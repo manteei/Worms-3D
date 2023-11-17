@@ -1,4 +1,4 @@
-ï»¿#include <iostream>
+#include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
 #include <vector>
@@ -119,7 +119,7 @@ int main()
 							if (s != clientName)
 							{
 								addPlayer(t_player, font, s);
-								cout << "ÐÐ¾Ð²Ñ‹Ð¹ Ð¸Ð³Ñ€Ð¾Ðº Ð¿Ð¾Ð´ÐºÐ»ÑŽÑ‡Ð¸Ð»ÑÑ: " << playersVec.back().name << endl;
+								cout << "®¢ë© ¨£à®ª ¯®¤ª«îç¨«áï: " << playersVec.back().name << endl;
 							}
 						}
 					}
@@ -189,10 +189,10 @@ void getUserInputData(string& playerName)
 	//cin >> serverIp;
 	S_Ip = "localhost";
 	cout << endl;
-	cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ñ€ÐµÐ³Ð¸ÑÑ‚Ñ€Ð°Ñ†Ð¸Ð¾Ð½Ð½Ñ‹Ð¹ Ð¿Ð¾Ñ€Ñ‚ Ñ‡ÐµÑ€Ð²ÐµÑ€Ð°: ";
+	cout << "‚¢¥¤¨â¥ à¥£¨áâà æ¨®­­ë© ¯®àâ ç¥à¢¥à : ";
 	cin >> S_port;
 	cout << endl;
-	cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¸Ð¼Ñ: ";
+	cout << "‚¢¥¤¨â¥ ¨¬ï: ";
 	cin >> playerName;
 };
 

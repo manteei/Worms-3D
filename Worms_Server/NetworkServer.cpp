@@ -11,7 +11,7 @@ Socket::Status NetworkServer::init()
 {
 	if (listener.listen(Socket::AnyPort) == Socket::Status::Done)
 	{
-		cout << "Ïîðò -" << listener.getLocalPort() << endl;
+		cout << "®àâ -" << listener.getLocalPort() << endl;
 		return Socket::Status();
 	}
 	else return Socket::Status::Error;
@@ -37,7 +37,7 @@ Socket::Status NetworkServer::acceptIncomingConnection()
 		//cout << "Port -" << listener.getLocalPort() << endl;
 		if (listener.accept(regSocket) == Socket::Status::Done)
 		{
-			cout << "acceptIncomingConnection(): Ïðèíÿòî íîâîå ñîåäèíåíèå\n";
+			cout << "acceptIncomingConnection(): à¨­ïâ® ­®¢®¥ á®¥¤¨­¥­¨¥\n";
 			regStep = 1;
 			return Socket::Status::Done;
 		}
@@ -66,11 +66,11 @@ Socket::Status NetworkServer::receiveClientRegData()
 					clientsVec.back().Ip = regSocket.getRemoteAddress();
 					clientsVec.back().dataSocket = new UdpSocket;
 					if (clientsVec.back().dataSocket->bind(Socket::AnyPort) != Socket::Status::Done)
-						cout << "(!)receiveClientRegData(): Íå óäàëîñü ïðèâÿçàòü ïîðò ê íîâîìó âûäåëåííîìó ïîðòó äàííûõ êëèåíòà.\n";
+						cout << "(!)receiveClientRegData(): ¥ ã¤ «®áì ¯à¨¢ï§ âì ¯®àâ ª ­®¢®¬ã ¢ë¤¥«¥­­®¬ã ¯®àâã ¤ ­­ëå ª«¨¥­â .\n";
 				}
 				else
 				{
-					cout << "(!)receiveClientRegData(): Íå óäàëîñü ïðî÷èòàòü èìÿ êëèåíòà èç ïîëó÷åííîãî ïàêåòà.\n";
+					cout << "(!)receiveClientRegData(): ¥ ã¤ «®áì ¯à®ç¨â âì ¨¬ï ª«¨¥­â  ¨§ ¯®«ãç¥­­®£® ¯ ª¥â .\n";
 					return Socket::Status::Error;
 				}
 
@@ -81,20 +81,20 @@ Socket::Status NetworkServer::receiveClientRegData()
 				}
 				else
 				{
-					cout << "(!)receiveClientRegData(): Íå óäàëîñü ïðî÷èòàòü ïîðò ñîêåòà äàííûõ êëèåíòà èç ïîëó÷åííîãî ïàêåòà.\n";
+					cout << "(!)receiveClientRegData(): ¥ ã¤ «®áì ¯à®ç¨â âì ¯®àâ á®ª¥â  ¤ ­­ëå ª«¨¥­â  ¨§ ¯®«ãç¥­­®£® ¯ ª¥â .\n";
 					return Socket::Status::Error;
 				}
 
 				if (!packet.endOfPacket())
-					cout << "(!)receiveClientRegData(): Ðåãèñòðàöèîííûå äàííûå êëèåíòà ïîëó÷åíû, íî ÷òî-òî îñòàëîñü, âîçìîæíî äàííûå ïîâðåæäåíû\n";
+					cout << "(!)receiveClientRegData(): ¥£¨áâà æ¨®­­ë¥ ¤ ­­ë¥ ª«¨¥­â  ¯®«ãç¥­ë, ­® çâ®-â® ®áâ «®áì, ¢®§¬®¦­® ¤ ­­ë¥ ¯®¢à¥¦¤¥­ë\n";
 			}
 			else
 			{
-				cout << "(!)receiveClientRegData(): Îøèáêà, ïîëó÷åííûé ïàêåò ïóñò\n";
+				cout << "(!)receiveClientRegData(): Žè¨¡ª , ¯®«ãç¥­­ë© ¯ ª¥â ¯ãáâ\n";
 				return Socket::Status::Error;
 			}
 
-			cout << "receiveClientRegData(): Ðåãèñòðàöèîííûå äàííûå êëèåíòà ïîëó÷åíû. Íîâûé êëèåíò: " << clientsVec.back().name << endl;
+			cout << "receiveClientRegData(): ¥£¨áâà æ¨®­­ë¥ ¤ ­­ë¥ ª«¨¥­â  ¯®«ãç¥­ë. ®¢ë© ª«¨¥­â: " << clientsVec.back().name << endl;
 			regStep = 2;
 			for (int i = 0; i < clientsVec.size() - 1; i++)
 				clientsVec[i].done = false;
@@ -165,7 +165,7 @@ Socket::Status NetworkServer::sendDedicatedDataPort()
 
 		if (regSocket.send(packet) == Socket::Status::Done)
 		{
-			cout << "sendDedicatedDataPort(): Îòïðàâëåí âûäåëåííûé ïîðò äàííûõ\n";
+			cout << "sendDedicatedDataPort(): Žâ¯à ¢«¥­ ¢ë¤¥«¥­­ë© ¯®àâ ¤ ­­ëå\n";
 			regStep = 4;
 			packet.clear();
 			return Socket::Status::Done;
@@ -192,7 +192,7 @@ Socket::Status NetworkServer::sendConnectedClientsRecords()
 
 		if (regSocket.send(packet) == Socket::Status::Done)
 		{
-			cout << "sendConnectedClientsRecords(): Çàïèñè ïîäêëþ÷åííûõ êëèåíòîâ îòïðàâëåíû íîâîìó êëèåíòó\n";
+			cout << "sendConnectedClientsRecords(): ‡ ¯¨á¨ ¯®¤ª«îç¥­­ëå ª«¨¥­â®¢ ®â¯à ¢«¥­ë ­®¢®¬ã ª«¨¥­âã\n";
 			regStep = 5;
 			regSocket.disconnect();
 			return Socket::Status::Done;
