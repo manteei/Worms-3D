@@ -130,11 +130,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="NetworkClient.cpp" />
-    <ClCompile Include="Worms_Client.cpp" />
+    <ClCompile Include="src\NetworkClient.cpp" />
+    <ClCompile Include="src\Worms_Client.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NetworkClient.h" />
+    <ClInclude Include="src\NetworkClient.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
