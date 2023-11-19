@@ -10,23 +10,23 @@ Socket::Status NetworkClient::init(unsigned short preferablePort)
 
 	if (status == Socket::Status::Done)
 	{
-		cout << "init(): Успешно подключились к порту: " << dataSocket.getLocalPort() << endl;
+		cout << "init(): Successfully binded to port: " << dataSocket.getLocalPort() << endl;
 		return Socket::Status::Done;
 	}
 	else
 	{
-		cout << "(!)init(): Не удалось подключиться к порту\n";
+		cout << "(!)init(): Failed to bind passed preferred port\n";
 		do
 		{
 			unsigned short newPort = Socket::AnyPort;
-			cout << "init(): Пытаюсь привязать другой порт - " << newPort << endl;
+			cout << "init(): Trying to bind other port - " << newPort << endl;
 			status = dataSocket.bind(newPort);
 			if (status != Socket::Status::Done)
-				cout << "(!)init(): Не удалось привязать другой порт. Повторная попытка...\n";
+				cout << "(!)init(): Failed to bind other port. Retrying...\n";
 
 		} while (status != Socket::Done);
 
-		cout << "init(): Успешно подключились к другому порту - " << dataSocket.getLocalPort() << endl;
+		cout << "init(): Successfully binded to other port - " << dataSocket.getLocalPort() << endl;
 		return Socket::Status::Done;
 	}
 }
@@ -61,18 +61,18 @@ Socket::Status NetworkClient::receiveConnectedClientsNames(vector<string>& names
 				{
 					if (name == "FIRST")
 					{
-						"receiveConnectedClientsNames(): Ни один клиент не подключен, вы первый\n";
+						"receiveConnectedClientsNames(): No clients are connected, you are first\n";
 						return Socket::Status::Done;
 					}
 					namesVec.push_back(name);
 				}
 				else
 				{
-					cout << "(!)receiveConnectedClientsNames() :Не удалось прочитать пакет\n";
+					cout << "(!)receiveConnectedClientsNames() : Failed to read packet\n";
 					return Socket::Status::Error;
 				}
 			}
-			cout << "receiveConnectedClientsNames() :Имена клиентов прочитаны\n";
+			cout << "receiveConnectedClientsNames() :Client names read\n";
 			/*for (int i = 0; i < namesVec.size(); i++)
 			{
 				cout << namesVec[i];
@@ -81,9 +81,9 @@ Socket::Status NetworkClient::receiveConnectedClientsNames(vector<string>& names
 			return Socket::Status::Done;
 
 		}
-		else cout << "(!)receiveConnectedClientsNames(): Принимаемый пакет пуст. Убедитесь, что пакет содержит: (string name1 << string name2 << ...) или \"FIRST\" если это первый подключенный клиент\n";
+		else cout << "(!)receiveConnectedClientsNames(): Receives packet is empty, ensure that packet contains: (string name1 << string name2 << ...) or \"FIRST\" if it's first connected client\n";
 	}
-	else cout << "(!)receiveConnectedClientsNames(): Не удалось получить имена клиентов.\n";
+	else cout << "(!)receiveConnectedClientsNames(): Failed to receive clients names\n";
 
 	return Socket::Status::Error;
 }
@@ -101,7 +101,7 @@ Socket::Status NetworkClient::receiveData(Packet& dataPacket, IpAddress S_Ip, un
 		}
 		else
 		{
-			cout << "(!)receiveData(): Полученный пакет пустой\n";
+			cout << "(!)receiveData(): Received packet is empty\n";
 			return Socket::Status::Error;
 		}
 	}
@@ -140,14 +140,14 @@ Socket::Status NetworkClient::connectRegTcpSocket(IpAddress serverIp, unsigned s
 
 	if (regSocket.connect(serverIp, serverRegPort, seconds(10)) == Socket::Status::Done)
 	{
-		cout << "connectRegTcpSocket(): Подключено к серверу\n";
+		cout << "connectRegTcpSocket(): Connected to server\n";
 		S_Ip = serverIp;
 		S_dataPort = serverRegPort;
 		return Socket::Status::Done;
 	}
 	else
 	{
-		cout << "(!)connectRegTcpSocket(): Ошибка подключения к серверу!\n";
+		cout << "(!)connectRegTcpSocket(): Error connecting to server!\n";
 		return Socket::Status::Error;
 	}
 }
@@ -161,12 +161,12 @@ Socket::Status NetworkClient::sendClientRecipientData(string clientName)
 
 	if (regSocket.send(tempPacket) == Socket::Status::Done)
 	{
-		cout << "sendClientRecipientData(): Данные получателя клиента успешно отправлены.\n";
+		cout << "sendClientRecipientData(): Successfully sent client recipient data\n";
 		return Socket::Status::Done;
 	}
 	else
 	{
-		cout << "(!)sendClientRecipientData(): Не удалось отправить данные получателя клиента.\n";
+		cout << "(!)sendClientRecipientData(): Failed to send client recipient data\n";
 		return Socket::Status::Error;
 	}
 }
@@ -185,16 +185,16 @@ Socket::Status NetworkClient::recieveDedicatedDataServerPort()
 			{
 				if (tempPacket >> S_dataPort)
 				{
-					cout << "recieveDedicatedDataServerPort(): Успешно получены данные клиентского выделенного порта сервера - " << S_dataPort << endl;
+					cout << "recieveDedicatedDataServerPort(): Successfully received data client-dedicated port of a server - " << S_dataPort << endl;
 					return Socket::Status::Done;
 				}
-				else cout << "(!)recieveDedicatedDataServerPort(): Не удалось прочитать полученный пакет.\n";
+				else cout << "(!)recieveDedicatedDataServerPort(): Failed to read from received packet\n";
 			}
-			else cout << "(!)recieveDedicatedDataServerPort(): недопустимый размер пакета, убедитесь, что сервер отправляет только Uint16 \n";
+			else cout << "(!)recieveDedicatedDataServerPort(): Invalid packet size, ensure that server sends only Uint16 var\n";
 		}
-		else cout << "(!)recieveDedicatedDataServerPort(): Полученный пакет пустой\n";
+		else cout << "(!)recieveDedicatedDataServerPort(): Received packet is empty\n";
 	}
-	else cout << "(!)recieveDedicatedDataServerPort(): Не удалось получить выделенный клиентский порт сервера.\n";
+	else cout << "(!)recieveDedicatedDataServerPort(): Failed to receive client-dedicated port of a server\n";
 
 	return Socket::Status::Error;
 }

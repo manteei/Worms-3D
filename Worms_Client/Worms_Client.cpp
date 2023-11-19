@@ -75,7 +75,7 @@ int main()
 
 
 	Texture t_player;
-	t_player.loadFromFile("t1.png");
+	t_player.loadFromFile("indianajones.png");
 	Font font;
 	font.loadFromFile("8bitOperatorPlus-Regular.ttf");
 
@@ -119,7 +119,7 @@ int main()
 							if (s != clientName)
 							{
 								addPlayer(t_player, font, s);
-								cout << "Новый игрок подключился: " << playersVec.back().name << endl;
+								cout << "New player connected: " << playersVec.back().name << endl;
 							}
 						}
 					}
@@ -189,10 +189,10 @@ void getUserInputData(string& playerName)
 	//cin >> serverIp;
 	S_Ip = "localhost";
 	cout << endl;
-	cout << "Введите регистрационный порт червера: ";
+	cout << "Enter server registration port: ";
 	cin >> S_port;
 	cout << endl;
-	cout << "Введите имя: ";
+	cout << "Enter name: ";
 	cin >> playerName;
 };
 

@@ -11,7 +11,7 @@ Socket::Status NetworkServer::init()
 {
 	if (listener.listen(Socket::AnyPort) == Socket::Status::Done)
 	{
-		cout << "Порт -" << listener.getLocalPort() << endl;
+		cout << "Port -" << listener.getLocalPort() << endl;
 		return Socket::Status();
 	}
 	else return Socket::Status::Error;
@@ -37,7 +37,7 @@ Socket::Status NetworkServer::acceptIncomingConnection()
 		//cout << "Port -" << listener.getLocalPort() << endl;
 		if (listener.accept(regSocket) == Socket::Status::Done)
 		{
-			cout << "acceptIncomingConnection(): Принято новое соединение\n";
+			cout << "acceptIncomingConnection(): Accepted new connection\n";
 			regStep = 1;
 			return Socket::Status::Done;
 		}
@@ -66,11 +66,11 @@ Socket::Status NetworkServer::receiveClientRegData()
 					clientsVec.back().Ip = regSocket.getRemoteAddress();
 					clientsVec.back().dataSocket = new UdpSocket;
 					if (clientsVec.back().dataSocket->bind(Socket::AnyPort) != Socket::Status::Done)
-						cout << "(!)receiveClientRegData(): Не удалось привязать порт к новому выделенному порту данных клиента.\n";
+						cout << "(!)receiveClientRegData(): Failed to bind port to the new client-dedicated data port\n";
 				}
 				else
 				{
-					cout << "(!)receiveClientRegData(): Не удалось прочитать имя клиента из полученного пакета.\n";
+					cout << "(!)receiveClientRegData(): Failed to read client name from received packet\n";
 					return Socket::Status::Error;
 				}
 
@@ -81,20 +81,20 @@ Socket::Status NetworkServer::receiveClientRegData()
 				}
 				else
 				{
-					cout << "(!)receiveClientRegData(): Не удалось прочитать порт сокета данных клиента из полученного пакета.\n";
+					cout << "(!)receiveClientRegData(): Failed to read client data socket port from received packet\n";
 					return Socket::Status::Error;
 				}
 
 				if (!packet.endOfPacket())
-					cout << "(!)receiveClientRegData(): Регистрационные данные клиента получены, но что-то осталось, возможно данные повреждены\n";
+					cout << "(!)receiveClientRegData(): Client registration data received, but something left, data probably corrupted\n";
 			}
 			else
 			{
-				cout << "(!)receiveClientRegData(): Ошибка, полученный пакет пуст\n";
+				cout << "(!)receiveClientRegData(): Error, received packet is empty\n";
 				return Socket::Status::Error;
 			}
 
-			cout << "receiveClientRegData(): Регистрационные данные клиента получены. Новый клиент: " << clientsVec.back().name << endl;
+			cout << "receiveClientRegData(): Client registration data received. New client: " << clientsVec.back().name << endl;
 			regStep = 2;
 			for (int i = 0; i < clientsVec.size() - 1; i++)
 				clientsVec[i].done = false;
@@ -165,7 +165,7 @@ Socket::Status NetworkServer::sendDedicatedDataPort()
 
 		if (regSocket.send(packet) == Socket::Status::Done)
 		{
-			cout << "sendDedicatedDataPort(): Отправлен выделенный порт данных\n";
+			cout << "sendDedicatedDataPort(): Dedicated data port sent\n";
 			regStep = 4;
 			packet.clear();
 			return Socket::Status::Done;
@@ -192,7 +192,7 @@ Socket::Status NetworkServer::sendConnectedClientsRecords()
 
 		if (regSocket.send(packet) == Socket::Status::Done)
 		{
-			cout << "sendConnectedClientsRecords(): Записи подключенных клиентов отправлены новому клиенту\n";
+			cout << "sendConnectedClientsRecords(): Connected clients records sent to new client\n";
 			regStep = 5;
 			regSocket.disconnect();
 			return Socket::Status::Done;
