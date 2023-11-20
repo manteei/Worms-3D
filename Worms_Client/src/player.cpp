@@ -10,6 +10,13 @@ Player::Player(float x0, float y0, float z0, float size0)
     needJump = false;
 }
 
+void Player::load(Font& font)
+{
+    t.setFont(font);
+    t.setString(name);
+    t.setFillColor(sf::Color::Red);
+}
+
 void Player::update(float time, std::vector < std::vector<std::vector<bool>>>& mass, Map map)
 {
     needJump = false;
@@ -24,6 +31,18 @@ void Player::update(float time, std::vector < std::vector<std::vector<bool>>>& m
     collision(0, 0, dz, mass, map);
 
     dx = dz = 0;
+}
+
+void Player::draw(RenderWindow& window)
+{
+    window.draw(t);
+};
+
+void Player::setPosition(float x1, float y1, float z1)
+{
+    x = x1;
+    y = y1;
+    z = z1;
 }
 
 void Player::collision(float Dx, float Dy, float Dz, std::vector < std::vector<std::vector<bool>>>& mass, Map map)
