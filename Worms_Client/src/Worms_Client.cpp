@@ -32,9 +32,14 @@ const float PI = 3.141592653;
 void getUserInputData(string& playerName);
 void addPlayer(Font& font, string clientName);
 
+bool windowIsActive = false;
+
 int main()
 {
 	RenderWindow window(VideoMode(800, 600), "OpenGL", Style::Default, ContextSettings(32));
+
+	bool isDragging = false;
+	sf::Vector2i offset;
 
 	window.setVerticalSyncEnabled(true);
 
@@ -140,7 +145,35 @@ int main()
 
 			if ((event.type == Event::KeyPressed) && (event.key.code == Keyboard::Escape))
 				window.close();
+			if ((event.type == Event::KeyPressed) && (event.key.code == Keyboard::F)) {
+					windowIsActive = false;
+					ShowCursor(TRUE);
+
+			}
+			if ((event.type == Event::KeyPressed) && (event.key.code == Keyboard::G)) {
+				windowIsActive = true;
+				ShowCursor(FALSE);
+
+			}
+			if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+			{
+				isDragging = true;
+				offset = window.getPosition() - sf::Mouse::getPosition();
+			}
+
+			if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
+			{
+				isDragging = false;
+			}
+			
+				
 		}
+
+		if (isDragging)
+		{
+			window.setPosition(sf::Mouse::getPosition() + offset);
+		}
+
 
 		for (int i = 0; i < playersVec.size(); i++)
 		{
@@ -154,23 +187,27 @@ int main()
 
 		player.draw(window);  
 
+		window.clear();
+
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		player.keyboard(angleX);
 		player.update(time, mass, myMap);
+		if (windowIsActive) {
 
-		POINT mousexy;
-		GetCursorPos(&mousexy);
-		int xt = window.getPosition().x + 400;
-		int yt = window.getPosition().y + 300;
+			POINT mousexy;
+			GetCursorPos(&mousexy);
+			int xt = window.getPosition().x + 400;
+			int yt = window.getPosition().y + 300;
 
-		angleX += (xt - mousexy.x) / 4;
-		angleY += (yt - mousexy.y) / 4;
+			angleX += (xt - mousexy.x) / 4;
+			angleY += (yt - mousexy.y) / 4;
 
-		if (angleY < -89.0) { angleY = -89.0; }
-		if (angleY > 89.0) { angleY = 89.0; }
+			if (angleY < -89.0) { angleY = -89.0; }
+			if (angleY > 89.0) { angleY = 89.0; }
 
-		SetCursorPos(xt, yt);
+			SetCursorPos(xt, yt);
+		}
 
 		
 		glMatrixMode(GL_MODELVIEW);
