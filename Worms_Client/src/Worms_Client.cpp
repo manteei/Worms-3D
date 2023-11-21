@@ -9,6 +9,7 @@
 #include "map.h"
 #include "NetworkClient.h"
 #include "enemy.h"
+#include "camera.h"
 
 using namespace sf;
 
@@ -59,6 +60,7 @@ int main()
 	font.loadFromFile("8bitOperatorPlus-Regular.ttf");
 
 	Player player(100, 200, 100, size0);
+	Camera camera(player);
 
 	getUserInputData(player.name);
 	//≈сли загурузить им€, рендеринг ломаетс€!
@@ -199,7 +201,9 @@ int main()
 		if (windowIsActive) {
 			player.keyboard(angleX);
 			player.update(time, mass, myMap);
-
+			camera.keyboard();
+			camera.update(time, player);
+			
 			POINT mousexy;
 			GetCursorPos(&mousexy);
 			int xt = window.getPosition().x + 400;
@@ -217,12 +221,12 @@ int main()
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-		gluLookAt(player.x, player.y + player.h / 2, player.z, player.x - sin(angleX / 180 * PI), player.y + player.h / 2 + (tan(angleY / 180 * PI)), player.z - cos(angleX / 180 * PI), 0, 1, 0);
+		gluLookAt(camera.x, camera.y + camera.h / 2, camera.z, camera.x - sin(angleX / 180 * PI), camera.y + camera.h / 2 + (tan(angleY / 180 * PI)), camera.z - cos(angleX / 180 * PI), 0, 1, 0);
 		
 		
-		glTranslatef(player.x, player.y, player.z);
+		glTranslatef(camera.x, camera.y, camera.z);
 		textureManager.drawSkybox(skybox, 1000);
-		glTranslatef(-player.x, -player.y, -player.z);
+		glTranslatef(-camera.x, -camera.y, -camera.z);
 
 
 		myMap.drawMap(textureManager, size0, box, mass);

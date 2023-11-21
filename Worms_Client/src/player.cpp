@@ -4,7 +4,7 @@ Player::Player(float x0, float y0, float z0, float size0)
 {
     x = x0; y = y0; z = z0;
     dx = 0; dy = 0; dz = 0;
-    w = 5; h = 20; d = 5; speed = 5;
+    w = 5; h = 20; d = 5; speed = 2;
     onGround = false;
     size = size0;
     needJump = false;
@@ -143,10 +143,7 @@ void Player::keyboard(float angleX)
         }
     }
 
-    if (Keyboard::isKeyPressed(Keyboard::E))
-    {
-        onGround = false; dy = 40;
-    }
+    
 
 };
 
