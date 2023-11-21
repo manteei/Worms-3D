@@ -8,7 +8,7 @@ Player::Player(float x0, float y0, float z0, float size0)
     onGround = false;
     size = size0;
     needJump = false;
-}
+}   
 
 void Player::load(Font& font)
 {

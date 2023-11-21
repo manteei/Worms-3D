@@ -8,10 +8,11 @@
 #include "player.h"
 #include "map.h"
 #include "NetworkClient.h"
+#include "enemy.h"
 
 using namespace sf;
 
-vector<Player> playersVec;
+vector<Enemy> enemyVec;
 
 Clock cycleTimer;
 Time cycleTime;
@@ -33,6 +34,8 @@ void getUserInputData(string& playerName);
 void addPlayer(Font& font, string clientName);
 
 bool windowIsActive = false;
+
+
 
 int main()
 {
@@ -56,6 +59,10 @@ int main()
 	font.loadFromFile("8bitOperatorPlus-Regular.ttf");
 
 	Player player(100, 200, 100, size0);
+
+	getUserInputData(player.name);
+	//≈сли загурузить им€, рендеринг ломаетс€!
+	//player.load(font);
 	
 
 	glEnable(GL_DEPTH_TEST);
@@ -70,14 +77,13 @@ int main()
 	myMap.createMap(mass);
 
 	Clock clock;
-
-	getUserInputData(player.name);
 	
 	netC.init();
 	netC.registerOnServer(S_Ip, S_port, player.name);
 
 	vector<string> namesVec;
 	netC.receiveConnectedClientsNames(namesVec);
+
 	for (int i = 0; i < namesVec.size(); i++)
 	{
 		addPlayer(font, namesVec[i]);
@@ -105,12 +111,12 @@ int main()
 						{
 							if (s != clientName)
 							{
-								addPlayer(font, s);
-								cout << "New player connected: " << playersVec.back().name << endl;
+								//addPlayer(font, s);
+								//cout << "New player connected: " << playersVec.back().name << endl;
 							}
 						}
 					}
-					if (s == "DATA")
+					/*if (s == "DATA")
 					{
 						while (!receivedDataPacket.endOfPacket())
 						{
@@ -125,16 +131,16 @@ int main()
 									playersVec[i].setPosition( x, y, z );
 							}
 						}
-					}
+					}*/
 				}
 			}
 		}
 
 
 
-		sendDataPacket.clear();
-		sendDataPacket << "DATA" << player.x << player.y << player.z;
-		netC.sendData(sendDataPacket);
+		//sendDataPacket.clear();
+		//sendDataPacket << "DATA" << player.x << player.y << player.z;
+		//netC.sendData(sendDataPacket);
 
 
 		Event event;
@@ -175,9 +181,9 @@ int main()
 		}
 
 
-		for (int i = 0; i < playersVec.size(); i++)
+		for (int i = 0; i < enemyVec.size(); i++)
 		{
-			playersVec[i].draw(window);
+			enemyVec[i].draw(window);
 		}
 
 		float time = clock.getElapsedTime().asMilliseconds();
@@ -190,10 +196,9 @@ int main()
 		window.clear();
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		player.keyboard(angleX);
-		player.update(time, mass, myMap);
 		if (windowIsActive) {
+			player.keyboard(angleX);
+			player.update(time, mass, myMap);
 
 			POINT mousexy;
 			GetCursorPos(&mousexy);
@@ -207,12 +212,13 @@ int main()
 			if (angleY > 89.0) { angleY = 89.0; }
 
 			SetCursorPos(xt, yt);
+
 		}
 
-		
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		gluLookAt(player.x, player.y + player.h / 2, player.z, player.x - sin(angleX / 180 * PI), player.y + player.h / 2 + (tan(angleY / 180 * PI)), player.z - cos(angleX / 180 * PI), 0, 1, 0);
+		
 		
 		glTranslatef(player.x, player.y, player.z);
 		textureManager.drawSkybox(skybox, 1000);
@@ -251,8 +257,7 @@ void getUserInputData(string& playerName)
 
 void addPlayer(Font& font, string clientName)
 {
-	Player p(100, 200, 100, size0);
-	playersVec.push_back(p);
-	playersVec.back().name = clientName;
-	playersVec.back().load(font);
+	Enemy enemy(105, 205, 105, size0);
+	enemyVec.push_back(enemy);
+	enemyVec.back().name = clientName;
 };
