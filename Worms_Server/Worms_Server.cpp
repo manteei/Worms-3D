@@ -20,7 +20,7 @@ int main()
 	packet << "DATA";
 	for (int i = 0; i < netS.clientsVec.size(); i++)
 	{
-		packet << netS.clientsVec[i].name << netS.clientsVec[i].pos.x << netS.clientsVec[i].pos.y;
+		packet << netS.clientsVec[i].name << netS.clientsVec[i].pos.x << netS.clientsVec[i].pos.y << netS.clientsVec[i].pos.z;
 	}
 
 	while (true)
@@ -34,7 +34,7 @@ int main()
 			packet << "DATA";
 			for (int i = 0; i < netS.clientsVec.size(); i++)
 			{
-				packet << netS.clientsVec[i].name << netS.clientsVec[i].pos.x << netS.clientsVec[i].pos.y;
+				packet << netS.clientsVec[i].name << netS.clientsVec[i].pos.x << netS.clientsVec[i].pos.y << netS.clientsVec[i].pos.z;
 			}
 		}
 
@@ -49,7 +49,7 @@ int main()
 				{
 					if (s == "DATA")
 					{
-						float x, y;
+						float x, y, z;
 						if (netS.clientsVec[receivedClientIndex].rDataPacket >> x)
 						{
 							netS.clientsVec[receivedClientIndex].pos.x = x;
@@ -57,6 +57,10 @@ int main()
 						if (netS.clientsVec[receivedClientIndex].rDataPacket >> y)
 						{
 							netS.clientsVec[receivedClientIndex].pos.y = y;
+						}
+						if (netS.clientsVec[receivedClientIndex].rDataPacket >> z)
+						{
+							netS.clientsVec[receivedClientIndex].pos.z = z;
 						}
 						netS.clientsVec[receivedClientIndex].rDataPacket.clear();
 					}

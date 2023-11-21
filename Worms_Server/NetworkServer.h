@@ -17,7 +17,8 @@ struct Client
 	Packet sDataPacket;
 	bool done = true;
 
-	Vector2f pos{ 5,5 };
+	Vector3f pos{ 5,5,5 };
+	 
 };
 
 class NetworkServer
