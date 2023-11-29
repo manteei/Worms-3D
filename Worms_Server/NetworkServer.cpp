@@ -11,7 +11,7 @@ Socket::Status NetworkServer::init()
 {
 	if (listener.listen(Socket::AnyPort) == Socket::Status::Done)
 	{
-		cout << "Port -" << listener.getLocalPort() << endl;
+		cout << "Port - " << listener.getLocalPort() << endl;
 		return Socket::Status();
 	}
 	else return Socket::Status::Error;

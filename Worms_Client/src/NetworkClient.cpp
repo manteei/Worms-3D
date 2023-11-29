@@ -61,10 +61,11 @@ Socket::Status NetworkClient::receiveConnectedClientsNames(vector<string>& names
 				{
 					if (name == "FIRST")
 					{
-						"receiveConnectedClientsNames(): No clients are connected, you are first\n";
+						cout << "receiveConnectedClientsNames(): No clients are connected, you are first\n";
 						return Socket::Status::Done;
 					}
 					namesVec.push_back(name);
+
 				}
 				else
 				{

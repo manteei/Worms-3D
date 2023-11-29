@@ -16,5 +16,6 @@ public:
     Enemy(float x0, float y0, float z0, float size0);
     void load(Font& font);
     void draw(RenderWindow& window);
+    void setPosition(float x1, float y1, float z1);
 };
 

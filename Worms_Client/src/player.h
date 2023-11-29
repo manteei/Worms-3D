@@ -18,8 +18,8 @@ public:
     bool onGround, needJump;
     float speed, size;
     const float PI = 3.141592653;
-    Player(float x0, float y0, float z0, float size0);
-    void update(float time, std::vector < std::vector<std::vector<bool>>>& mass, Map map);
+    Player(float size0);
+    void update(Time time, std::vector < std::vector<std::vector<bool>>>& mass, Map map);
     void collision(float Dx, float Dy, float Dz, std::vector < std::vector<std::vector<bool>>>& mass, Map map);
     void keyboard(float angleX);
     bool check(int x, int y, int z, std::vector < std::vector<std::vector<bool>>>& mass);

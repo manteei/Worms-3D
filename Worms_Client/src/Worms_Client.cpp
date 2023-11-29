@@ -9,10 +9,11 @@
 #include "map.h"
 #include "NetworkClient.h"
 #include "enemy.h"
+#include "camera.h"
 
 using namespace sf;
 
-vector<Enemy> enemyVec;
+vector<Player> enemyVec;
 
 Clock cycleTimer;
 Time cycleTime;
@@ -20,6 +21,7 @@ Time cycleTime;
 IpAddress S_Ip;
 unsigned short S_port;
 string clientName;
+
 Map myMap(80, 40, 80);
 NetworkClient netC;
 float size0 = 20.f;
@@ -31,10 +33,11 @@ float angleX, angleY;
 const float PI = 3.141592653;
 
 void getUserInputData(string& playerName);
-void addPlayer(Font& font, string clientName);
+void addPlayer(string clientName);
 
 bool windowIsActive = false;
 
+Player player(size0);
 
 
 int main()
@@ -55,10 +58,11 @@ int main()
 	GLuint box = textureManager.createBox();
 	GLuint worm = textureManager.createWorm();
 
-	Font font;
-	font.loadFromFile("8bitOperatorPlus-Regular.ttf");
 
-	Player player(100, 200, 100, size0);
+
+
+
+	Camera camera(player);
 
 	getUserInputData(player.name);
 	//≈сли загурузить им€, рендеринг ломаетс€!
@@ -82,17 +86,18 @@ int main()
 	netC.registerOnServer(S_Ip, S_port, player.name);
 
 	vector<string> namesVec;
+	
 	netC.receiveConnectedClientsNames(namesVec);
 
 	for (int i = 0; i < namesVec.size(); i++)
 	{
-		addPlayer(font, namesVec[i]);
+		addPlayer(namesVec[i]);
 	}
 
 	Packet receivedDataPacket;
 	Packet sendDataPacket;
 
-
+	
 	while (window.isOpen())
 	{
 		cycleTime = cycleTimer.restart();
@@ -111,12 +116,13 @@ int main()
 						{
 							if (s != clientName)
 							{
-								//addPlayer(font, s);
-								//cout << "New player connected: " << playersVec.back().name << endl;
+								addPlayer(s);
+								cout << "New player connected: " << enemyVec.back().name << endl;
+								
 							}
 						}
 					}
-					/*if (s == "DATA")
+					if (s == "DATA")
 					{
 						while (!receivedDataPacket.endOfPacket())
 						{
@@ -125,22 +131,25 @@ int main()
 							receivedDataPacket >> x;
 							receivedDataPacket >> y;
 							receivedDataPacket >> z;
-							for (int i = 0; i < playersVec.size(); i++)
+						
+							for (int i = 0; i < enemyVec.size(); i++)
 							{
-								if (s == playersVec[i].name)
-									playersVec[i].setPosition( x, y, z );
+								if (s == enemyVec[i].name) {
+									enemyVec[i].setPosition(x, y, z);  
+									
+								}
 							}
 						}
-					}*/
+					}
 				}
 			}
 		}
 
 
 
-		//sendDataPacket.clear();
-		//sendDataPacket << "DATA" << player.x << player.y << player.z;
-		//netC.sendData(sendDataPacket);
+		sendDataPacket.clear();
+		sendDataPacket << "DATA"  << player.x << player.y << player.z;
+		netC.sendData(sendDataPacket);
 
 
 		Event event;
@@ -181,25 +190,24 @@ int main()
 		}
 
 
-		for (int i = 0; i < enemyVec.size(); i++)
-		{
-			enemyVec[i].draw(window);
-		}
+		
 
-		float time = clock.getElapsedTime().asMilliseconds();
+		/*float time = clock.getElapsedTime().asMilliseconds();
 		clock.restart();
-		time = time / 50;
-		if (time > 3) time = 3;
+		time = time / 10;
+		if (time > 3) time = 3;*/
 
-		player.draw(window);  
+		//player.draw(window);  
 
-		window.clear();
+		//window.clear();
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		if (windowIsActive) {
 			player.keyboard(angleX);
-			player.update(time, mass, myMap);
-
+			player.update(cycleTime, mass, myMap);
+			camera.keyboard();
+			camera.update(cycleTime, player);
+			
 			POINT mousexy;
 			GetCursorPos(&mousexy);
 			int xt = window.getPosition().x + 400;
@@ -214,22 +222,35 @@ int main()
 			SetCursorPos(xt, yt);
 
 		}
+		window.clear();
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-		gluLookAt(player.x, player.y + player.h / 2, player.z, player.x - sin(angleX / 180 * PI), player.y + player.h / 2 + (tan(angleY / 180 * PI)), player.z - cos(angleX / 180 * PI), 0, 1, 0);
+		gluLookAt(camera.x, camera.y + camera.h / 2, camera.z, camera.x - sin(angleX / 180 * PI), camera.y + camera.h / 2 + (tan(angleY / 180 * PI)), camera.z - cos(angleX / 180 * PI), 0, 1, 0);
 		
 		
-		glTranslatef(player.x, player.y, player.z);
+		glTranslatef(camera.x, camera.y, camera.z);
 		textureManager.drawSkybox(skybox, 1000);
-		glTranslatef(-player.x, -player.y, -player.z);
+		glTranslatef(-camera.x, -camera.y, -camera.z);
 
 
 		myMap.drawMap(textureManager, size0, box, mass);
+		
 
-		glTranslatef(player.x, player.y + 5, player.z);
+		for (int i = 0; i < enemyVec.size(); i++)
+		{
+
+			//enemyVec[i].draw(window);
+			glTranslatef(enemyVec[i].x, enemyVec[i].y , enemyVec[i].z);
+			textureManager.drawBox(worm, size0 / 10);
+			glTranslatef(-enemyVec[i].x, -enemyVec[i].y, -enemyVec[i].z);
+			
+			
+		}
+		glTranslatef(player.x, player.y, player.z);
 		textureManager.drawBox(worm, size0 / 10);
-		glTranslatef(-player.x, -player.y - 5, -player.z);
+		glTranslatef(-player.x, -player.y, -player.z);
+	
 
 		window.pushGLStates();
 		window.draw(s);
@@ -255,9 +276,10 @@ void getUserInputData(string& playerName)
 	std::cin >> playerName;
 };
 
-void addPlayer(Font& font, string clientName)
+void addPlayer(string clientName)
 {
-	Enemy enemy(105, 205, 105, size0);
+	Player enemy(size0);
 	enemyVec.push_back(enemy);
 	enemyVec.back().name = clientName;
+	
 };
