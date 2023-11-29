@@ -17,7 +17,7 @@ struct Client
 	Packet sDataPacket;
 	bool done = true;
 
-	Vector3f pos{ 5,5,5 };
+	Vector3f pos{ 100,100,100 };
 	 
 };
 

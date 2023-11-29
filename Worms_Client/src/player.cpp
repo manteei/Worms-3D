@@ -1,8 +1,8 @@
 #include "player.h"
 
-Player::Player(float x0, float y0, float z0, float size0)
+Player::Player(float size0)
 {
-    x = x0; y = y0; z = z0;
+    x = 100; y = 100; z = 100;
     dx = 0; dy = 0; dz = 0;
     w = 5; h = 20; d = 5; speed = 2;
     onGround = false;
@@ -17,17 +17,17 @@ void Player::load(Font& font)
     t.setFillColor(sf::Color::Red);
 }
 
-void Player::update(float time, std::vector < std::vector<std::vector<bool>>>& mass, Map map)
+void Player::update(Time time, std::vector < std::vector<std::vector<bool>>>& mass, Map map)
 {
     needJump = false;
-    if (!onGround) dy -= 1.5 * time;
+    if (!onGround) dy -= time.asSeconds() * 50;
     onGround = 0;
 
-    x += dx * time;
+    x += dx * time.asSeconds() * 50;
     collision(dx, 0, 0, mass, map);
-    y += dy * time;
+    y += dy * time.asSeconds() * 50;
     collision(0, dy, 0, mass, map);
-    z += dz * time;
+    z += dz * time.asSeconds() * 50;
     collision(0, 0, dz, mass, map);
 
     dx = dz = 0;

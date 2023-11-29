@@ -10,12 +10,12 @@ Camera::Camera(Player player)
 
 }
 
-void Camera::update(float time, Player player)
+void Camera::update(Time time, Player player)
 {
-    if (!onGround) dy -= 1.5 * time;
+    if (!onGround) dy -= time.asSeconds()* 50;
  
     onGround = 0;
-    y += dy * time;
+    y += dy * time.asSeconds() * 50;
     if (y + h + dy < player.z) {y = player.y; }
     if (y + h + dy > 600) {y = 600 - h;}
     if (farPlayer) h = 60;

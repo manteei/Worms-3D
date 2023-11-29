@@ -19,7 +19,7 @@ public:
    
 
     Camera(Player player);
-    void update(float time,Player player);
+    void update(Time time,Player player);
     void keyboard();
    
 };
