@@ -4,7 +4,7 @@ Player::Player(float size0)
 {
     x = 100; y = 100; z = 100;
     dx = 0; dy = 0; dz = 0;
-    w = 5; h = 20; d = 5; speed = 2;
+    w = 5; h = 20; d = 5;
     onGround = false;
     size = size0;
     needJump = false;
@@ -109,8 +109,8 @@ void Player::keyboard(float angleX)
 
     if (Keyboard::isKeyPressed(Keyboard::W))
     {
-        dx = -sin(angleX / 180 * PI) * speed;
-        dz = -cos(angleX / 180 * PI) * speed;
+        dx = -sin(angleX / 180 * PI) ;
+        dz = -cos(angleX / 180 * PI) ;
         if (needJump) {
             onGround = false; dy = 12;
         }
@@ -118,8 +118,8 @@ void Player::keyboard(float angleX)
 
     if (Keyboard::isKeyPressed(Keyboard::S))
     {
-        dx = sin(angleX / 180 * PI) * speed;
-        dz = cos(angleX / 180 * PI) * speed;
+        dx = sin(angleX / 180 * PI) ;
+        dz = cos(angleX / 180 * PI) ;
         if (needJump) {
             onGround = false; dy = 12;
         }
@@ -127,8 +127,8 @@ void Player::keyboard(float angleX)
 
     if (Keyboard::isKeyPressed(Keyboard::D))
     {
-        dx = sin((angleX + 90) / 180 * PI) * speed;
-        dz = cos((angleX + 90) / 180 * PI) * speed;
+        dx = sin((angleX + 90) / 180 * PI) ;
+        dz = cos((angleX + 90) / 180 * PI) ;
         if (needJump) {
             onGround = false; dy = 12;
         }
@@ -136,8 +136,8 @@ void Player::keyboard(float angleX)
 
     if (Keyboard::isKeyPressed(Keyboard::A))
     {
-        dx = sin((angleX - 90) / 180 * PI) * speed;
-        dz = cos((angleX - 90) / 180 * PI) * speed;
+        dx = sin((angleX - 90) / 180 * PI) ;
+        dz = cos((angleX - 90) / 180 * PI) ;
         if (needJump) {
             onGround = false; dy = 12;
         }

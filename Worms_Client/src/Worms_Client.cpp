@@ -58,8 +58,7 @@ int main()
 	GLuint box = textureManager.createBox();
 	GLuint worm = textureManager.createWorm();
 
-	Font font;
-	font.loadFromFile("8bitOperatorPlus-Regular.ttf");
+
 
 
 
