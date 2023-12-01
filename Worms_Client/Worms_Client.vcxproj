@@ -130,6 +130,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\About_Game.cpp" />
+    <ClCompile Include="src\GameMenu.cpp" />
+    <ClCompile Include="src\GameStart.cpp" />
+    <ClCompile Include="src\Options.cpp" />
     <ClCompile Include="src\camera.cpp" />
     <ClCompile Include="src\enemy.cpp" />
     <ClCompile Include="src\map.cpp" />
@@ -137,14 +141,23 @@
     <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\textureManager.cpp" />
     <ClCompile Include="src\Worms_Client.cpp" />
+    <ClCompile Include="src\InitText.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\About_Game.h" />
+    <ClInclude Include="src\GameMenu.h" />
+    <ClInclude Include="src\GameStart.h" />
+    <ClInclude Include="src\Options.h" />
     <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\enemy.h" />
     <ClInclude Include="src\map.h" />
     <ClInclude Include="src\NetworkClient.h" />
     <ClInclude Include="src\player.h" />
     <ClInclude Include="src\textureManager.h" />
+    <ClInclude Include="src\InitText.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\..\Downloads\4.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

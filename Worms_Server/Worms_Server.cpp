@@ -22,6 +22,7 @@ int main()
 	{
 		packet << netS.clientsVec[i].name << netS.clientsVec[i].pos.x << netS.clientsVec[i].pos.y << netS.clientsVec[i].pos.z;
 		
+		
 	}
 
 	while (true)
@@ -36,7 +37,6 @@ int main()
 			for (int i = 0; i < netS.clientsVec.size(); i++)
 			{
 				packet << netS.clientsVec[i].name << netS.clientsVec[i].pos.x << netS.clientsVec[i].pos.y << netS.clientsVec[i].pos.z;
-				cout << netS.clientsVec[i].name << netS.clientsVec[i].pos.x << endl;
 			}
 		}
 
