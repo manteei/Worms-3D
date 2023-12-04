@@ -20,14 +20,14 @@ void Player::load(Font& font)
 void Player::update(Time time, std::vector < std::vector<std::vector<bool>>>& mass, Map map)
 {
     needJump = false;
-    if (!onGround) dy -= time.asSeconds() * 50;
+    if (!onGround) dy -= time.asSeconds() * 100;
     onGround = 0;
 
-    x += dx * time.asSeconds() * 50;
+    x += dx * time.asSeconds() * 100;
     collision(dx, 0, 0, mass, map);
-    y += dy * time.asSeconds() * 50;
+    y += dy * time.asSeconds() * 100;
     collision(0, dy, 0, mass, map);
-    z += dz * time.asSeconds() * 50;
+    z += dz * time.asSeconds() * 100;
     collision(0, 0, dz, mass, map);
 
     dx = dz = 0;

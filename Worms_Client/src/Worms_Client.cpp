@@ -22,7 +22,7 @@ IpAddress S_Ip;
 unsigned short S_port;
 string clientName;
 
-Map myMap(80, 40, 80);
+Map myMap(40, 20, 40);
 NetworkClient netC;
 float size0 = 20.f;
 
@@ -57,9 +57,6 @@ int main()
 	std::vector<GLuint> skybox = textureManager.createSkybox();
 	GLuint box = textureManager.createBox();
 	GLuint worm = textureManager.createWorm();
-
-
-
 
 
 	Camera camera(player);
@@ -135,7 +132,9 @@ int main()
 							for (int i = 0; i < enemyVec.size(); i++)
 							{
 								if (s == enemyVec[i].name) {
-									enemyVec[i].setPosition(x, y, z);  
+									enemyVec[i].setPosition(x, y, z); 
+									//cout << "!!!Rendering coordinat for enemy " << enemyVec[i].name << "\n ";
+									//cout << "x: " << enemyVec[i].x << " y: " << enemyVec[i].y << " z: " << enemyVec[i].z << "\n";
 									
 								}
 							}
@@ -149,6 +148,7 @@ int main()
 
 		sendDataPacket.clear();
 		sendDataPacket << "DATA"  << player.x << player.y << player.z;
+		
 		netC.sendData(sendDataPacket);
 
 
@@ -189,9 +189,6 @@ int main()
 			window.setPosition(sf::Mouse::getPosition() + offset);
 		}
 
-
-		
-
 		/*float time = clock.getElapsedTime().asMilliseconds();
 		clock.restart();
 		time = time / 10;
@@ -202,6 +199,7 @@ int main()
 		//window.clear();
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 		if (windowIsActive) {
 			player.keyboard(angleX);
 			player.update(cycleTime, mass, myMap);
@@ -239,7 +237,6 @@ int main()
 
 		for (int i = 0; i < enemyVec.size(); i++)
 		{
-
 			//enemyVec[i].draw(window);
 			glTranslatef(enemyVec[i].x, enemyVec[i].y , enemyVec[i].z);
 			textureManager.drawBox(worm, size0 / 10);

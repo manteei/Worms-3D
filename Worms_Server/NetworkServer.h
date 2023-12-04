@@ -32,7 +32,7 @@ class NetworkServer
 	Packet packet;
 
 	Clock sendingsRateTimer;
-	Int32 sendingsRate = 4;
+	Int32 sendingsRate = 25;
 
 public:
 	vector<Client> clientsVec;
