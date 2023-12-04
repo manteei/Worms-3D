@@ -10,8 +10,8 @@ void Map::createMap(std::vector < std::vector<std::vector<bool>>>& mass) {
     Image im;  im.loadFromFile("resources/heightmap.png");
 
 
-    for (int x = 0; x < 256; x++)
-        for (int z = 0; z < 256; z++)
+    for (int x = 0; x < maxX; x++)
+        for (int z = 0; z < maxZ; z++)
         {
             int c = im.getPixel(x, z).r / 15;
             for (int y = 0; y < c; y++)
