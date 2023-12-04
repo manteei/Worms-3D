@@ -9,7 +9,7 @@ class Enemy
 {
 public:
     Text t;
- 
+
     float x, y, z;
     float size;
     std::string name;

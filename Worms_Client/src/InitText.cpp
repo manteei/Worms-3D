@@ -1,6 +1,7 @@
 #include "InitText.h"
 
 InitText::InitText() {
+    font.loadFromFile("resources/troika.otf");
 }
 // функция настройки текста
 void InitText::texts(Text& mtext, float xpos, float ypos, String str, int size_font,
@@ -12,4 +13,5 @@ void InitText::texts(Text& mtext, float xpos, float ypos, String str, int size_f
     mtext.setFillColor(menu_text_color);
     mtext.setOutlineThickness(bord);
     mtext.setOutlineColor(border_color);
+    mtext.setFont(font);
 }

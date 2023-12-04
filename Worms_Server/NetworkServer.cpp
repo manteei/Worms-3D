@@ -4,7 +4,7 @@ NetworkServer::NetworkServer()
 {
 	//listener.setBlocking(true);
 
-
+	sendingsRateTimer.restart();
 }
 
 Socket::Status NetworkServer::init()

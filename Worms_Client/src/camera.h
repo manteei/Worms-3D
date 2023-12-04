@@ -11,15 +11,16 @@ class Camera
 {
 public:
 
-    
+
     float x, y, z, speed;
     float dx, dy, dz;
     float w, h, d;
+    float farPlayers;
     bool onGround, farPlayer;
-   
+
 
     Camera(Player player);
-    void update(Time time,Player player);
+    void update(Time time, Player player);
     void keyboard();
-   
+
 };

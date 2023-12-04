@@ -2,13 +2,13 @@
 
 Player::Player(float size0)
 {
-    x = 100; y = 100; z = 100;
+    x = 600; y = 200; z = 600;
     dx = 0; dy = 0; dz = 0;
-    w = 5; h = 20; d = 5;
+    w = 5; h = 10; d = 5;
     onGround = false;
     size = size0;
     needJump = false;
-}   
+}
 
 void Player::load(Font& font)
 {
@@ -64,7 +64,9 @@ void Player::collision(float Dx, float Dy, float Dz, std::vector < std::vector<s
     if (y + h + Dy < minY) {
         y = minY + h;
     }
-
+    if (y + h + Dy > minY*size + 120) {
+        y = minY * size + 120;
+    }
     if (y + h + Dy > maxY) {
         y = maxY - h;
     }
@@ -85,7 +87,7 @@ void Player::collision(float Dx, float Dy, float Dz, std::vector < std::vector<s
                     if (Dx < 0) {
                         x = X * size + size + w; needJump = true;
                     }
-                    if (Dy > 0)  y = Y * size - h;
+                    if (Dy > 40)  y = Y * size - h;
                     if (Dy < 0) { y = Y * size + size + h; onGround = true; dy = 0; }
                     if (Dz > 0) { z = Z * size - d; needJump = true; }
                     if (Dz < 0) { z = Z * size + size + d; needJump = true; }
@@ -94,9 +96,9 @@ void Player::collision(float Dx, float Dy, float Dz, std::vector < std::vector<s
 
 bool Player::check(int x, int y, int z, std::vector < std::vector<std::vector<bool>>>& mass)
 {
-    if ((x < 0) || (x >= 500) ||
-        (y < 0) || (y >= 500) ||
-        (z < 0) || (z >= 500)) return false;
+    if ((x < 0) || (x >= 100 * size) ||
+        (y < 0) || (y >= 100 * size) ||
+        (z < 0) || (z >= 100 * size)) return false;
 
     return mass[x][y][z];
 }
@@ -105,46 +107,44 @@ bool Player::check(int x, int y, int z, std::vector < std::vector<std::vector<bo
 
 void Player::keyboard(float angleX)
 {
-    if (Keyboard::isKeyPressed(Keyboard::Space)) if (onGround) { onGround = false; dy = 12; };
+  //  if (Keyboard::isKeyPressed(Keyboard::Space)) if (onGround) { onGround = false; dy = size * 2; };
 
     if (Keyboard::isKeyPressed(Keyboard::W))
     {
-        dx = -sin(angleX / 180 * PI) ;
-        dz = -cos(angleX / 180 * PI) ;
+        dx = -sin(angleX / 180 * PI);
+        dz = -cos(angleX / 180 * PI);
         if (needJump) {
-            onGround = false; dy = 12;
+            onGround = false; dy = size / 4;
         }
     }
 
     if (Keyboard::isKeyPressed(Keyboard::S))
     {
-        dx = sin(angleX / 180 * PI) ;
-        dz = cos(angleX / 180 * PI) ;
+        dx = sin(angleX / 180 * PI);
+        dz = cos(angleX / 180 * PI);
         if (needJump) {
-            onGround = false; dy = 12;
+            onGround = false; dy = size / 4;
         }
     }
 
     if (Keyboard::isKeyPressed(Keyboard::D))
     {
-        dx = sin((angleX + 90) / 180 * PI) ;
-        dz = cos((angleX + 90) / 180 * PI) ;
+        dx = sin((angleX + 90) / 180 * PI);
+        dz = cos((angleX + 90) / 180 * PI);
         if (needJump) {
-            onGround = false; dy = 12;
+            onGround = false; dy = size / 4;
         }
     }
 
     if (Keyboard::isKeyPressed(Keyboard::A))
     {
-        dx = sin((angleX - 90) / 180 * PI) ;
-        dz = cos((angleX - 90) / 180 * PI) ;
+        dx = sin((angleX - 90) / 180 * PI);
+        dz = cos((angleX - 90) / 180 * PI);
         if (needJump) {
-            onGround = false; dy = 12;
+            onGround = false; dy = size / 4;
         }
     }
 
-    
+
 
 };
-
-

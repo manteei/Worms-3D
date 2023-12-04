@@ -142,6 +142,7 @@
     <ClCompile Include="src\textureManager.cpp" />
     <ClCompile Include="src\Worms_Client.cpp" />
     <ClCompile Include="src\InitText.cpp" />
+    <ClCompile Include="src\Сommand\Turboranec.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\About_Game.h" />
@@ -155,9 +156,49 @@
     <ClInclude Include="src\player.h" />
     <ClInclude Include="src\textureManager.h" />
     <ClInclude Include="src\InitText.h" />
+    <ClInclude Include="src\Сommand\Turboranec.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\..\Downloads\4.jpg" />
+    <Image Include="resources\3.jpg" />
+    <Image Include="resources\4.jpg" />
+    <Image Include="resources\cursor.png" />
+    <Image Include="resources\grassBox\bottom.jpg" />
+    <Image Include="resources\grassBox\side.jpg" />
+    <Image Include="resources\grassBox\top.jpg" />
+    <Image Include="resources\heightmap.png" />
+    <Image Include="resources\heightmap2.png" />
+    <Image Include="resources\heightmap3.png" />
+    <Image Include="resources\skybox\back.png" />
+    <Image Include="resources\skybox\bottom.png" />
+    <Image Include="resources\skybox\front.png" />
+    <Image Include="resources\skybox\left.png" />
+    <Image Include="resources\skybox\right.png" />
+    <Image Include="resources\skybox\top.png" />
+    <Image Include="resources\textures\grass.jpg" />
+    <Image Include="resources\textures\pink.png" />
+    <Image Include="resources\textures\sand.jpg" />
+    <Image Include="resources\textures\top.jpg" />
+    <Image Include="resources\tools\back.png" />
+    <Image Include="resources\tools\background.png" />
+    <Image Include="resources\tools\banan.png" />
+    <Image Include="resources\tools\chermageddon.png" />
+    <Image Include="resources\tools\drobovik.png" />
+    <Image Include="resources\tools\dubinka.png" />
+    <Image Include="resources\tools\granata.png" />
+    <Image Include="resources\tools\kulak.png" />
+    <Image Include="resources\tools\magnit.png" />
+    <Image Include="resources\tools\oslik.png" />
+    <Image Include="resources\tools\parashut.png" />
+    <Image Include="resources\tools\pulemet.png" />
+    <Image Include="resources\tools\raketa.png" />
+    <Image Include="resources\tools\sheep.png" />
+    <Image Include="resources\tools\teleport.png" />
+    <Image Include="resources\tools\Turboranec.png" />
+    <Image Include="resources\tools\vzryv.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="resources\troika.otf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

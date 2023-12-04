@@ -5,6 +5,8 @@ using namespace sf;
 
 class InitText
 {
+	Font font;
+
 public:
 	InitText();
 	void texts(Text& mtext, float xpos, float ypos, String str, int size_font = 60,

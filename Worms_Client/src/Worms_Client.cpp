@@ -31,7 +31,7 @@ int main()
    
 
     RenderWindow window;
-    window.create(VideoMode::getDesktopMode(), L"Моя игра", Style::Fullscreen);
+    window.create(VideoMode::getDesktopMode(), L"Моя игра", Style::Default);
 
     //отключаем видимость курсора
     window.setMouseCursorVisible(false);
@@ -47,12 +47,9 @@ int main()
     if (!texture_window.loadFromFile("resources/4.jpg")) return 4;
     background.setTexture(&texture_window);
 
-    // Устанавливаем шрифт для названия игры
-    Font font;
-    if (!font.loadFromFile("resources/troika.otf")) return 5;
+   
     Text Titul;
-    Titul.setFont(font);
-    // Текст с названием игры
+   
     initText.texts(Titul, 730, 50, L"WORMS", 150, Color(237, 147, 0), 3);
 
     // Название пунктов меню

@@ -8,14 +8,14 @@ Enemy::Enemy(float x0, float y0, float z0, float size0)
 
 void Enemy::load(Font& font)
 {
-	t.setFont(font);
-	t.setString(name);
-	t.setFillColor(Color::Red);
+    t.setFont(font);
+    t.setString(name);
+    t.setFillColor(Color::Red);
 }
 
 void Enemy::draw(RenderWindow& window)
 {
-	window.draw(t);
+    window.draw(t);
 };
 
 void Enemy::setPosition(float x1, float y1, float z1)
