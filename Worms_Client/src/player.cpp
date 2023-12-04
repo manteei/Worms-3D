@@ -105,14 +105,14 @@ bool Player::check(int x, int y, int z, std::vector < std::vector<std::vector<bo
 
 void Player::keyboard(float angleX)
 {
-    if (Keyboard::isKeyPressed(Keyboard::Space)) if (onGround) { onGround = false; dy = 12; };
+    if (Keyboard::isKeyPressed(Keyboard::Space)) if (onGround) { onGround = false; dy = size*2; };
 
     if (Keyboard::isKeyPressed(Keyboard::W))
     {
         dx = -sin(angleX / 180 * PI) ;
         dz = -cos(angleX / 180 * PI) ;
         if (needJump) {
-            onGround = false; dy = 12;
+            onGround = false; dy = size/4;
         }
     }
 
@@ -121,7 +121,7 @@ void Player::keyboard(float angleX)
         dx = sin(angleX / 180 * PI) ;
         dz = cos(angleX / 180 * PI) ;
         if (needJump) {
-            onGround = false; dy = 12;
+            onGround = false; dy = size/4;
         }
     }
 
@@ -130,7 +130,7 @@ void Player::keyboard(float angleX)
         dx = sin((angleX + 90) / 180 * PI) ;
         dz = cos((angleX + 90) / 180 * PI) ;
         if (needJump) {
-            onGround = false; dy = 12;
+            onGround = false; dy = size/4;
         }
     }
 
@@ -139,7 +139,7 @@ void Player::keyboard(float angleX)
         dx = sin((angleX - 90) / 180 * PI) ;
         dz = cos((angleX - 90) / 180 * PI) ;
         if (needJump) {
-            onGround = false; dy = 12;
+            onGround = false; dy = size/4;
         }
     }
 

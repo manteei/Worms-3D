@@ -22,7 +22,7 @@ IpAddress S_Ip;
 unsigned short S_port;
 string clientName;
 
-Map myMap(40, 20, 40);
+Map myMap(30, 10, 30);
 NetworkClient netC;
 float size0 = 20.f;
 
@@ -51,6 +51,8 @@ int main()
 
 	window.setActive(true);
 
+
+
 	Texture t;
 	t.loadFromFile("resources/cursor.png");
 	Sprite s(t); s.setOrigin(8, 8); s.setPosition(400, 300);
@@ -62,10 +64,7 @@ int main()
 	Camera camera(player);
 
 	getUserInputData(player.name);
-	//≈сли загурузить им€, рендеринг ломаетс€!
-	//player.load(font);
 	
-
 	glEnable(GL_DEPTH_TEST);
 	glDepthMask(GL_TRUE);
 	glClearDepth(1.f);
@@ -74,6 +73,8 @@ int main()
 	gluPerspective(90.f, 1.f, 1.f, 2000.f);
 	glEnable(GL_TEXTURE_2D);
 	ShowCursor(FALSE);
+
+
 
 	myMap.createMap(mass);
 
@@ -237,10 +238,12 @@ int main()
 
 		for (int i = 0; i < enemyVec.size(); i++)
 		{
-			//enemyVec[i].draw(window);
 			glTranslatef(enemyVec[i].x, enemyVec[i].y , enemyVec[i].z);
 			textureManager.drawBox(worm, size0 / 10);
+			
 			glTranslatef(-enemyVec[i].x, -enemyVec[i].y, -enemyVec[i].z);
+
+
 			
 			
 		}
