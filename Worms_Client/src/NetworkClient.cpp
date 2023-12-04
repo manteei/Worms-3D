@@ -121,6 +121,7 @@ Socket::Status NetworkClient::sendData(Packet dataPacket)
 		unsigned short tempDataPort = S_dataPort;
 		if (dataSocket.send(sendPacket, tempIp, tempDataPort) == Socket::Status::Done)
 		{
+
 			sendPacket.clear();
 			sendRateTimer.restart();
 			return Socket::Status::Done;

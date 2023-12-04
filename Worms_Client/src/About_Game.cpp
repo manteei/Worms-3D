@@ -6,18 +6,13 @@ About_Game::About_Game() {
 // Функция с описанием игры
 void About_Game::showInformation()
 {
-    InitText initText;
+ 
     RenderWindow About(VideoMode::getDesktopMode(), L"О игре", Style::Fullscreen);
     RectangleShape background_ab(Vector2f(VideoMode::getDesktopMode().width, VideoMode::getDesktopMode().height));
-    Texture texture_ab;
+    About.setMouseCursorVisible(false);
     if (!texture_ab.loadFromFile("resources/3.jpg")) exit(3);
     background_ab.setTexture(&texture_ab);
-    // Устанавливаем шрифт для названия игры
-    Font font;
-    if (!font.loadFromFile("resources/troika.otf")) exit(3);
-    Text Titul;
-    Titul.setFont(font);
-    // Текст с названием игры
+
     initText.texts(Titul, 600, 400, L"ляляля игра наверное супер\n      никогда не играли", 50, Color(255, 239, 213), 3);
 
 

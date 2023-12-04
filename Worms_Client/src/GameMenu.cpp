@@ -1,16 +1,5 @@
 #include "GameMenu.h"
-// метод настройки текстовых объектов пунктов игрового меню
-void GameMenu::setInitText(sf::Text& text, sf::String str, float xpos, float ypos)
-{
-	text.setFont(font);                 // шрифт
-	text.setFillColor(menu_text_color); // цвет 
-	text.setString(str);                // текст
-	text.setCharacterSize(size_font);   // размер шрифта
-	text.setPosition(xpos, ypos);       // координаты текстового объекта
-	text.setOutlineThickness(3);        // толщина контура обводки текста
-	text.setOutlineColor(border_color); // цвет контура обводки текста
-}
-// Выравнивание пунктов меню по левому по правому по центру 
+
 void GameMenu::AlignMenu(int posx)
 {
 	float nullx = 0;
@@ -18,41 +7,37 @@ void GameMenu::AlignMenu(int posx)
 		switch (posx)
 		{
 		case 0:
-			nullx = 0; // выравнивание по правому краю от установленных координат
-			break;
+			nullx = 0; 
 		case 1:
-			nullx = mainMenu[i].getLocalBounds().width;  // по левому краю
+			nullx = mainMenu[i].getLocalBounds().width;  
 			break;
 		case 2:
-			nullx = nullx = mainMenu[i].getLocalBounds().width / 2;  // по центру
+			nullx = nullx = mainMenu[i].getLocalBounds().width / 2;  
 			break;
 		}
 		mainMenu[i].setPosition(mainMenu[i].getPosition().x - nullx, mainMenu[i].getPosition().y);
 	}
 
 }
-// Конструктор
-GameMenu::GameMenu(sf::RenderWindow& window, float menux, float menuy,
-	int index, sf::String name[], int sizeFont, int step)
+
+GameMenu::GameMenu(RenderWindow& window, float menux, float menuy,
+	int index, String name[], int sizeFont, int step)
 	:mywindow(window), menu_X(menux), menu_Y(menuy), size_font(sizeFont), menu_Step(step)
 {
-	// Загрузка шрифта
-	if (!font.loadFromFile("resources/troika.otf")) exit(32);
-	max_menu = index; // Количество єлементов меню 
-	mainMenu = new sf::Text[max_menu];     // Динамический массив пунктов меню
-	// Выстраиваем элементы меню
-	for (int i = 0, ypos = menu_Y; i < max_menu; i++, ypos += menu_Step) setInitText(mainMenu[i], name[i], menu_X, ypos);
-	mainMenuSelected = 0; // Задаём начальное положения выбраного пункта меню
-	// цвет выбраного пункта меню
-	mainMenu[mainMenuSelected].setFillColor(chose_text_color);
 
-	mainMenuSelected++;
+	max_menu = index; 
+	mainMenu = new Text[max_menu];   
+	// Выстраиваем элементы меню
+	for (int i = 0, ypos = menu_Y; i < max_menu; i++, ypos += menu_Step)
+		initText.texts(mainMenu[i], menu_X, ypos, name[i], size_font, menu_text_color, 3, border_color);
+	mainMenuSelected = 1; 
+	mainMenu[mainMenuSelected].setFillColor(chose_text_color);
+	
 }
-// перемещение выбора меню вверх
+
 void GameMenu::MoveUp()
 {
 	mainMenuSelected--;
-	// подсвечиваем выбранный пункт меню
 	if (mainMenuSelected >= 0) {
 		mainMenu[mainMenuSelected].setFillColor(chose_text_color);
 		mainMenu[mainMenuSelected + 1].setFillColor(menu_text_color);
@@ -64,11 +49,9 @@ void GameMenu::MoveUp()
 		mainMenu[mainMenuSelected].setFillColor(chose_text_color);
 	}
 }
-// перемещение выбора меню вниз
 void GameMenu::MoveDown()
 {
 	mainMenuSelected++;
-	// подсвечиваем выбранный пункт меню
 	if (mainMenuSelected < max_menu) {
 		mainMenu[mainMenuSelected - 1].setFillColor(menu_text_color);
 		mainMenu[mainMenuSelected].setFillColor(chose_text_color);
@@ -81,18 +64,16 @@ void GameMenu::MoveDown()
 	}
 
 }
-// рисуем элементы меню в графическом окне
 void GameMenu::draw()
-{
-	// перебираем для отрисовки существующие текстовые объекты пунктов меню 	
+{	
 	for (int i = 0; i < max_menu; i++) mywindow.draw(mainMenu[i]);
 }
-// назначение цвета элементам пунктов меню
-void GameMenu::setColorTextMenu(sf::Color menColor, sf::Color ChoColor, sf::Color BordColor)
+
+void GameMenu::setColorTextMenu(Color menColor, Color ChoColor, Color BordColor)
 {
-	menu_text_color = menColor;   // цвет пунктов меню
-	chose_text_color = ChoColor; // цвет выбраного пункта меню
-	border_color = BordColor;    // цвет контура пунктов меню
+	menu_text_color = menColor;   
+	chose_text_color = ChoColor; 
+	border_color = BordColor;   
 
 	for (int i = 0; i < max_menu; i++) {
 		mainMenu[i].setFillColor(menu_text_color);

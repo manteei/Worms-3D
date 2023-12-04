@@ -8,7 +8,7 @@ using namespace sf;
 class About_Game
 {
     Texture texture_ab;
-    Font font;
+    InitText initText;
     Text Titul;
 public:
     About_Game();

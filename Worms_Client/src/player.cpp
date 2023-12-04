@@ -20,14 +20,14 @@ void Player::load(Font& font)
 void Player::update(Time time, std::vector < std::vector<std::vector<bool>>>& mass, Map map)
 {
     needJump = false;
-    if (!onGround) dy -= time.asSeconds() * 50;
+    if (!onGround) dy -= time.asSeconds() * 100;
     onGround = 0;
 
-    x += dx * time.asSeconds() * 50;
+    x += dx * time.asSeconds() * 100;
     collision(dx, 0, 0, mass, map);
-    y += dy * time.asSeconds() * 50;
+    y += dy * time.asSeconds() * 100;
     collision(0, dy, 0, mass, map);
-    z += dz * time.asSeconds() * 50;
+    z += dz * time.asSeconds() * 100;
     collision(0, 0, dz, mass, map);
 
     dx = dz = 0;
@@ -105,41 +105,41 @@ bool Player::check(int x, int y, int z, std::vector < std::vector<std::vector<bo
 
 void Player::keyboard(float angleX)
 {
-    if (Keyboard::isKeyPressed(Keyboard::Space)) if (onGround) { onGround = false; dy = 12; };
+    if (Keyboard::isKeyPressed(Keyboard::Space)) if (onGround) { onGround = false; dy = size * 2; };
 
     if (Keyboard::isKeyPressed(Keyboard::W))
     {
-        dx = -sin(angleX / 180 * PI) ;
-        dz = -cos(angleX / 180 * PI) ;
+        dx = -sin(angleX / 180 * PI);
+        dz = -cos(angleX / 180 * PI);
         if (needJump) {
-            onGround = false; dy = 12;
+            onGround = false; dy = size / 4;
         }
     }
 
     if (Keyboard::isKeyPressed(Keyboard::S))
     {
-        dx = sin(angleX / 180 * PI) ;
-        dz = cos(angleX / 180 * PI) ;
+        dx = sin(angleX / 180 * PI);
+        dz = cos(angleX / 180 * PI);
         if (needJump) {
-            onGround = false; dy = 12;
+            onGround = false; dy = size / 4;
         }
     }
 
     if (Keyboard::isKeyPressed(Keyboard::D))
     {
-        dx = sin((angleX + 90) / 180 * PI) ;
-        dz = cos((angleX + 90) / 180 * PI) ;
+        dx = sin((angleX + 90) / 180 * PI);
+        dz = cos((angleX + 90) / 180 * PI);
         if (needJump) {
-            onGround = false; dy = 12;
+            onGround = false; dy = size / 4;
         }
     }
 
     if (Keyboard::isKeyPressed(Keyboard::A))
     {
-        dx = sin((angleX - 90) / 180 * PI) ;
-        dz = cos((angleX - 90) / 180 * PI) ;
+        dx = sin((angleX - 90) / 180 * PI);
+        dz = cos((angleX - 90) / 180 * PI);
         if (needJump) {
-            onGround = false; dy = 12;
+            onGround = false; dy = size / 4;
         }
     }
 
