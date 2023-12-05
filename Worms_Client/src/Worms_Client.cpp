@@ -22,7 +22,7 @@ IpAddress S_Ip;
 unsigned short S_port;
 string clientName;
 
-Map myMap(30, 10, 30);
+Map myMap(30, 20, 30);
 NetworkClient netC;
 float size0 = 20.f;
 
@@ -38,7 +38,6 @@ void addPlayer(string clientName);
 bool windowIsActive = false;
 
 Player player(size0);
-
 
 int main()
 {
@@ -56,6 +55,12 @@ int main()
 	Texture t;
 	t.loadFromFile("resources/cursor.png");
 	Sprite s(t); s.setOrigin(8, 8); s.setPosition(400, 300);
+
+
+	Font font;
+	font.loadFromFile("8bitOperatorPlus-Regular.ttf");
+
+
 	std::vector<GLuint> skybox = textureManager.createSkybox();
 	GLuint box = textureManager.createBox();
 	GLuint worm = textureManager.createWorm();
@@ -91,7 +96,7 @@ int main()
 	{
 		addPlayer(namesVec[i]);
 	}
-
+  
 	Packet receivedDataPacket;
 	Packet sendDataPacket;
 
@@ -190,14 +195,6 @@ int main()
 			window.setPosition(sf::Mouse::getPosition() + offset);
 		}
 
-		/*float time = clock.getElapsedTime().asMilliseconds();
-		clock.restart();
-		time = time / 10;
-		if (time > 3) time = 3;*/
-
-		//player.draw(window);  
-
-		//window.clear();
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -226,27 +223,54 @@ int main()
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		gluLookAt(camera.x, camera.y + camera.h / 2, camera.z, camera.x - sin(angleX / 180 * PI), camera.y + camera.h / 2 + (tan(angleY / 180 * PI)), camera.z - cos(angleX / 180 * PI), 0, 1, 0);
-		
-		
+
 		glTranslatef(camera.x, camera.y, camera.z);
 		textureManager.drawSkybox(skybox, 1000);
 		glTranslatef(-camera.x, -camera.y, -camera.z);
 
-
 		myMap.drawMap(textureManager, size0, box, mass);
-		
 
 		for (int i = 0; i < enemyVec.size(); i++)
 		{
-			glTranslatef(enemyVec[i].x, enemyVec[i].y , enemyVec[i].z);
-			textureManager.drawBox(worm, size0 / 10);
+			Vector2f windowCoords;
+			textureManager.convertWorldToWindowCoordinates(enemyVec[i].x, enemyVec[i].y, enemyVec[i].z, windowCoords, window);
+			Vector3f vectorToEnemy(enemyVec[i].x - camera.x, enemyVec[i].y - camera.y, enemyVec[i].z - camera.z);
+			Vector3f viewVector(-sin(angleX / 180 * PI), tan(angleY / 180 * PI), -cos(angleX / 180 * PI));
+
+			float length1 = std::sqrt(vectorToEnemy.x * vectorToEnemy.x + vectorToEnemy.y * vectorToEnemy.y + vectorToEnemy.z * vectorToEnemy.z);
+			vectorToEnemy.x /= length1;
+			vectorToEnemy.y /= length1;
+			vectorToEnemy.z /= length1;
+
+			float length2 = std::sqrt(viewVector.x * viewVector.x + viewVector.y * viewVector.y + viewVector.z * viewVector.z);
+			viewVector.x /= length2;
+			viewVector.y /= length2;
+			viewVector.z /= length2;
+
+			float fontScale = 1.0f - (length1 / 250); 
+			float fontSize = 30.0f * fontScale;
 			
+			float angleToEnemy = std::acos(vectorToEnemy.x * viewVector.x + vectorToEnemy.y * viewVector.y + vectorToEnemy.z * viewVector.z) * 180.0 / PI;
+			
+			glTranslatef(enemyVec[i].x, enemyVec[i].y, enemyVec[i].z);
+			textureManager.drawBox(worm, size0 / 10);
 			glTranslatef(-enemyVec[i].x, -enemyVec[i].y, -enemyVec[i].z);
 
+			
+			if (angleToEnemy >= -90 && angleToEnemy <= 90)
+			{
+				glTranslatef(enemyVec[i].x, enemyVec[i].y, enemyVec[i].z);
+				window.pushGLStates();
 
-			
-			
+				if (fontSize > 0.0f)
+				{
+					textureManager.addName(enemyVec[i].name, font, windowCoords, window, fontSize);
+				}
+				window.popGLStates();
+				glTranslatef(-enemyVec[i].x, -enemyVec[i].y, -enemyVec[i].z);
+			}
 		}
+
 		glTranslatef(player.x, player.y, player.z);
 		textureManager.drawBox(worm, size0 / 10);
 		glTranslatef(-player.x, -player.y, -player.z);
