@@ -2,9 +2,9 @@
 
 Player::Player(float size0)
 {
-    x = 100; y = 100; z = 100;
+    x = 99; y = 200; z = 99;
     dx = 0; dy = 0; dz = 0;
-    w = 5; h = 20; d = 5;
+    w = 5; h = 10; d = 5;
     onGround = false;
     size = size0;
     needJump = false;
@@ -94,9 +94,9 @@ void Player::collision(float Dx, float Dy, float Dz, std::vector < std::vector<s
 
 bool Player::check(int x, int y, int z, std::vector < std::vector<std::vector<bool>>>& mass)
 {
-    if ((x < 0) || (x >= 500) ||
-        (y < 0) || (y >= 500) ||
-        (z < 0) || (z >= 500)) return false;
+    if ((x < 0) || (x >= 100*size) ||
+        (y < 0) || (y >= 100*size) ||
+        (z < 0) || (z >= 100*size)) return false;
 
     return mass[x][y][z];
 }

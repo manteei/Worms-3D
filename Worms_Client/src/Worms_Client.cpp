@@ -22,11 +22,11 @@ IpAddress S_Ip;
 unsigned short S_port;
 string clientName;
 
-Map myMap(30, 20, 30);
+Map myMap(64, 10, 64);
 NetworkClient netC;
 float size0 = 20.f;
 
-std::vector<std::vector<std::vector<bool>>> mass(500, std::vector<std::vector<bool>>(500, std::vector<bool>(500, false)));
+std::vector<std::vector<std::vector<bool>>> mass(100, std::vector<std::vector<bool>>(100, std::vector<bool>(100, false)));
 TextureManager textureManager;
 
 float angleX, angleY;
@@ -64,6 +64,7 @@ int main()
 	std::vector<GLuint> skybox = textureManager.createSkybox();
 	GLuint box = textureManager.createBox();
 	GLuint worm = textureManager.createWorm();
+	GLuint sand = textureManager.createSand();
 
 
 	Camera camera(player);
@@ -228,12 +229,12 @@ int main()
 		textureManager.drawSkybox(skybox, 1000);
 		glTranslatef(-camera.x, -camera.y, -camera.z);
 
-		myMap.drawMap(textureManager, size0, box, mass);
+		myMap.drawMap(textureManager, size0, box, sand, mass);
 
 		for (int i = 0; i < enemyVec.size(); i++)
 		{
 			Vector2f windowCoords;
-			textureManager.convertWorldToWindowCoordinates(enemyVec[i].x, enemyVec[i].y, enemyVec[i].z, windowCoords, window);
+			textureManager. convertWorldToWindowCoordinates(enemyVec[i].x, enemyVec[i].y, enemyVec[i].z, windowCoords, window);
 			Vector3f vectorToEnemy(enemyVec[i].x - camera.x, enemyVec[i].y - camera.y, enemyVec[i].z - camera.z);
 			Vector3f viewVector(-sin(angleX / 180 * PI), tan(angleY / 180 * PI), -cos(angleX / 180 * PI));
 

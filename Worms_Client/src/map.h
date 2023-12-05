@@ -16,7 +16,7 @@ public:
     void createMap(std::vector < std::vector<std::vector<bool>>>& mass);
     void drawMap(TextureManager textureManager, float size);
     bool check(int x, int y, int z, std::vector < std::vector<std::vector<bool>>>& mass);
-    void drawMap(TextureManager textureManager, float size, GLuint box, std::vector < std::vector<std::vector<bool>>>& mass);
+    void drawMap(TextureManager textureManager, float size, GLuint box, GLuint sand, std::vector < std::vector<std::vector<bool>>>& mass);
 
 };
 
