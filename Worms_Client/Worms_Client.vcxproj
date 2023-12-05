@@ -130,6 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\attack.cpp" />
     <ClCompile Include="src\camera.cpp" />
     <ClCompile Include="src\enemy.cpp" />
     <ClCompile Include="src\map.cpp" />
@@ -139,6 +140,7 @@
     <ClCompile Include="src\Worms_Client.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\attack.h" />
     <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\enemy.h" />
     <ClInclude Include="src\map.h" />

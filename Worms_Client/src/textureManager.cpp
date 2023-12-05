@@ -125,6 +125,18 @@ void TextureManager::drawBox(GLuint skybox, float size)
     glEnd();
 }
 
+void TextureManager::addName(std::string& text, const sf::Font& font, const sf::Vector2f& position, RenderWindow& window, float fontSize) {
+    sf::Text sfText;
+    sfText.setFont(font);
+    sfText.setString(text);
+    sfText.setCharacterSize(fontSize);
+    sfText.setFillColor(sf::Color::Black);
+    sfText.setPosition(position);
+
+    // Отрисовка текста в окне SFML
+    window.draw(sfText);
+}
+
 std::vector<GLuint> TextureManager::createSkybox() {
     std::vector<GLuint> skybox(6);
 
@@ -136,6 +148,24 @@ std::vector<GLuint> TextureManager::createSkybox() {
     skybox[5] = LoadTexture("resources/skybox/top.png");
 
     return skybox;
+}
+
+
+void TextureManager::convertWorldToWindowCoordinates(float worldX, float worldY, float worldZ, Vector2f& windowCoords, const RenderWindow& window)
+{
+    GLdouble modelview[16];
+    GLdouble projection[16];
+    GLint viewport[4];
+
+    glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
+    glGetDoublev(GL_PROJECTION_MATRIX, projection);
+    glGetIntegerv(GL_VIEWPORT, viewport);
+
+    GLdouble winX, winY, winZ;
+    gluProject(worldX, worldY, worldZ, modelview, projection, viewport, &winX, &winY, &winZ);
+
+    windowCoords.x = static_cast<float>(winX);
+    windowCoords.y = static_cast<float>(window.getSize().y - winY);  // Invert Y-coordinate as OpenGL and SFML have different coordinate systems
 }
 
 GLuint TextureManager::createBox() {
