@@ -8,15 +8,20 @@ using namespace sf;
 
 class Map
 {
-public:
     int maxX, maxY, maxZ;
     int minX, minY, minZ;
-
+public:
     Map(int x0, int y0, int z0);
     void createMap(std::vector < std::vector<std::vector<bool>>>& mass);
     void drawMap(TextureManager textureManager, float size);
-    bool check(int x, int y, int z, std::vector < std::vector<std::vector<bool>>>& mass);
+    bool check(int x, int y, int z, std::vector < std::vector<std::vector<bool>>>& mass, float maxX, float maxY, float maxZ);
     void drawMap(TextureManager textureManager, float size, GLuint box, GLuint sand, std::vector < std::vector<std::vector<bool>>>& mass);
+    float getMaxX();
+    float getMaxY();
+    float getMaxZ();
+    float getMinX();
+    float getMinY();
+    float getMinZ();
 
 };
 

@@ -8,7 +8,6 @@
 #include "player.h"
 #include "map.h"
 #include "NetworkClient.h"
-#include "enemy.h"
 #include "camera.h"
 
 using namespace sf;
@@ -26,7 +25,7 @@ Map myMap(64, 10, 64);
 NetworkClient netC;
 float size0 = 20.f;
 
-std::vector<std::vector<std::vector<bool>>> mass(100, std::vector<std::vector<bool>>(100, std::vector<bool>(100, false)));
+std::vector<std::vector<std::vector<bool>>> mass(64, std::vector<std::vector<bool>>(64, std::vector<bool>(64, false)));
 TextureManager textureManager;
 
 float angleX, angleY;
@@ -154,8 +153,8 @@ int main()
 
 
 		sendDataPacket.clear();
-		sendDataPacket << "DATA"  << player.x << player.y << player.z;
-		
+		sendDataPacket << "DATA"  << player.getPosX() << player.getPosY() << player.getPosZ();
+		//cout << "x " << player.getPosX() << " y " << player.getPosY() << " z " << player.getPosZ() << "\n";
 		netC.sendData(sendDataPacket);
 
 
@@ -234,8 +233,8 @@ int main()
 		for (int i = 0; i < enemyVec.size(); i++)
 		{
 			Vector2f windowCoords;
-			textureManager. convertWorldToWindowCoordinates(enemyVec[i].x, enemyVec[i].y, enemyVec[i].z, windowCoords, window);
-			Vector3f vectorToEnemy(enemyVec[i].x - camera.x, enemyVec[i].y - camera.y, enemyVec[i].z - camera.z);
+			textureManager. convertWorldToWindowCoordinates(enemyVec[i].getPosX(), enemyVec[i].getPosY(), enemyVec[i].getPosZ(), windowCoords, window);
+			Vector3f vectorToEnemy(enemyVec[i].getPosX() - camera.x, enemyVec[i].getPosY() - camera.y, enemyVec[i].getPosZ() - camera.z);
 			Vector3f viewVector(-sin(angleX / 180 * PI), tan(angleY / 180 * PI), -cos(angleX / 180 * PI));
 
 			float length1 = std::sqrt(vectorToEnemy.x * vectorToEnemy.x + vectorToEnemy.y * vectorToEnemy.y + vectorToEnemy.z * vectorToEnemy.z);
@@ -253,14 +252,14 @@ int main()
 			
 			float angleToEnemy = std::acos(vectorToEnemy.x * viewVector.x + vectorToEnemy.y * viewVector.y + vectorToEnemy.z * viewVector.z) * 180.0 / PI;
 			
-			glTranslatef(enemyVec[i].x, enemyVec[i].y, enemyVec[i].z);
+			glTranslatef(enemyVec[i].getPosX(), enemyVec[i].getPosY(), enemyVec[i].getPosZ());
 			textureManager.drawBox(worm, size0 / 10);
-			glTranslatef(-enemyVec[i].x, -enemyVec[i].y, -enemyVec[i].z);
+			glTranslatef(-enemyVec[i].getPosX(), -enemyVec[i].getPosY(), -enemyVec[i].getPosZ());
 
 			
 			if (angleToEnemy >= -90 && angleToEnemy <= 90)
 			{
-				glTranslatef(enemyVec[i].x, enemyVec[i].y, enemyVec[i].z);
+				glTranslatef(enemyVec[i].getPosX(), enemyVec[i].getPosY(), enemyVec[i].getPosZ());
 				window.pushGLStates();
 
 				if (fontSize > 0.0f)
@@ -268,13 +267,13 @@ int main()
 					textureManager.addName(enemyVec[i].name, font, windowCoords, window, fontSize);
 				}
 				window.popGLStates();
-				glTranslatef(-enemyVec[i].x, -enemyVec[i].y, -enemyVec[i].z);
+				glTranslatef(-enemyVec[i].getPosX(), -enemyVec[i].getPosY(), -enemyVec[i].getPosZ());
 			}
 		}
 
-		glTranslatef(player.x, player.y, player.z);
+		glTranslatef(player.getPosX(), player.getPosY(), player.getPosZ());
 		textureManager.drawBox(worm, size0 / 10);
-		glTranslatef(-player.x, -player.y, -player.z);
+		glTranslatef(-player.getPosX(), -player.getPosY(), -player.getPosZ());
 	
 
 		window.pushGLStates();

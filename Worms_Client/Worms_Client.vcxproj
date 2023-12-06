@@ -132,7 +132,6 @@
   <ItemGroup>
     <ClCompile Include="src\attack.cpp" />
     <ClCompile Include="src\camera.cpp" />
-    <ClCompile Include="src\enemy.cpp" />
     <ClCompile Include="src\map.cpp" />
     <ClCompile Include="src\NetworkClient.cpp" />
     <ClCompile Include="src\player.cpp" />
@@ -142,7 +141,6 @@
   <ItemGroup>
     <ClInclude Include="src\attack.h" />
     <ClInclude Include="src\camera.h" />
-    <ClInclude Include="src\enemy.h" />
     <ClInclude Include="src\map.h" />
     <ClInclude Include="src\NetworkClient.h" />
     <ClInclude Include="src\player.h" />

@@ -2,12 +2,13 @@
 
 Player::Player(float size0)
 {
-    x = 99; y = 200; z = 99;
+    x = 475; y = 51; z = 99;
     dx = 0; dy = 0; dz = 0;
     w = 5; h = 10; d = 5;
     onGround = false;
     size = size0;
     needJump = false;
+    float health = 100;
 }   
 
 void Player::load(Font& font)
@@ -45,14 +46,30 @@ void Player::setPosition(float x1, float y1, float z1)
     z = z1;
 }
 
+float Player::getPosX() {
+    return x;
+}
+
+float Player::getPosY() {
+    return y;
+}
+
+float Player::getPosZ() {
+    return z;
+}
+
+float Player::getPosH() {
+    return h;
+}
+
 void Player::collision(float Dx, float Dy, float Dz, std::vector < std::vector<std::vector<bool>>>& mass, Map map)
 {
-    float minX = map.minX;
-    float minY = map.minY;
-    float minZ = map.minZ;
-    float maxX = map.maxX * size;
-    float maxY = map.maxY * size;
-    float maxZ = map.maxZ * size;
+    float minX = map.getMinX();
+    float minY = map.getMinY();
+    float minZ = map.getMinZ();
+    float maxX = map.getMaxX() * size;
+    float maxY = map.getMaxY() * size;
+    float maxZ = map.getMaxZ() * size;
 
     if (x - w + Dx < minX) {
         x = minX + w;
@@ -78,7 +95,7 @@ void Player::collision(float Dx, float Dy, float Dz, std::vector < std::vector<s
     for (int X = (x - w) / size; X < (x + w) / size; X++)
         for (int Y = (y - h) / size; Y < (y + h) / size; Y++)
             for (int Z = (z - d) / size; Z < (z + d) / size; Z++)
-                if (check(X, Y, Z, mass)) {
+                if (check(X, Y, Z, mass, maxX, maxY, maxZ)) {
                     if (Dx > 0) {
                         x = X * size - w; needJump = true;
                     }
@@ -92,11 +109,11 @@ void Player::collision(float Dx, float Dy, float Dz, std::vector < std::vector<s
                 }
 }
 
-bool Player::check(int x, int y, int z, std::vector < std::vector<std::vector<bool>>>& mass)
+bool Player::check(int x, int y, int z, std::vector < std::vector<std::vector<bool>>>& mass, float maxX, float maxY, float maxZ)
 {
-    if ((x < 0) || (x >= 100*size) ||
-        (y < 0) || (y >= 100*size) ||
-        (z < 0) || (z >= 100*size)) return false;
+    if ((x < 0) || (x >= maxX) ||
+        (y < 0) || (y >= maxY) ||
+        (z < 0) || (z >= maxZ)) return false;
 
     return mass[x][y][z];
 }
