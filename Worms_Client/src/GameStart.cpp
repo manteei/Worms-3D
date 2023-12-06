@@ -1,5 +1,5 @@
 #include "GameStart.h"
-#include "Options.h"
+
 
 GamåStart::GamåStart(NetworkClient& netC0, IpAddress S_Ip0, unsigned short S_port0, Player player0, vector<string> namesVec0)
 	:netC(netC0), S_Ip(S_Ip0), S_port(S_port0), player(player0), namesVec(namesVec0)
@@ -62,7 +62,7 @@ void GamåStart::start()
 	GLuint sand = textureManager.createSand();
 
 
-	Map myMap(64, 10, 64);
+	Map myMap(64, 15, 64);
 	std::vector<std::vector<std::vector<bool>>> mass(100, std::vector<std::vector<bool>>(100, std::vector<bool>(100, false)));
 
 	Camera camera(player);
@@ -77,7 +77,7 @@ void GamåStart::start()
 	ShowCursor(FALSE);
 
 	myMap.createMap(mass);
-
+	ActionInvoker invoker(player);
 	mymenu.showWindow = false;
 
 	for (int i = 0; i < namesVec.size(); i++)
@@ -186,16 +186,27 @@ void GamåStart::start()
 				if (event.key.code == Keyboard::Right) { mymenu.MoveRight(); }
 				if (event.key.code == Keyboard::Enter) { 
 					mymenu.showWindow = false;
-					windowIsActive = true;
+					windowIsActive = true; 
 
-					mymenu.MoveRight(); }
+					invoker.executeCommand(name_menu[mymenu.getSelectedMenuNumber()]); // Âûâîä: Âûïîëíåíà êîìàíäà 1
+					
+				//	invoker.executeCommand("command3"); // Âûâîä: Êîìàíäà íå íàéäåíà
+
+					timer.restart();
+					player.fight = true;
+					
+				}
 			}
 		}
+		if (timer.getElapsedTime().asSeconds() > 5) {
+			player.fight = false;
+		}
+	//	initText.texts(Titul, 50, 950, timer.getElapsedTime().asSeconds(), 20, Color::Black);
 
-		if (isDragging)
+		/*if (isDragging)
 		{
 			window.setPosition(Mouse::getPosition() + offset);
-		}
+		}*/
 
 
 

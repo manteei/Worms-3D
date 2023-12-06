@@ -13,6 +13,8 @@
 #include "camera.h"
 #include "Options.h"
 #include "InitText.h"
+#include "command/ActionInvoker.h"
+
 
 using namespace sf;
 using namespace std;
@@ -34,6 +36,8 @@ class GamåStart
 	Player player;
 	Text Titul;
 	InitText initText;
+	Clock timer;
+	
 
 public:
 	GamåStart(NetworkClient& netC0, IpAddress S_Ip0, unsigned short S_port0, Player player0, vector<string> namesVec0);

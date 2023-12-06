@@ -130,6 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\command\ActionInvoker.cpp" />
     <ClCompile Include="src\About_Game.cpp" />
     <ClCompile Include="src\GameMenu.cpp" />
     <ClCompile Include="src\GameStart.cpp" />
@@ -142,9 +143,11 @@
     <ClCompile Include="src\textureManager.cpp" />
     <ClCompile Include="src\Worms_Client.cpp" />
     <ClCompile Include="src\InitText.cpp" />
-    <ClCompile Include="src\Сommand\Turboranec.cpp" />
+    <ClCompile Include="src\command\Turboranec.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\command\Actions.h" />
+    <ClInclude Include="src\command\ActionInvoker.h" />
     <ClInclude Include="src\About_Game.h" />
     <ClInclude Include="src\GameMenu.h" />
     <ClInclude Include="src\GameStart.h" />
@@ -156,7 +159,7 @@
     <ClInclude Include="src\player.h" />
     <ClInclude Include="src\textureManager.h" />
     <ClInclude Include="src\InitText.h" />
-    <ClInclude Include="src\Сommand\Turboranec.h" />
+    <ClInclude Include="src\command\Turboranec.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\..\Downloads\4.jpg" />

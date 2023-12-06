@@ -5,9 +5,9 @@ Player::Player(float size0)
     x = 600; y = 200; z = 600;
     dx = 0; dy = 0; dz = 0;
     w = 5; h = 10; d = 5;
-    onGround = false;
+    onGround = fight = needJump = false;
     size = size0;
-    needJump = false;
+    onSand = true;
 }
 
 void Player::load(Font& font)
@@ -53,6 +53,7 @@ void Player::collision(float Dx, float Dy, float Dz, std::vector < std::vector<s
     float maxX = map.maxX * size;
     float maxY = map.maxY * size;
     float maxZ = map.maxZ * size;
+    float granica = minY * size + 120;
 
     if (x - w + Dx < minX) {
         x = minX + w;
@@ -64,9 +65,7 @@ void Player::collision(float Dx, float Dy, float Dz, std::vector < std::vector<s
     if (y + h + Dy < minY) {
         y = minY + h;
     }
-    if (y + h + Dy > minY*size + 120) {
-        y = minY * size + 120;
-    }
+   
     if (y + h + Dy > maxY) {
         y = maxY - h;
     }
@@ -75,6 +74,18 @@ void Player::collision(float Dx, float Dy, float Dz, std::vector < std::vector<s
     }
     if (z + d + Dz > maxZ) {
         z = maxZ - d;
+    }
+    if ((y + h + Dy > granica) and onSand and !fight) {
+        y = granica;
+    }
+    /*if ((y + h + Dy < granica) and !onSand and !fight) {
+        y = granica+10;
+    }*/
+    if ((y + h + Dy > granica) and fight) {
+        onSand = false;
+    }
+    if ((y + h + Dy < granica) ) {
+        onSand = true;
     }
 
     for (int X = (x - w) / size; X < (x + w) / size; X++)
@@ -87,7 +98,7 @@ void Player::collision(float Dx, float Dy, float Dz, std::vector < std::vector<s
                     if (Dx < 0) {
                         x = X * size + size + w; needJump = true;
                     }
-                    if (Dy > 40)  y = Y * size - h;
+                    if (Dy > 0)  y = Y * size - h;
                     if (Dy < 0) { y = Y * size + size + h; onGround = true; dy = 0; }
                     if (Dz > 0) { z = Z * size - d; needJump = true; }
                     if (Dz < 0) { z = Z * size + size + d; needJump = true; }
@@ -114,8 +125,9 @@ void Player::keyboard(float angleX)
         dx = -sin(angleX / 180 * PI);
         dz = -cos(angleX / 180 * PI);
         if (needJump) {
-            onGround = false; dy = size / 4;
+            onGround = false; dy = size / 5;
         }
+        if (fight) { dx *= size / 10; dz *= size / 10; }
     }
 
     if (Keyboard::isKeyPressed(Keyboard::S))
@@ -123,8 +135,9 @@ void Player::keyboard(float angleX)
         dx = sin(angleX / 180 * PI);
         dz = cos(angleX / 180 * PI);
         if (needJump) {
-            onGround = false; dy = size / 4;
+            onGround = false; dy = size / 5;
         }
+        if (fight) { dx *= size / 10; dz *= size / 10; }
     }
 
     if (Keyboard::isKeyPressed(Keyboard::D))
@@ -132,8 +145,9 @@ void Player::keyboard(float angleX)
         dx = sin((angleX + 90) / 180 * PI);
         dz = cos((angleX + 90) / 180 * PI);
         if (needJump) {
-            onGround = false; dy = size / 4;
+            onGround = false; dy = size / 5;
         }
+        if (fight) { dx *= size / 10; dz *= size / 10; }
     }
 
     if (Keyboard::isKeyPressed(Keyboard::A))
@@ -141,10 +155,15 @@ void Player::keyboard(float angleX)
         dx = sin((angleX - 90) / 180 * PI);
         dz = cos((angleX - 90) / 180 * PI);
         if (needJump) {
-            onGround = false; dy = size / 4;
+            onGround = false; dy = size / 5;
         }
+        if (fight) { dx *= size / 10; dz *= size / 10; }
     }
 
-
+    if (Keyboard::isKeyPressed(Keyboard::Space) and fight)
+    {
+        dy = size / 5;
+        
+    }
 
 };

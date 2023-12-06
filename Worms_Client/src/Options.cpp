@@ -31,6 +31,7 @@ Options::Options(RenderWindow& window, float menux, float menuy,
 			initText.texts(nameTools[i], menu_X, menu_Y - 70, name[i], size_font, menu_text_color, 2, menu_text_color_border);
 			i++;
 		}
+
 	
 	mainMenuSelected = 0; 
 	mainMenu[mainMenuSelected].setOutlineColor(chose_text_color_border);

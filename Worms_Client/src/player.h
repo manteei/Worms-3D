@@ -15,7 +15,7 @@ public:
     float x, y, z;
     float dx, dy, dz;
     float w, h, d;
-    bool onGround, needJump;
+    bool onGround, needJump, fight, onSand;
     float speed, size;
     const float PI = 3.141592653;
     Player(float size0);
