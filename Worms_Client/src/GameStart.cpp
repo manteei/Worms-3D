@@ -151,20 +151,7 @@ void GamеStart::start()
 
 			if ((event.type == Event::KeyPressed) && (event.key.code == Keyboard::Escape))
 				window.close();
-			/*if ((event.type == Event::KeyPressed) && (event.key.code == Keyboard::F)) {
-				windowIsActive = false;
-				mymenu.showWindow = true;
-			}
-			if ((event.type == Event::KeyPressed) && (event.key.code == Keyboard::G)) {
-				windowIsActive = true;
-				ShowCursor(FALSE);
-				mymenu.showWindow = false;
-			}*/
-			//if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
-			//{
-			//	isDragging = true;
-			//	offset = window.getPosition() - sf::Mouse::getPosition();
-			//}
+			
 			if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
 			{
 				windowIsActive = true;
@@ -187,26 +174,26 @@ void GamеStart::start()
 				if (event.key.code == Keyboard::Enter) { 
 					mymenu.showWindow = false;
 					windowIsActive = true; 
-
-					invoker.executeCommand(name_menu[mymenu.getSelectedMenuNumber()]); // Вывод: Выполнена команда 1
-					
-				//	invoker.executeCommand("command3"); // Вывод: Команда не найдена
-
+					invoker.executeCommand(name_menu[mymenu.getSelectedMenuNumber()],player); // Вывод: Выполнена команда 1
 					timer.restart();
-					player.fight = true;
+					
 					
 				}
 			}
 		}
-		if (timer.getElapsedTime().asSeconds() > 5) {
-			player.fight = false;
-		}
-	//	initText.texts(Titul, 50, 950, timer.getElapsedTime().asSeconds(), 20, Color::Black);
+		RectangleShape background_timer(Vector2f(100, 100));
+		Texture texture_timer;
+		if (!texture_timer.loadFromFile("resources/q.png")) exit(4);
+		background_timer.setTexture(&texture_timer);
+		background_timer.setPosition(100, 800);
+		
+		
 
-		/*if (isDragging)
-		{
-			window.setPosition(Mouse::getPosition() + offset);
-		}*/
+		if (timer.getElapsedTime().asSeconds() < 10) {
+			initText.timer(Titul, 126, 780, 10- timer.getElapsedTime().asSeconds(), 100, Color(66, 170, 255), 4, Color::White);
+			
+		}else player.flying = false;
+	
 
 
 
@@ -297,7 +284,10 @@ void GamеStart::start()
 			window.draw(background_ab);
 			mymenu.draw();
 		}
-		else window.draw(Titul);
+		if (player.flying) {
+			window.draw(background_timer);
+			window.draw(Titul);
+		}
 		window.popGLStates();
 		window.display();
 

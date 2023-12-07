@@ -172,6 +172,9 @@
     <Image Include="resources\heightmap.png" />
     <Image Include="resources\heightmap2.png" />
     <Image Include="resources\heightmap3.png" />
+    <Image Include="resources\q.png" />
+    <Image Include="resources\qq.png" />
+    <Image Include="resources\qqq.png" />
     <Image Include="resources\skybox\back.png" />
     <Image Include="resources\skybox\bottom.png" />
     <Image Include="resources\skybox\front.png" />

@@ -214,6 +214,15 @@
     <Image Include="resources\tools\Turboranec.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="resources\q.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\qq.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\qqq.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="resources\troika.otf" />

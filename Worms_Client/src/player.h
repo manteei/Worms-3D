@@ -15,7 +15,7 @@ public:
     float x, y, z;
     float dx, dy, dz;
     float w, h, d;
-    bool onGround, needJump, fight, onSand;
+    bool onGround, needJump, flying = false, onSand;
     float speed, size;
     const float PI = 3.141592653;
     Player(float size0);
@@ -26,5 +26,6 @@ public:
     void setPosition(float x1, float y1, float z1);
     void load(Font& font);
     void draw(RenderWindow& window);
+    void setFlying(bool fly);
 };
 

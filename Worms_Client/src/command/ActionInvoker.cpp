@@ -14,9 +14,9 @@ void ActionInvoker::addCommand(String name, Actions* command) {
 
 }
 
-void ActionInvoker::executeCommand(String& name) {
+void ActionInvoker::executeCommand(String& name, Player& player0) {
 	if (commands.find(name) != commands.end()) {
-		commands[name]->execute();
+		commands[name]->execute(player0);
 	}
 	
 	else {

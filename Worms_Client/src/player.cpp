@@ -5,7 +5,7 @@ Player::Player(float size0)
     x = 600; y = 200; z = 600;
     dx = 0; dy = 0; dz = 0;
     w = 5; h = 10; d = 5;
-    onGround = fight = needJump = false;
+    onGround = flying = needJump = false;
     size = size0;
     onSand = true;
 }
@@ -16,7 +16,9 @@ void Player::load(Font& font)
     t.setString(name);
     t.setFillColor(sf::Color::Red);
 }
-
+void Player::setFlying(bool fly) {
+    flying = fly;
+}
 void Player::update(Time time, std::vector < std::vector<std::vector<bool>>>& mass, Map map)
 {
     needJump = false;
@@ -75,13 +77,11 @@ void Player::collision(float Dx, float Dy, float Dz, std::vector < std::vector<s
     if (z + d + Dz > maxZ) {
         z = maxZ - d;
     }
-    if ((y + h + Dy > granica) and onSand and !fight) {
+    if ((y + h + Dy > granica) and onSand and !flying) {
         y = granica;
     }
-    /*if ((y + h + Dy < granica) and !onSand and !fight) {
-        y = granica+10;
-    }*/
-    if ((y + h + Dy > granica) and fight) {
+   
+    if ((y + h + Dy > granica) and flying) {
         onSand = false;
     }
     if ((y + h + Dy < granica) ) {
@@ -127,7 +127,7 @@ void Player::keyboard(float angleX)
         if (needJump) {
             onGround = false; dy = size / 5;
         }
-        if (fight) { dx *= size / 10; dz *= size / 10; }
+        if (flying) { dx *= size / 10; dz *= size / 10; }
     }
 
     if (Keyboard::isKeyPressed(Keyboard::S))
@@ -137,7 +137,7 @@ void Player::keyboard(float angleX)
         if (needJump) {
             onGround = false; dy = size / 5;
         }
-        if (fight) { dx *= size / 10; dz *= size / 10; }
+        if (flying) { dx *= size / 10; dz *= size / 10; }
     }
 
     if (Keyboard::isKeyPressed(Keyboard::D))
@@ -147,7 +147,7 @@ void Player::keyboard(float angleX)
         if (needJump) {
             onGround = false; dy = size / 5;
         }
-        if (fight) { dx *= size / 10; dz *= size / 10; }
+        if (flying) { dx *= size / 10; dz *= size / 10; }
     }
 
     if (Keyboard::isKeyPressed(Keyboard::A))
@@ -157,10 +157,10 @@ void Player::keyboard(float angleX)
         if (needJump) {
             onGround = false; dy = size / 5;
         }
-        if (fight) { dx *= size / 10; dz *= size / 10; }
+        if (flying) { dx *= size / 10; dz *= size / 10; }
     }
 
-    if (Keyboard::isKeyPressed(Keyboard::Space) and fight)
+    if (Keyboard::isKeyPressed(Keyboard::Space) and flying)
     {
         dy = size / 5;
         

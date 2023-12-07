@@ -1,6 +1,7 @@
 #pragma once
+#include "../player.h"
 class Actions {
 public:
 
-	virtual void execute() = 0;
+	virtual void execute(Player& player) = 0;
 };
