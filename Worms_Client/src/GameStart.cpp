@@ -66,7 +66,7 @@ void GamÂStart::start()
 	std::vector<std::vector<std::vector<bool>>> mass(100, std::vector<std::vector<bool>>(100, std::vector<bool>(100, false)));
 
 	Camera camera(player);
-
+	
 	glEnable(GL_DEPTH_TEST);
 	glDepthMask(GL_TRUE);
 	glClearDepth(1.f);
@@ -77,7 +77,7 @@ void GamÂStart::start()
 	ShowCursor(FALSE);
 
 	myMap.createMap(mass);
-	ActionInvoker invoker(player);
+	ActionInvoker invoker;
 	mymenu.showWindow = false;
 
 	for (int i = 0; i < namesVec.size(); i++)
@@ -87,7 +87,7 @@ void GamÂStart::start()
 
 	Packet receivedDataPacket;
 	Packet sendDataPacket;
-
+	Packet sendPacketShoot;
 
 	while (window.isOpen())
 	{
@@ -113,15 +113,19 @@ void GamÂStart::start()
 							}
 						}
 					}
-					if (s == "DATA")
+					else if (s == "DATA")
 					{
 						while (!receivedDataPacket.endOfPacket())
 						{
 							float x, y, z;
+							float damage;
+							string name;
 							receivedDataPacket >> s;
 							receivedDataPacket >> x;
 							receivedDataPacket >> y;
 							receivedDataPacket >> z;
+							receivedDataPacket >> name;
+							receivedDataPacket >> damage;
 
 							for (int i = 0; i < enemyVec.size(); i++)
 							{
@@ -130,18 +134,43 @@ void GamÂStart::start()
 
 								}
 							}
+							if (name == player.name) {
+								player.helth -= damage;
+								cout << s << "   " << name << "    " << player.helth << endl;;
+
+
+							}
 						}
 					}
+					/*else if (s == "ATTACK")
+					{
+						while (!receivedDataPacket.endOfPacket())
+						{
+							float damage;
+							string name;
+							receivedDataPacket >> s;
+							receivedDataPacket >> name;
+							receivedDataPacket >> damage;
+							
+							if (name == player.name) {
+								player.helth -= damage;
+								cout << s<< "   "<< name << "    "<< player.helth << endl;;
+
+								
+							}
+						}
+					}*/
 				}
 			}
 		}
 
 
 
-		sendDataPacket.clear();
+		/*sendDataPacket.clear();
 		sendDataPacket << "DATA" << player.x << player.y << player.z;
-		netC.sendData(sendDataPacket);
-
+		netC.sendData(sendDataPacket);*/
+		damage = 0;
+		nameEnemy = "";
 
 		Event event;
 		while (window.pollEvent(event))
@@ -152,17 +181,33 @@ void GamÂStart::start()
 			if ((event.type == Event::KeyPressed) && (event.key.code == Keyboard::Escape))
 				window.close();
 			
-			if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
+			if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left )
 			{
+				
+				if (camera.showMap) {
+					offset = Mouse::getPosition();
+					player.x = offset.x * 0.7;
+					player.z = offset.y * 1.3;
+					for (int i = myMap.maxY; i > myMap.minY; i--) {
+						if (mass[player.x / 20][i][player.z / 20] == 1) {
+							player.y = i * size0 + size0;
+							break;
+						}
+					}
+					camera.showMap = false;
+					camera.farPlayers = 0;
+					player.flying = false;
+					window.setMouseCursorVisible(false);
+				}
 				windowIsActive = true;
 				ShowCursor(FALSE);
 				mymenu.showWindow = false;
 			}
-			if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Right)
+			if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Right && !camera.showMap)
 			{
-				windowIsActive = false;
 				mymenu.showWindow = true;
-			
+				windowIsActive = false;
+				ShowCursor(TRUE);
 			}
 
 			if (event.type == Event::KeyReleased)
@@ -174,11 +219,12 @@ void GamÂStart::start()
 				if (event.key.code == Keyboard::Enter) { 
 					mymenu.showWindow = false;
 					windowIsActive = true; 
-					invoker.executeCommand(name_menu[mymenu.getSelectedMenuNumber()],player); // ¬˚‚Ó‰: ¬˚ÔÓÎÌÂÌ‡ ÍÓÏ‡Ì‰‡ 1
+					invoker.executeCommand(name_menu[mymenu.getSelectedMenuNumber()],player, camera); 
 					timer.restart();
 					
 					
 				}
+				if (event.key.code == Keyboard::Space) { shoot = 1; }
 			}
 		}
 		RectangleShape background_timer(Vector2f(100, 100));
@@ -187,17 +233,14 @@ void GamÂStart::start()
 		background_timer.setTexture(&texture_timer);
 		background_timer.setPosition(100, 800);
 		
-		
 
-		if (timer.getElapsedTime().asSeconds() < 10) {
+		if (timer.getElapsedTime().asSeconds() < 10 && player.flying) {
 			initText.timer(Titul, 126, 780, 10- timer.getElapsedTime().asSeconds(), 100, Color(66, 170, 255), 4, Color::White);
 			
 		}else player.flying = false;
-	
 
-
-
-
+		
+		initText.timer(health, 126, 700, player.helth, 100, Color(66, 170, 255), 4, Color::White);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		if (windowIsActive) {
@@ -219,13 +262,62 @@ void GamÂStart::start()
 
 			SetCursorPos(xt, yt);
 
+			if (shoot)
+			{
+				float x = player.x;
+				float y = player.y + player.h;
+				float z = player.z;
+
+				int X, Y, Z;
+				int dist = 0;
+				bool flag = false;
+				
+				while (dist < 120)  // ‡‰ËÛÒ ‰ÂÈÒÚ‚Ëˇ
+				{		
+					dist++;
+					x += -sin(angleX / 180 * PI);    X = x ;
+					y += tan(angleY / 180 * PI);    Y = y ;
+					z += -cos(angleX / 180 * PI);    Z = z ;
+
+					for (int i = 0; i < enemyVec.size(); i++) {
+						if (x  <= enemyVec[i].x + size0 /2 && x   >= enemyVec[i].x - size0 / 2 &&
+							y  <= enemyVec[i].y + size0 / 2 && y   >= enemyVec[i].y - size0 / 2 &&
+							z  <= enemyVec[i].z + size0 / 2 && z  >= enemyVec[i].z - size0 / 2)
+						{
+							damage = 10;
+							flag = true;
+							nameEnemy = enemyVec[i].name;
+							/*sendPacketShoot.clear();
+							sendPacketShoot << "ATTACK" << enemyVec[i].name << damage;
+							netC.sendData(sendPacketShoot);*/
+
+							cout << " X: " << x << " Y: " << y << " Z: " << z << endl;
+							break;
+						}
+					}
+					if (flag) break;
+				}
+			}
+			shoot = 0;
+		}
+		sendDataPacket.clear();
+		sendDataPacket << "DATA" << player.x << player.y << player.z << nameEnemy << damage;
+		netC.sendData(sendDataPacket);
+
+		if (camera.showMap  ) {
+			angleX = 0; angleY = -89;
+			windowIsActive = false;
+			ShowCursor(TRUE);
+			window.setMouseCursorVisible(true);
+			mymenu.showWindow = false;
+
 		}
 		window.clear();
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		gluLookAt(camera.x, camera.y + camera.farPlayers + camera.h / 2, camera.z, camera.x - sin(angleX / 180 * PI), camera.y + camera.farPlayers + camera.h / 2 + (tan(angleY / 180 * PI)), camera.z - cos(angleX / 180 * PI), 0, 1, 0);
-
+	//	cout << angleX << "          " << angleY << endl;
 		glTranslatef(camera.x, camera.y + camera.farPlayers, camera.z);
 		textureManager.drawSkybox(skybox, 1000);
 		glTranslatef(-camera.x, -camera.y - camera.farPlayers, -camera.z);
@@ -255,7 +347,7 @@ void GamÂStart::start()
 			float angleToEnemy = std::acos(vectorToEnemy.x * viewVector.x + vectorToEnemy.y * viewVector.y + vectorToEnemy.z * viewVector.z) * 180.0 / PI;
 
 			glTranslatef(enemyVec[i].x, enemyVec[i].y, enemyVec[i].z);
-			textureManager.drawBox(worm, size0 / 10);
+			textureManager.drawBox(worm, size0 / 2);
 			glTranslatef(-enemyVec[i].x, -enemyVec[i].y, -enemyVec[i].z);
 
 
@@ -277,6 +369,7 @@ void GamÂStart::start()
 		textureManager.drawBox(worm, size0 / 10);
 		glTranslatef(-player.x, -player.y, -player.z);
 
+	//	cout << player.y  << endl;
 
 		window.pushGLStates();
 		window.draw(s);
@@ -288,6 +381,7 @@ void GamÂStart::start()
 			window.draw(background_timer);
 			window.draw(Titul);
 		}
+		window.draw(health);
 		window.popGLStates();
 		window.display();
 

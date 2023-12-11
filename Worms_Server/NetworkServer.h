@@ -10,6 +10,8 @@ using namespace sf;
 struct Client
 {
 	string name;
+	string nameEnemy;
+	float damage;
 	IpAddress Ip;
 	UdpSocket* dataSocket;
 	unsigned short port;
@@ -32,7 +34,7 @@ class NetworkServer
 	Packet packet;
 
 	Clock sendingsRateTimer;
-	Int32 sendingsRate = 25;
+	Int32 sendingsRate = 80;
 
 public:
 	vector<Client> clientsVec;

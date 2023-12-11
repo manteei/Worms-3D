@@ -7,7 +7,7 @@ About_Game::About_Game() {
 void About_Game::showInformation()
 {
  
-    RenderWindow About(VideoMode::getDesktopMode(), L"О игре", Style::Default);
+    RenderWindow About(VideoMode::getDesktopMode(), L"Об игре", Style::Default);
     RectangleShape background_ab(Vector2f(VideoMode::getDesktopMode().width, VideoMode::getDesktopMode().height));
     About.setMouseCursorVisible(false);
     if (!texture_ab.loadFromFile("resources/3.jpg")) exit(3);

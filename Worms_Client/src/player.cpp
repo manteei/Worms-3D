@@ -107,9 +107,9 @@ void Player::collision(float Dx, float Dy, float Dz, std::vector < std::vector<s
 
 bool Player::check(int x, int y, int z, std::vector < std::vector<std::vector<bool>>>& mass)
 {
-    if ((x < 0) || (x >= 100 * size) ||
-        (y < 0) || (y >= 100 * size) ||
-        (z < 0) || (z >= 100 * size)) return false;
+    if ((x < 0) || (x >= 64 * size) ||
+        (y < 0) || (y >= 15 * size) ||
+        (z < 0) || (z >= 64 * size)) return false;
 
     return mass[x][y][z];
 }
@@ -118,7 +118,6 @@ bool Player::check(int x, int y, int z, std::vector < std::vector<std::vector<bo
 
 void Player::keyboard(float angleX)
 {
-  //  if (Keyboard::isKeyPressed(Keyboard::Space)) if (onGround) { onGround = false; dy = size * 2; };
 
     if (Keyboard::isKeyPressed(Keyboard::W))
     {

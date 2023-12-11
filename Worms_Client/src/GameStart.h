@@ -29,17 +29,19 @@ class GamåStart
 	string clientName;
 	NetworkClient& netC;
 	float size0 = 20.f;
-	bool windowIsActive = false;
+	bool shoot = 0;
 	TextureManager textureManager;
 	float angleX, angleY;
 	const float PI = 3.141592653;
 	Player player;
-	Text Titul;
+	Text Titul, health;
 	InitText initText;
 	Clock timer;
-	
+	float damage;
+	string nameEnemy;
 
 public:
+	bool windowIsActive = false;
 	GamåStart(NetworkClient& netC0, IpAddress S_Ip0, unsigned short S_port0, Player player0, vector<string> namesVec0);
 	void start();
 	void addPlayer(string clientName);

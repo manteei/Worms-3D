@@ -15,10 +15,12 @@ int main()
 {
 	netS.init();
 	Packet packet;
+	Packet packetShoot;
+	bool flag = false;
 	packet << "DATA";
 	for (int i = 0; i < netS.clientsVec.size(); i++)
 	{
-		packet << netS.clientsVec[i].name << netS.clientsVec[i].pos.x << netS.clientsVec[i].pos.y << netS.clientsVec[i].pos.z;
+		packet << netS.clientsVec[i].name << netS.clientsVec[i].pos.x << netS.clientsVec[i].pos.y << netS.clientsVec[i].pos.z << netS.clientsVec[i].nameEnemy << netS.clientsVec[i].damage;
 
 	}
 
@@ -33,12 +35,28 @@ int main()
 			packet << "DATA";
 			for (int i = 0; i < netS.clientsVec.size(); i++)
 			{
-				packet << netS.clientsVec[i].name << netS.clientsVec[i].pos.x << netS.clientsVec[i].pos.y << netS.clientsVec[i].pos.z;
-				//cout << netS.clientsVec[i].name << " "<< netS.clientsVec[i].pos.x << " " <<netS.clientsVec[i].pos.y << " " << netS.clientsVec[i].pos.z << endl;
+				packet << netS.clientsVec[i].name << netS.clientsVec[i].pos.x << netS.clientsVec[i].pos.y << netS.clientsVec[i].pos.z << netS.clientsVec[i].nameEnemy << netS.clientsVec[i].damage;
+				
 			}
 		}
 
+		//if (flag) {
+		//	packetShoot << "ATTACK";
+		//	for (int i = 0; i < netS.clientsVec.size(); i++)
+		//	{
+		//		packetShoot << netS.clientsVec[i].name << netS.clientsVec[i].nameEnemy << netS.clientsVec[i].damage;
+		//		cout << "danage"<< netS.clientsVec[i].damage << endl;
 
+		//	}
+		//	if (netS.sendDataToAll(packetShoot) == Socket::Status::Done)
+		//	{
+		//		packetShoot.clear();
+		//		flag = false;
+		//		cout << "ura" << endl;
+		//	}
+		//}
+
+	
 		unsigned int receivedClientIndex;
 		if (netS.receiveData(receivedClientIndex) == Socket::Status::Done)
 		{
@@ -49,7 +67,9 @@ int main()
 				{
 					if (s == "DATA")
 					{
-						float x, y, z;
+						float x, y, z ;
+						string name;
+						float damage;
 
 						if (netS.clientsVec[receivedClientIndex].rDataPacket >> x)
 						{
@@ -64,13 +84,42 @@ int main()
 						{
 							netS.clientsVec[receivedClientIndex].pos.z = z;
 						}
+						if (netS.clientsVec[receivedClientIndex].rDataPacket >> name)
+						{
+							netS.clientsVec[receivedClientIndex].nameEnemy = name;
+
+						}
+						if (netS.clientsVec[receivedClientIndex].rDataPacket >> damage)
+						{
+							netS.clientsVec[receivedClientIndex].damage = damage;
+
+						}
 						netS.clientsVec[receivedClientIndex].rDataPacket.clear();
 
 						//cout << netS.clientsVec[receivedClientIndex].name << netS.clientsVec[receivedClientIndex].pos.x << " " << netS.clientsVec[receivedClientIndex].pos.y << " " << netS.clientsVec[receivedClientIndex].pos.z << endl;
 					}
+				/*	if (s == "ATTACK")
+					{
+						flag = true;
+						string name;
+						float damage;
+						if (netS.clientsVec[receivedClientIndex].rDataPacket >> name)
+						{
+							netS.clientsVec[receivedClientIndex].nameEnemy = name;
+
+						}
+						if (netS.clientsVec[receivedClientIndex].rDataPacket >> damage)
+						{
+							netS.clientsVec[receivedClientIndex].damage = damage;
+
+						}
+						netS.clientsVec[receivedClientIndex].rDataPacket.clear();
+					}*/
 				}
 			}
 		}
+
+
 	}
 
 

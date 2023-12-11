@@ -18,6 +18,7 @@ public:
     bool onGround, needJump, flying = false, onSand;
     float speed, size;
     const float PI = 3.141592653;
+    float helth= 100.0;
     Player(float size0);
     void update(Time time, std::vector < std::vector<std::vector<bool>>>& mass, Map map);
     void collision(float Dx, float Dy, float Dz, std::vector < std::vector<std::vector<bool>>>& mass, Map map);

@@ -4,6 +4,7 @@ Map::Map(int x0, int y0, int z0)
 {
     maxX = x0; maxY = y0; maxZ = z0;
     minX = 0; minY = 0; minZ = 0;
+    
 }
 
 void Map::createMap(std::vector < std::vector<std::vector<bool>>>& mass) {
@@ -20,9 +21,9 @@ void Map::createMap(std::vector < std::vector<std::vector<bool>>>& mass) {
 
 bool Map::check(int x, int y, int z, std::vector < std::vector<std::vector<bool>>>& mass)
 {
-    if ((x < 0) || (x >= 100) ||
-        (y < 0) || (y >= 100) ||
-        (z < 0) || (z >= 100)) return false;
+    if ((x < 0) || (x >= 64) ||
+        (y < 0) || (y >= 15) ||
+        (z < 0) || (z >= 64)) return false;
 
     return mass[x][y][z];
 }

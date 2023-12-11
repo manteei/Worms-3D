@@ -6,7 +6,7 @@ Camera::Camera(Player player)
     dx = 0; dy = 0; dz = 0;
     w = 5; h = 20; d = 5;
     farPlayers = 0;
-    farPlayer = false;
+    farPlayer = showMap = false;
     onGround = true;
 
 }
@@ -19,8 +19,7 @@ void Camera::update(Time time, Player player)
     y += dy * time.asSeconds() * 50;
     if (y + h + dy < player.y) { y = player.y; }
     if (y + h + dy > 600) { y = 600 - h; }
-    if (farPlayer) farPlayers = 60;
-    else farPlayers = 0;;
+    
 
     x = player.x;  z = player.z;
 }
@@ -36,11 +35,14 @@ void Camera::keyboard()
 
     if (Keyboard::isKeyPressed(Keyboard::F5))
     {
+        if (farPlayer) farPlayers = 60;
+        else farPlayers = 0;
         farPlayer = !farPlayer;
     }
 
-
+ 
 
 };
+
 
 
