@@ -14,7 +14,7 @@ void GamеStart::addPlayer(string clientName)
 
 };
 
-   
+
 
 void GamеStart::start()
 {
@@ -43,14 +43,20 @@ void GamеStart::start()
 	background_ab.setPosition(1500, 600);
 
 
-	// Название пунктов меню
+	
+
+	RectangleShape background_timer(Vector2f(100, 100));
+	Texture texture_timer;
+	if (!texture_timer.loadFromFile("resources/q.png")) exit(4);
+	background_timer.setTexture(&texture_timer);
+	background_timer.setPosition(100, 800);
+
+ 
 	String name_menu[]{L"Дробовик",L"Ракета",L"Парашут",L"Бита",L"Динамит",L"Граната",L"Пулемет",L"Телепорт",L"Чермагеддон",L"Электромагнит",L"Бананобомба",L"Злой ослик" ,L"Супер овца",L"Мегакулак",L"Турборанец" };
-	String file[]{ L"resources/tools/drobovik.png",L"resources/tools/raketa.png",L"resources/tools/parashut.png",L"resources/tools/dubinka.png",L"resources/tools/vzryv.png",L"resources/tools/granata.png",
-		L"resources/tools/pulemet.png",L"resources/tools/teleport.png",L"resources/tools/chermageddon.png",L"resources/tools/magnit.png",L"resources/tools/banan.png",L"resources/tools/oslik.png" ,
-	L"resources/tools/sheep.png",L"resources/tools/kulak.png",L"resources/tools/Turboranec.png" };
 
-	Options mymenu(window, 1533, 700, 15, name_menu, file, 30, 57);
 
+	Options mymenu(window, 1533, 700, 15, name_menu, 30, 57);
+	Health health(window);
 
 	s.setOrigin(8, 8); s.setPosition(width, height);
 
@@ -113,7 +119,7 @@ void GamеStart::start()
 							}
 						}
 					}
-					else if (s == "DATA")
+					if (s == "DATA")
 					{
 						while (!receivedDataPacket.endOfPacket())
 						{
@@ -129,48 +135,19 @@ void GamеStart::start()
 
 							for (int i = 0; i < enemyVec.size(); i++)
 							{
-								if (s == enemyVec[i].name) {
-									enemyVec[i].setPosition(x, y, z);
-
-								}
+								if (s == enemyVec[i].name) enemyVec[i].setPosition(x, y, z);
+								if (name == enemyVec[i].name) enemyVec[i].health -= damage;
 							}
-							if (name == player.name) {
-								player.helth -= damage;
-								cout << s << "   " << name << "    " << player.helth << endl;;
-
-
-							}
+							if (name == player.name) player.health -= damage;
 						}
 					}
-					/*else if (s == "ATTACK")
-					{
-						while (!receivedDataPacket.endOfPacket())
-						{
-							float damage;
-							string name;
-							receivedDataPacket >> s;
-							receivedDataPacket >> name;
-							receivedDataPacket >> damage;
-							
-							if (name == player.name) {
-								player.helth -= damage;
-								cout << s<< "   "<< name << "    "<< player.helth << endl;;
-
-								
-							}
-						}
-					}*/
 				}
 			}
 		}
 
-
-
-		/*sendDataPacket.clear();
-		sendDataPacket << "DATA" << player.x << player.y << player.z;
-		netC.sendData(sendDataPacket);*/
 		damage = 0;
 		nameEnemy = "";
+		health.updateHealth(player, enemyVec);
 
 		Event event;
 		while (window.pollEvent(event))
@@ -186,28 +163,27 @@ void GamеStart::start()
 				
 				if (camera.showMap) {
 					offset = Mouse::getPosition();
-					player.x = offset.x * 0.7;
-					player.z = offset.y * 1.3;
-					for (int i = myMap.maxY; i > myMap.minY; i--) {
-						if (mass[player.x / 20][i][player.z / 20] == 1) {
+					player.x = int(offset.x * 0.7);
+					player.z = int(offset.y * 1.3);
+					for (int i = myMap.maxY; i >= myMap.minY; i--) {
+						if (mass[int(player.x / size0)][i][int(player.z / size0)] == 1) {
 							player.y = i * size0 + size0;
 							break;
 						}
 					}
+					ShowCursor(FALSE);
 					camera.showMap = false;
 					camera.farPlayers = 0;
-					player.flying = false;
-					window.setMouseCursorVisible(false);
 				}
 				windowIsActive = true;
-				ShowCursor(FALSE);
+				window.setMouseCursorVisible(false);
 				mymenu.showWindow = false;
 			}
 			if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Right && !camera.showMap)
 			{
 				mymenu.showWindow = true;
 				windowIsActive = false;
-				ShowCursor(TRUE);
+				window.setMouseCursorVisible(true);
 			}
 
 			if (event.type == Event::KeyReleased)
@@ -224,23 +200,19 @@ void GamеStart::start()
 					
 					
 				}
-				if (event.key.code == Keyboard::Space) { shoot = 1; }
+				if (event.key.code == Keyboard::Space && player.canShoot) { shoot = 1; }
 			}
 		}
-		RectangleShape background_timer(Vector2f(100, 100));
-		Texture texture_timer;
-		if (!texture_timer.loadFromFile("resources/q.png")) exit(4);
-		background_timer.setTexture(&texture_timer);
-		background_timer.setPosition(100, 800);
 		
 
-		if (timer.getElapsedTime().asSeconds() < 10 && player.flying) {
+		if (timer.getElapsedTime().asSeconds() < 10 && (player.flying || player.canShoot)) {
 			initText.timer(Titul, 126, 780, 10- timer.getElapsedTime().asSeconds(), 100, Color(66, 170, 255), 4, Color::White);
 			
-		}else player.flying = false;
+		}
+		else { player.flying = false; player.canShoot = false;
+		}
 
-		
-		initText.timer(health, 126, 700, player.helth, 100, Color(66, 170, 255), 4, Color::White);
+
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		if (windowIsActive) {
@@ -284,14 +256,9 @@ void GamеStart::start()
 							y  <= enemyVec[i].y + size0 / 2 && y   >= enemyVec[i].y - size0 / 2 &&
 							z  <= enemyVec[i].z + size0 / 2 && z  >= enemyVec[i].z - size0 / 2)
 						{
-							damage = 10;
+							damage = player.damage;
 							flag = true;
 							nameEnemy = enemyVec[i].name;
-							/*sendPacketShoot.clear();
-							sendPacketShoot << "ATTACK" << enemyVec[i].name << damage;
-							netC.sendData(sendPacketShoot);*/
-
-							cout << " X: " << x << " Y: " << y << " Z: " << z << endl;
 							break;
 						}
 					}
@@ -304,7 +271,7 @@ void GamеStart::start()
 		sendDataPacket << "DATA" << player.x << player.y << player.z << nameEnemy << damage;
 		netC.sendData(sendDataPacket);
 
-		if (camera.showMap  ) {
+		if (camera.showMap ) {
 			angleX = 0; angleY = -89;
 			windowIsActive = false;
 			ShowCursor(TRUE);
@@ -317,7 +284,7 @@ void GamеStart::start()
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		gluLookAt(camera.x, camera.y + camera.farPlayers + camera.h / 2, camera.z, camera.x - sin(angleX / 180 * PI), camera.y + camera.farPlayers + camera.h / 2 + (tan(angleY / 180 * PI)), camera.z - cos(angleX / 180 * PI), 0, 1, 0);
-	//	cout << angleX << "          " << angleY << endl;
+	
 		glTranslatef(camera.x, camera.y + camera.farPlayers, camera.z);
 		textureManager.drawSkybox(skybox, 1000);
 		glTranslatef(-camera.x, -camera.y - camera.farPlayers, -camera.z);
@@ -369,7 +336,6 @@ void GamеStart::start()
 		textureManager.drawBox(worm, size0 / 10);
 		glTranslatef(-player.x, -player.y, -player.z);
 
-	//	cout << player.y  << endl;
 
 		window.pushGLStates();
 		window.draw(s);
@@ -377,11 +343,11 @@ void GamеStart::start()
 			window.draw(background_ab);
 			mymenu.draw();
 		}
-		if (player.flying) {
+		if (player.flying || player.canShoot) {
 			window.draw(background_timer);
 			window.draw(Titul);
 		}
-		window.draw(health);
+		health.draw();
 		window.popGLStates();
 		window.display();
 

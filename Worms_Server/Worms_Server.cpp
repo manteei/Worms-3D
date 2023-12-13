@@ -40,22 +40,6 @@ int main()
 			}
 		}
 
-		//if (flag) {
-		//	packetShoot << "ATTACK";
-		//	for (int i = 0; i < netS.clientsVec.size(); i++)
-		//	{
-		//		packetShoot << netS.clientsVec[i].name << netS.clientsVec[i].nameEnemy << netS.clientsVec[i].damage;
-		//		cout << "danage"<< netS.clientsVec[i].damage << endl;
-
-		//	}
-		//	if (netS.sendDataToAll(packetShoot) == Socket::Status::Done)
-		//	{
-		//		packetShoot.clear();
-		//		flag = false;
-		//		cout << "ura" << endl;
-		//	}
-		//}
-
 	
 		unsigned int receivedClientIndex;
 		if (netS.receiveData(receivedClientIndex) == Socket::Status::Done)
@@ -98,23 +82,7 @@ int main()
 
 						//cout << netS.clientsVec[receivedClientIndex].name << netS.clientsVec[receivedClientIndex].pos.x << " " << netS.clientsVec[receivedClientIndex].pos.y << " " << netS.clientsVec[receivedClientIndex].pos.z << endl;
 					}
-				/*	if (s == "ATTACK")
-					{
-						flag = true;
-						string name;
-						float damage;
-						if (netS.clientsVec[receivedClientIndex].rDataPacket >> name)
-						{
-							netS.clientsVec[receivedClientIndex].nameEnemy = name;
-
-						}
-						if (netS.clientsVec[receivedClientIndex].rDataPacket >> damage)
-						{
-							netS.clientsVec[receivedClientIndex].damage = damage;
-
-						}
-						netS.clientsVec[receivedClientIndex].rDataPacket.clear();
-					}*/
+				
 				}
 			}
 		}

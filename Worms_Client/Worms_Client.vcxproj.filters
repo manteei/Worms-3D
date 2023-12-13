@@ -30,9 +30,6 @@
     <ClCompile Include="src\textureManager.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\enemy.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="src\camera.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -60,6 +57,12 @@
     <ClCompile Include="src\command\Teleport.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="src\Health.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command\MachineGun.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\NetworkClient.h">
@@ -72,9 +75,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\textureManager.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="src\enemy.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\camera.h">
@@ -95,16 +95,13 @@
     <ClInclude Include="src\InitText.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\command\Turboranec.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="src\command\ActionInvoker.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\command\Actions.h">
+    <ClInclude Include="src\command\Actions.cpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\command\Teleport.h">
+    <ClInclude Include="src\Health.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

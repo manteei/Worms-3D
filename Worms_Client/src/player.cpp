@@ -1,8 +1,13 @@
 #include "player.h"
+int Player::generateRandomNumber() {
+    srand(time(0)); 
+    int randomNumber = rand() % 401 + 400; 
+    return randomNumber;
+}
 
 Player::Player(float size0)
 {
-    x = 600; y = 200; z = 600;
+    x = generateRandomNumber(); y = generateRandomNumber(); z = generateRandomNumber();
     dx = 0; dy = 0; dz = 0;
     w = 5; h = 10; d = 5;
     onGround = flying = needJump = false;

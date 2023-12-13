@@ -4,6 +4,7 @@
 void ActionInvoker::setCommand() {
 	addCommand(L"Турборанец", &ranec);
 	addCommand(L"Телепорт", &teleport);
+	addCommand(L"Пулемет", &machineGun);
 }
 ActionInvoker::ActionInvoker() 
 {

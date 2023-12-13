@@ -130,13 +130,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\command\MachineGun.cpp" />
+    <ClCompile Include="src\Health.cpp" />
     <ClCompile Include="src\command\ActionInvoker.cpp" />
     <ClCompile Include="src\About_Game.cpp" />
     <ClCompile Include="src\GameMenu.cpp" />
     <ClCompile Include="src\GameStart.cpp" />
     <ClCompile Include="src\Options.cpp" />
     <ClCompile Include="src\camera.cpp" />
-    <ClCompile Include="src\enemy.cpp" />
     <ClCompile Include="src\map.cpp" />
     <ClCompile Include="src\NetworkClient.cpp" />
     <ClCompile Include="src\player.cpp" />
@@ -147,21 +148,19 @@
     <ClCompile Include="src\command\Teleport.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\command\Actions.h" />
+    <ClInclude Include="src\Health.h" />
+    <ClInclude Include="src\command\Actions.cpp" />
     <ClInclude Include="src\command\ActionInvoker.h" />
     <ClInclude Include="src\About_Game.h" />
     <ClInclude Include="src\GameMenu.h" />
     <ClInclude Include="src\GameStart.h" />
     <ClInclude Include="src\Options.h" />
     <ClInclude Include="src\camera.h" />
-    <ClInclude Include="src\enemy.h" />
     <ClInclude Include="src\map.h" />
     <ClInclude Include="src\NetworkClient.h" />
     <ClInclude Include="src\player.h" />
     <ClInclude Include="src\textureManager.h" />
     <ClInclude Include="src\InitText.h" />
-    <ClInclude Include="src\command\Turboranec.h" />
-    <ClInclude Include="src\command\Teleport.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\..\Downloads\4.jpg" />

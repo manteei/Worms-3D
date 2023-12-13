@@ -9,9 +9,9 @@
 #include "player.h"
 #include "map.h"
 #include "NetworkClient.h"
-#include "enemy.h"
 #include "camera.h"
 #include "Options.h"
+#include "Health.h"
 #include "InitText.h"
 #include "command/ActionInvoker.h"
 
@@ -34,7 +34,7 @@ class GamåStart
 	float angleX, angleY;
 	const float PI = 3.141592653;
 	Player player;
-	Text Titul, health;
+	Text Titul;
 	InitText initText;
 	Clock timer;
 	float damage;

@@ -16,9 +16,12 @@ void Options::setInitButton(RectangleShape& button, Texture& texture, String& fi
 
 
 Options::Options(RenderWindow& window, float menux, float menuy,
-	int index, String name[], String file[], int sizeFont, int step)
+	int index, String name_menu[], int sizeFont, int step)
 	:mywindow(window), menu_X(menux), menu_Y(menuy), size_font(sizeFont), menu_Step(step)
 {
+	String file[]{ L"resources/tools/drobovik.png",L"resources/tools/raketa.png",L"resources/tools/parashut.png",L"resources/tools/dubinka.png",L"resources/tools/vzryv.png",L"resources/tools/granata.png",
+		L"resources/tools/pulemet.png",L"resources/tools/teleport.png",L"resources/tools/chermageddon.png",L"resources/tools/magnit.png",L"resources/tools/banan.png",L"resources/tools/oslik.png" ,
+	L"resources/tools/sheep.png",L"resources/tools/kulak.png",L"resources/tools/Turboranec.png" };
 	max_menu = index; 
 	mainMenu = new RectangleShape[max_menu];     
 	nameTools = new Text[max_menu];
@@ -28,7 +31,7 @@ Options::Options(RenderWindow& window, float menux, float menuy,
 	for (int ypos = menu_Y; ypos < 960 and i < max_menu; ypos += menu_Step)
 		for (int xpos = menu_X; xpos < 1800 and i < max_menu; xpos += menu_Step) {
 			setInitButton(mainMenu[i], texture[i], file[i], xpos, ypos);
-			initText.texts(nameTools[i], menu_X, menu_Y - 70, name[i], size_font, menu_text_color, 2, menu_text_color_border);
+			initText.texts(nameTools[i], menu_X, menu_Y - 70, name_menu[i], size_font, menu_text_color, 2, menu_text_color_border);
 			i++;
 		}
 

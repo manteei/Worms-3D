@@ -27,7 +27,7 @@ GameMenu::GameMenu(RenderWindow& window, float menux, float menuy,
 
 	max_menu = index; 
 	mainMenu = new Text[max_menu];   
-	// Выстраиваем элементы меню
+	
 	for (int i = 0, ypos = menu_Y; i < max_menu; i++, ypos += menu_Step)
 		initText.texts(mainMenu[i], menu_X, ypos, name[i], size_font, menu_text_color, 3, border_color);
 	mainMenuSelected = 1; 

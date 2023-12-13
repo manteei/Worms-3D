@@ -1,5 +1,5 @@
 #pragma once
-#include "Actions.h"
+#include "Actions.cpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/OpenGL.hpp>
 #include <iostream>
@@ -7,15 +7,14 @@
 #include "../player.h"
 #include "../camera.h"
 using namespace sf;
-class Teleport : public Actions 
+class MachineGun : public Actions
 {
 public:
 	void execute(Player& player, Camera& camera) override {
-		player.setPosition(680, player.y, 700);
-		player.flying = true;
-		camera.showMap = true;
-		camera.farPlayers = 800;
-		
+		player.canShoot = true;
+		player.damage = 10;
+		std::cout << " sdfsd" << std::endl;
+
 	}
 };
 

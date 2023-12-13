@@ -36,7 +36,7 @@ class Options
 public:
 	
 	Options(RenderWindow& window, float menux, float menuy,
-		int index, String name[], String file[], int sizeFont = 60, int step = 80);
+		int index, String name[], int sizeFont = 60, int step = 80);
 
 	~Options()
 	{
