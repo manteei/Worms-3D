@@ -23,7 +23,6 @@ class Options
 	// Динамический массив текстовых объектов названий пунктов меню
 	RectangleShape* mainMenu;
 
-
 	Color menu_text_color_border = Color::Black;    
 	Color chose_text_color_border = Color::Red;  
 	Color menu_text_color = Color(237, 147, 0);

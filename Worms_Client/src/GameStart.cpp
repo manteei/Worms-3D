@@ -1,17 +1,17 @@
 #include "GameStart.h"
 
 
-GamåStart::GamåStart(NetworkClient& netC0, IpAddress S_Ip0, unsigned short S_port0, Player player0, vector<string> namesVec0)
+GamåStart::GamåStart(NetworkClient& netC0, IpAddress S_Ip0, unsigned short S_port0, TeamWorms player0, vector<string> namesVec0)
 	:netC(netC0), S_Ip(S_Ip0), S_port(S_port0), player(player0), namesVec(namesVec0)
 {
+	//player.createTeam();
 }
 
 void GamåStart::addPlayer(string clientName)
 {
-	Player enemy(size0);
+	TeamWorms enemy;
 	enemyVec.push_back(enemy);
 	enemyVec.back().name = clientName;
-
 };
 
 
@@ -42,7 +42,6 @@ void GamåStart::start()
 	background_ab.setTexture(&texture_ab);
 	background_ab.setPosition(1500, 600);
 
-
 	
 
 	RectangleShape background_timer(Vector2f(100, 100));
@@ -70,8 +69,8 @@ void GamåStart::start()
 
 	Map myMap(64, 15, 64);
 	std::vector<std::vector<std::vector<bool>>> mass(100, std::vector<std::vector<bool>>(100, std::vector<bool>(100, false)));
-
-	Camera camera(player);
+	
+	Camera camera(player.team[player.selectesWorm]);
 	
 	glEnable(GL_DEPTH_TEST);
 	glDepthMask(GL_TRUE);
@@ -123,31 +122,36 @@ void GamåStart::start()
 					{
 						while (!receivedDataPacket.endOfPacket())
 						{
-							float x, y, z;
-							float damage;
-							string name;
+							float x, y, z, x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4, x5, y5, z5;
 							receivedDataPacket >> s;
-							receivedDataPacket >> x;
-							receivedDataPacket >> y;
-							receivedDataPacket >> z;
-							receivedDataPacket >> name;
-							receivedDataPacket >> damage;
-
+							receivedDataPacket >> x; receivedDataPacket >> y; receivedDataPacket >> z;
+							receivedDataPacket >> x1; receivedDataPacket >> y1; receivedDataPacket >> z1;
+							receivedDataPacket >> x2; receivedDataPacket >> y2; receivedDataPacket >> z2;
+							receivedDataPacket >> x3; receivedDataPacket >> y3; receivedDataPacket >> z3;
+							receivedDataPacket >> x4; receivedDataPacket >> y4; receivedDataPacket >> z4;
+							receivedDataPacket >> x5; receivedDataPacket >> y5; receivedDataPacket >> z5;
+							
 							for (int i = 0; i < enemyVec.size(); i++)
 							{
-								if (s == enemyVec[i].name) enemyVec[i].setPosition(x, y, z);
-								if (name == enemyVec[i].name) enemyVec[i].health -= damage;
+								if (s == enemyVec[i].name) {
+									enemyVec[i].team[0].setPosition(x, y, z);
+									enemyVec[i].team[1].setPosition(x1, y1, z1);
+									enemyVec[i].team[2].setPosition(x2, y2, z2);
+									enemyVec[i].team[3].setPosition(x3, y3, z3);
+									enemyVec[i].team[4].setPosition(x4, y4, z4);
+									enemyVec[i].team[5].setPosition(x5, y5, z5);
+								}
+									
+							//	if (name == enemyVec[i].name) enemyVec[i].health -= damage;
 							}
-							if (name == player.name) player.health -= damage;
+						//	if (name == player.name) player.health -= damage;
 						}
 					}
 				}
 			}
 		}
 
-		damage = 0;
-		nameEnemy = "";
-		health.updateHealth(player, enemyVec);
+		
 
 		Event event;
 		while (window.pollEvent(event))
@@ -163,11 +167,11 @@ void GamåStart::start()
 				
 				if (camera.showMap) {
 					offset = Mouse::getPosition();
-					player.x = int(offset.x * 0.7);
-					player.z = int(offset.y * 1.3);
+					player.team[player.selectesWorm].x = int(offset.x * 0.7);
+					player.team[player.selectesWorm].z = int(offset.y * 1.3);
 					for (int i = myMap.maxY; i >= myMap.minY; i--) {
-						if (mass[int(player.x / size0)][i][int(player.z / size0)] == 1) {
-							player.y = i * size0 + size0;
+						if (mass[int(player.team[player.selectesWorm].x / size0)][i][int(player.team[player.selectesWorm].z / size0)] == 1) {
+							player.team[player.selectesWorm].y = i * size0 + size0;
 							break;
 						}
 					}
@@ -188,38 +192,49 @@ void GamåStart::start()
 
 			if (event.type == Event::KeyReleased)
 			{
-				if (event.key.code == Keyboard::Up) { mymenu.MoveUp(); }
-				if (event.key.code == Keyboard::Down) { mymenu.MoveDown(); }
-				if (event.key.code == Keyboard::Left) { mymenu.MoveLeft(); }
-				if (event.key.code == Keyboard::Right) { mymenu.MoveRight(); }
-				if (event.key.code == Keyboard::Enter) { 
-					mymenu.showWindow = false;
-					windowIsActive = true; 
-					invoker.executeCommand(name_menu[mymenu.getSelectedMenuNumber()],player, camera); 
-					timer.restart();
-					
-					
+				if (mymenu.showWindow) {
+					if (event.key.code == Keyboard::Up) { mymenu.MoveUp(); }
+					if (event.key.code == Keyboard::Down) { mymenu.MoveDown(); }
+					if (event.key.code == Keyboard::Left) { mymenu.MoveLeft(); }
+					if (event.key.code == Keyboard::Right) { mymenu.MoveRight(); }
+					if (event.key.code == Keyboard::Enter) {
+						mymenu.showWindow = false;
+						windowIsActive = true;
+						invoker.executeCommand(name_menu[mymenu.getSelectedMenuNumber()], player.team[player.selectesWorm], camera);
+						timer.restart();
+					}
 				}
-				if (event.key.code == Keyboard::Space && player.canShoot) { shoot = 1; }
+				else {
+					if (event.key.code == Keyboard::Left) { player.changeWorm(player.selectesWorm -= 1); }
+					if (event.key.code == Keyboard::Right) { player.changeWorm(player.selectesWorm += 1); }
+				}
+
+				
+				if (event.key.code == Keyboard::Space && player.team[player.selectesWorm].canShoot) { shoot = 1; }
 			}
 		}
 		
 
-		if (timer.getElapsedTime().asSeconds() < 10 && (player.flying || player.canShoot)) {
+		if (timer.getElapsedTime().asSeconds() < 10 && (player.team[player.selectesWorm].flying || player.team[player.selectesWorm].canShoot)) {
 			initText.timer(Titul, 126, 780, 10- timer.getElapsedTime().asSeconds(), 100, Color(66, 170, 255), 4, Color::White);
 			
 		}
-		else { player.flying = false; player.canShoot = false;
+		else {
+			player.team[player.selectesWorm].flying = false; player.team[player.selectesWorm].canShoot = false;
 		}
 
 
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		if (windowIsActive) {
-			player.keyboard(angleX);
-			player.update(cycleTime, mass, myMap);
+			player.team[player.selectesWorm].keyboard(angleX);
+			for (int i = 0; i < 6; i++) {
+				player.team[i].update(cycleTime, mass, myMap);
+				
+			}
+			
 			camera.keyboard();
-			camera.update(cycleTime, player);
+			camera.update(cycleTime, player.team[player.selectesWorm]);
 
 			POINT mousexy;
 			GetCursorPos(&mousexy);
@@ -234,41 +249,43 @@ void GamåStart::start()
 
 			SetCursorPos(xt, yt);
 
-			if (shoot)
-			{
-				float x = player.x;
-				float y = player.y + player.h;
-				float z = player.z;
+			//if (shoot)
+			//{
+			//	float x = player.x;
+			//	float y = player.y + player.h;
+			//	float z = player.z;
 
-				int X, Y, Z;
-				int dist = 0;
-				bool flag = false;
-				
-				while (dist < 120)  // ðàäèóñ äåéñòâèÿ
-				{		
-					dist++;
-					x += -sin(angleX / 180 * PI);    X = x ;
-					y += tan(angleY / 180 * PI);    Y = y ;
-					z += -cos(angleX / 180 * PI);    Z = z ;
+			//	int X, Y, Z;
+			//	int dist = 0;
+			//	bool flag = false;
+			//	
+			//	while (dist < 120)  // ðàäèóñ äåéñòâèÿ
+			//	{		
+			//		dist++;
+			//		x += -sin(angleX / 180 * PI);    X = x ;
+			//		y += tan(angleY / 180 * PI);    Y = y ;
+			//		z += -cos(angleX / 180 * PI);    Z = z ;
 
-					for (int i = 0; i < enemyVec.size(); i++) {
-						if (x  <= enemyVec[i].x + size0 /2 && x   >= enemyVec[i].x - size0 / 2 &&
-							y  <= enemyVec[i].y + size0 / 2 && y   >= enemyVec[i].y - size0 / 2 &&
-							z  <= enemyVec[i].z + size0 / 2 && z  >= enemyVec[i].z - size0 / 2)
-						{
-							damage = player.damage;
-							flag = true;
-							nameEnemy = enemyVec[i].name;
-							break;
-						}
-					}
-					if (flag) break;
-				}
-			}
-			shoot = 0;
+			//		for (int i = 0; i < enemyVec.size(); i++) {
+			//			if (x  <= enemyVec[i].x + size0 /2 && x   >= enemyVec[i].x - size0 / 2 &&
+			//				y  <= enemyVec[i].y + size0 / 2 && y   >= enemyVec[i].y - size0 / 2 &&
+			//				z  <= enemyVec[i].z + size0 / 2 && z  >= enemyVec[i].z - size0 / 2)
+			//			{
+			//				damage = player.damage;
+			//				flag = true;
+			//				nameEnemy = enemyVec[i].name;
+			//				break;
+			//			}
+			//		}
+			//		if (flag) break;
+			//	}
+			//}
+			//shoot = 0;
 		}
 		sendDataPacket.clear();
-		sendDataPacket << "DATA" << player.x << player.y << player.z << nameEnemy << damage;
+		sendDataPacket << "DATA" << player.team[0].x << player.team[0].y << player.team[0].z << player.team[1].x << player.team[1].y << player.team[1].z
+			<< player.team[2].x << player.team[2].y << player.team[2].z << player.team[3].x << player.team[3].y << player.team[3].z 
+			<< player.team[4].x << player.team[4].y << player.team[4].z << player.team[5].x << player.team[5].y << player.team[5].z;
 		netC.sendData(sendDataPacket);
 
 		if (camera.showMap ) {
@@ -292,6 +309,14 @@ void GamåStart::start()
 		myMap.drawMap(textureManager, size0, box, sand, mass);
 
 		for (int i = 0; i < enemyVec.size(); i++)
+		{
+			for (int j = 0; j < 6; j++) {
+				glTranslatef(enemyVec[i].team[j].x, enemyVec[i].team[j].y, enemyVec[i].team[j].z);
+				textureManager.drawBox(worm, size0 / 5);
+				glTranslatef(-enemyVec[i].team[j].x, -enemyVec[i].team[j].y, -enemyVec[i].team[j].z);
+			}
+		}
+		/*for (int i = 0; i < enemyVec.size(); i++)
 		{
 			Vector2f windowCoords;
 			textureManager.convertWorldToWindowCoordinates(enemyVec[i].x, enemyVec[i].y, enemyVec[i].z, windowCoords, window);
@@ -330,11 +355,13 @@ void GamåStart::start()
 				window.popGLStates();
 				glTranslatef(-enemyVec[i].x, -enemyVec[i].y, -enemyVec[i].z);
 			}
+		}*/
+		for (int i = 0; i < 6; i++) {
+			glTranslatef(player.team[i].x, player.team[i].y, player.team[i].z);
+			textureManager.drawBox(worm, size0 / 10);
+			glTranslatef(-player.team[i].x, -player.team[i].y, -player.team[i].z);
 		}
-
-		glTranslatef(player.x, player.y, player.z);
-		textureManager.drawBox(worm, size0 / 10);
-		glTranslatef(-player.x, -player.y, -player.z);
+		
 
 
 		window.pushGLStates();
@@ -343,11 +370,11 @@ void GamåStart::start()
 			window.draw(background_ab);
 			mymenu.draw();
 		}
-		if (player.flying || player.canShoot) {
+		if (player.team[player.selectesWorm].flying || player.team[player.selectesWorm].canShoot) {
 			window.draw(background_timer);
 			window.draw(Titul);
 		}
-		health.draw();
+	//	health.draw();
 		window.popGLStates();
 		window.display();
 

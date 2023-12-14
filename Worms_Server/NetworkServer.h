@@ -18,8 +18,8 @@ struct Client
 	Packet rDataPacket;
 	Packet sDataPacket;
 	bool done = true;
-
-	Vector3f pos{ 100,100,100 };
+	vector<Vector3f>pos{ { 100,100,100 }, { 100,100,100 }, { 100,100,100 }, { 100,100,100 }, { 100,100,100 }, { 100,100,100 }};
+	//Vector3f pos{ 100,100,100 };
 
 };
 

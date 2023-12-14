@@ -4,6 +4,7 @@
 #include "InitText.h"
 #include "About_Game.h"
 #include "player.h"
+#include "TeamWorms.h"
 #include "NetworkClient.h"
 using namespace sf;
 
@@ -13,7 +14,8 @@ About_Game about_Game;
 
 IpAddress S_Ip;
 unsigned short S_port;
-Player player(20.f);
+
+TeamWorms teamWorms;
 NetworkClient netC;
 
 void getUserInputData(string& playerName);
@@ -21,13 +23,13 @@ void getUserInputData(string& playerName);
 
 int main()
 {
-    getUserInputData(player.name);
+    getUserInputData(teamWorms.name);
     netC.init();
-    netC.registerOnServer(S_Ip, S_port, player.name);
+    netC.registerOnServer(S_Ip, S_port, teamWorms.name);
     vector<string> namesVec;
     netC.receiveConnectedClientsNames(namesVec);
-    GamåStart games(netC, S_Ip, S_port, player, namesVec);
-    
+    GamåStart games(netC, S_Ip, S_port, teamWorms, namesVec);
+
    
 
     RenderWindow window;

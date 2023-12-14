@@ -6,6 +6,7 @@
 #include "player.h"
 #include "map.h"
 #include "player.h"
+#include "TeamWorms.h"
 
 using namespace sf;
 

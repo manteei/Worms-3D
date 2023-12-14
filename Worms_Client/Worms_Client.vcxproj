@@ -146,6 +146,7 @@
     <ClCompile Include="src\InitText.cpp" />
     <ClCompile Include="src\command\Turboranec.cpp" />
     <ClCompile Include="src\command\Teleport.cpp" />
+    <ClCompile Include="src\TeamWorms.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Health.h" />
@@ -161,6 +162,7 @@
     <ClInclude Include="src\player.h" />
     <ClInclude Include="src\textureManager.h" />
     <ClInclude Include="src\InitText.h" />
+    <ClInclude Include="src\TeamWorms.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\..\Downloads\4.jpg" />

@@ -16,11 +16,11 @@ public:
     float dx, dy, dz;
     float w, h, d;
     bool onGround, needJump, flying = false, onSand, canShoot = false;
-    float speed, size;
+    float speed, size = 20.0f;
     const float PI = 3.141592653;
     float health= 100.0f, damage = 0;
     int generateRandomNumber();
-    Player(float size0);
+    Player();   
     void update(Time time, std::vector < std::vector<std::vector<bool>>>& mass, Map map);
     void collision(float Dx, float Dy, float Dz, std::vector < std::vector<std::vector<bool>>>& mass, Map map);
     void keyboard(float angleX);

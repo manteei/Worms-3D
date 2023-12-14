@@ -1,18 +1,19 @@
 #include "player.h"
+
 int Player::generateRandomNumber() {
-    srand(time(0)); 
-    int randomNumber = rand() % 401 + 400; 
+    // srand(time(0)); 
+    int randomNumber = rand() % 501 + 500;
     return randomNumber;
 }
-
-Player::Player(float size0)
+Player::Player()
 {
+
     x = generateRandomNumber(); y = generateRandomNumber(); z = generateRandomNumber();
     dx = 0; dy = 0; dz = 0;
     w = 5; h = 10; d = 5;
     onGround = flying = needJump = false;
-    size = size0;
     onSand = true;
+    std::cout << name << "  " << x << std::endl;
 }
 
 void Player::load(Font& font)
@@ -29,15 +30,14 @@ void Player::update(Time time, std::vector < std::vector<std::vector<bool>>>& ma
     needJump = false;
     if (!onGround) dy -= time.asSeconds() * 50;
     onGround = 0;
-
     x += dx * time.asSeconds() * 50;
     collision(dx, 0, 0, mass, map);
     y += dy * time.asSeconds() * 50;
     collision(0, dy, 0, mass, map);
     z += dz * time.asSeconds() * 50;
     collision(0, 0, dz, mass, map);
-
     dx = dz = 0;
+    
 }
 
 void Player::draw(RenderWindow& window)
@@ -132,6 +132,7 @@ void Player::keyboard(float angleX)
             onGround = false; dy = size / 5;
         }
         if (flying) { dx *= size / 10; dz *= size / 10; }
+
     }
 
     if (Keyboard::isKeyPressed(Keyboard::S))
