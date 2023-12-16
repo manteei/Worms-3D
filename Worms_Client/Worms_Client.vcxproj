@@ -130,6 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\settings.cpp" />
     <ClCompile Include="src\command\MachineGun.cpp" />
     <ClCompile Include="src\Health.cpp" />
     <ClCompile Include="src\command\ActionInvoker.cpp" />
@@ -148,6 +149,7 @@
     <ClCompile Include="src\command\Teleport.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\settings.h" />
     <ClInclude Include="src\Health.h" />
     <ClInclude Include="src\command\Actions.cpp" />
     <ClInclude Include="src\command\ActionInvoker.h" />

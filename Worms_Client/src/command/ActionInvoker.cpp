@@ -22,6 +22,6 @@ void ActionInvoker::executeCommand(String& name, Player& player0, Camera& camera
 	
 	else {
 		
-		std::cout << "Команда не найдена" << std::endl;
+		std::cout << "Command not found" << std::endl;
 	}
 }

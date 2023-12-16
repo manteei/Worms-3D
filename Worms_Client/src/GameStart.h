@@ -45,6 +45,6 @@ public:
 	GamåStart(NetworkClient& netC0, IpAddress S_Ip0, unsigned short S_port0, Player player0, vector<string> namesVec0);
 	void start();
 	void addPlayer(string clientName);
-
+	void deletePlayer(string clientName);
 };
 

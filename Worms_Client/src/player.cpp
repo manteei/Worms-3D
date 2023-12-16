@@ -5,6 +5,45 @@ int Player::generateRandomNumber() {
     return randomNumber;
 }
 
+Player& Player::operator=(const Player& other)
+{
+    if (this != &other)
+    {
+        // Копирование членов класса
+        name = other.name;
+        x = other.x;
+        y = other.y;
+        z = other.z;
+        dx = other.dx;
+        dy = other.dy;
+        dz = other.dz;
+        w = other.w;
+        h = other.h;
+        d = other.d;
+        onGround = other.onGround;
+        needJump = other.needJump;
+        flying = other.flying;
+        onSand = other.onSand;
+        canShoot = other.canShoot;
+        speed = other.speed;
+        size = other.size;
+        PI = other.PI;
+        health = other.health;
+        damage = other.damage;
+
+        // Копирование текста и его ресурсов
+        t = other.t;
+
+        // Проверка, что у other.t установлен шрифт
+        if (other.t.getFont())
+        {
+            // Копирование шрифта, если он установлен
+            t.setFont(*other.t.getFont());
+        }
+    }
+    return *this;
+}
+
 Player::Player(float size0)
 {
     x = generateRandomNumber(); y = generateRandomNumber(); z = generateRandomNumber();

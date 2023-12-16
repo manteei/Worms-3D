@@ -4,17 +4,18 @@
 #include "InitText.h"
 #include "About_Game.h"
 #include "player.h"
+#include "settings.h"
 #include "NetworkClient.h"
 using namespace sf;
 
 
 InitText initText;
 About_Game about_Game;
-
+Settings setting;
 IpAddress S_Ip;
 unsigned short S_port;
 Player player(20.f);
-NetworkClient netC;
+
 
 void getUserInputData(string& playerName);
 
@@ -22,11 +23,7 @@ void getUserInputData(string& playerName);
 int main()
 {
     getUserInputData(player.name);
-    netC.init();
-    netC.registerOnServer(S_Ip, S_port, player.name);
-    vector<string> namesVec;
-    netC.receiveConnectedClientsNames(namesVec);
-    GamеStart games(netC, S_Ip, S_port, player, namesVec);
+    
     
    
 
@@ -83,8 +80,17 @@ int main()
                     // Переходим на выбранный пункт меню
                     switch (mymenu.getSelectedMenuNumber())
                     {
-                    case 0:games.start(); break;
-                    case 1: break;
+                    case 0: {
+                        NetworkClient netC;
+                        netC.init();
+                        netC.registerOnServer(S_Ip, 12345, setting.getName());
+                        player.name = setting.getName();
+                        vector<string> namesVec;
+                        netC.receiveConnectedClientsNames(namesVec);
+                        GamеStart games(netC, S_Ip, S_port, player, namesVec);
+                        games.start(); 
+                            break;}
+                    case 1:setting.inputName(); break;
                     case 2:about_Game.showInformation(); break;
                     case 3:window.close(); break;
 
@@ -107,10 +113,10 @@ void getUserInputData(string& playerName)
     //cout << "Enter server IP: ";
     //cin >> serverIp;
     S_Ip = "localhost";
-    std::cout << endl;
-    std::cout << "Enter server registration port: ";
-    std::cin >> S_port;
-    std::cout << endl;
-    std::cout << "Enter name: ";
-    std::cin >> playerName;
+   // std::cout << endl;
+   // std::cout << "Enter server registration port: ";
+    //std::cin >> S_port;
+    //std::cout << endl;
+   // std::cout << "Enter name: ";
+    //std::cin >> playerName;
 };

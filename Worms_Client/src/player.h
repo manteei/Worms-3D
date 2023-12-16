@@ -9,6 +9,7 @@ using namespace sf;
 
 class Player
 {
+
 public:
     Text t;
     std::string name;
@@ -17,7 +18,7 @@ public:
     float w, h, d;
     bool onGround, needJump, flying = false, onSand, canShoot = false;
     float speed, size;
-    const float PI = 3.141592653;
+    float PI = 3.141592653;
     float health= 100.0f, damage = 0;
     int generateRandomNumber();
     Player(float size0);
@@ -29,5 +30,7 @@ public:
     void load(Font& font);
     void draw(RenderWindow& window);
     void setFlying(bool fly);
+    // явное объ€вление оператора присваивани€ без реализации
+    Player& operator=(const Player&);
 };
 

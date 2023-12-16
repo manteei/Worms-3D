@@ -13,6 +13,13 @@ void GamеStart::addPlayer(string clientName)
 	enemyVec.back().name = clientName;
 
 };
+void GamеStart::deletePlayer(string clientName)
+{
+	Player enemy(size0);
+	enemyVec.push_back(enemy);
+	enemyVec.back().name = clientName;
+
+};
 
 
 
@@ -119,7 +126,7 @@ void GamеStart::start()
 							}
 						}
 					}
-					if (s == "DATA")
+					else if (s == "DATA")
 					{
 						while (!receivedDataPacket.endOfPacket())
 						{
@@ -141,6 +148,25 @@ void GamеStart::start()
 							if (name == player.name) player.health -= damage;
 						}
 					}
+					else if (s == "DEAD") {
+						string name;
+						receivedDataPacket >> name;
+						// Используйте итератор для обхода вектора и найдите элемент, который нужно удалить
+						auto it = std::find_if(enemyVec.begin(), enemyVec.end(), [&](const Player& player) {
+							return player.name == name;
+							});
+
+						// Проверяем, найден ли элемент
+						if (it != enemyVec.end()) {
+							// Удаляем элемент
+							enemyVec.erase(it);
+							std::cout << name << " убили" << std::endl;
+						}
+						else {
+							std::cout << name << " не найден" << std::endl;
+						}
+					}
+
 				}
 			}
 		}
