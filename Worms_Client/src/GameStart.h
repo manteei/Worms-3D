@@ -13,6 +13,7 @@
 #include "Options.h"
 #include "Health.h"
 #include "InitText.h"
+#include "ConfirmClosure.h"
 #include "command/ActionInvoker.h"
 
 

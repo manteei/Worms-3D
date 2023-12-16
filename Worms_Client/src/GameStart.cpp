@@ -29,7 +29,7 @@ void GamåStart::start()
 	RenderWindow window(VideoMode::getDesktopMode(), L"WORMS", Style::Default, ContextSettings(32));
 	bool isDragging = false;
 	Vector2i offset;
-
+	ConfirmClosure confirmClosure;
 	window.setVerticalSyncEnabled(true);
 
 	window.setActive(true);
@@ -178,11 +178,10 @@ void GamåStart::start()
 		Event event;
 		while (window.pollEvent(event))
 		{
-			if (event.type == Event::Closed)
-				window.close();
-
-			if ((event.type == Event::KeyPressed) && (event.key.code == Keyboard::Escape))
-				window.close();
+			if ((event.type == Event::KeyPressed) && (event.key.code == Keyboard::Escape)) {
+				confirmClosure.showConfirmClosure();
+				if (confirmClosure.needClose){ window.close(); }
+			}
 			
 			if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left )
 			{

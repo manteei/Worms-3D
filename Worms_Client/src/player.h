@@ -4,7 +4,7 @@
 #include <iostream>
 #include <GL/glu.h>
 #include "map.h"
-
+#include <random>
 using namespace sf;
 
 class Player

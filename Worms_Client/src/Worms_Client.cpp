@@ -12,34 +12,23 @@ using namespace sf;
 InitText initText;
 About_Game about_Game;
 Settings setting;
-IpAddress S_Ip;
+IpAddress S_Ip = "localhost";
 unsigned short S_port;
 Player player(20.f);
-
-
-void getUserInputData(string& playerName);
+Text warning;
 
 
 int main()
 {
-    getUserInputData(player.name);
-    
-    
-   
 
     RenderWindow window;
     window.create(VideoMode::getDesktopMode(), L"Моя игра", Style::Default);
-
-    //отключаем видимость курсора
     window.setMouseCursorVisible(false);
 
     float width = VideoMode::getDesktopMode().width;
     float height = VideoMode::getDesktopMode().height;
 
-    // Устанавливаем фон для графического окна 
-    // Создаём прямоугольник
     RectangleShape background(Vector2f(width, height));
-    // Загружаем в прямоугольник текстуру с изображением menu9.jpg
     Texture texture_window;
     if (!texture_window.loadFromFile("resources/4.jpg")) return 4;
     background.setTexture(&texture_window);
@@ -48,18 +37,11 @@ int main()
     Text Titul;
    
     initText.texts(Titul, 730, 50, L"WORMS", 150, Color(237, 147, 0), 3);
-
-    // Название пунктов меню
     String name_menu[]{ L"Старт",L"Настройки", L"О игре",L"Выход" };
 
-    // Объект игровое меню
     GameMenu mymenu(window, 950, 350, 4, name_menu, 100, 120);
-    // Установка цвета элементов пунктов меню
     mymenu.setColorTextMenu(Color(237, 147, 0), Color::Red, Color::Black);
-    // выравнивание по центру пунктов меню 
     mymenu.AlignMenu(2);
-
-
 
     while (window.isOpen())
     {
@@ -69,15 +51,13 @@ int main()
 
             if (event.type == Event::KeyReleased)
             {
-                // События выбра пунктов меню
-                    // нажати на клавиатуре стрелки вверх
+                
                 if (event.key.code == Keyboard::Up) { mymenu.MoveUp(); }
-                // нажати на клавиатуре стрелки вниз
+
                 if (event.key.code == Keyboard::Down) { mymenu.MoveDown(); }
-                // нажати на клавиатуре клавиши Enter
+
                 if (event.key.code == Keyboard::Return)
                 {
-                    // Переходим на выбранный пункт меню
                     switch (mymenu.getSelectedMenuNumber())
                     {
                     case 0: {
@@ -85,6 +65,10 @@ int main()
                         netC.init();
                         netC.registerOnServer(S_Ip, 12345, setting.getName());
                         player.name = setting.getName();
+                        if (player.name == "") {
+                            initText.texts(warning,400,900,L"!!! Зайдите в настройки, чтобы ввести имя",60,Color::Red,3);
+                            break;
+                        }
                         vector<string> namesVec;
                         netC.receiveConnectedClientsNames(namesVec);
                         GamеStart games(netC, S_Ip, S_port, player, namesVec);
@@ -101,6 +85,8 @@ int main()
         window.clear();
         window.draw(background);
         window.draw(Titul);
+        if (setting.getName()=="") window.draw(warning);
+
         mymenu.draw();
         window.display();
     }
@@ -108,15 +94,3 @@ int main()
 };
 
 
-void getUserInputData(string& playerName)
-{
-    //cout << "Enter server IP: ";
-    //cin >> serverIp;
-    S_Ip = "localhost";
-   // std::cout << endl;
-   // std::cout << "Enter server registration port: ";
-    //std::cin >> S_port;
-    //std::cout << endl;
-   // std::cout << "Enter name: ";
-    //std::cin >> playerName;
-};

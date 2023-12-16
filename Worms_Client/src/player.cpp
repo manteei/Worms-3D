@@ -1,10 +1,12 @@
 #include "player.h"
-int Player::generateRandomNumber() {
-    srand(time(0)); 
-    int randomNumber = rand() % 401 + 400; 
-    return randomNumber;
-}
 
+int Player::generateRandomNumber() {
+    std::random_device rd;  
+    std::mt19937 gen(rd()); 
+    std::uniform_int_distribution<int> distribution(400, 800); 
+
+    return distribution(gen);
+}
 Player& Player::operator=(const Player& other)
 {
     if (this != &other)
