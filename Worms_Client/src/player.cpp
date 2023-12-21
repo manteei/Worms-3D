@@ -1,7 +1,8 @@
 #include "player.h"
 
 int Player::generateRandomNumber() {
-    // srand(time(0)); 
+    srand(time(NULL)); 
+ 
     int randomNumber = rand() % 501 + 500;
     return randomNumber;
 }
