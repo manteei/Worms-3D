@@ -35,8 +35,9 @@ int main()
 			packet << "DATA";
 			for (int i = 0; i < netS.clientsVec.size(); i++)
 			{
+
 				packet << netS.clientsVec[i].name << netS.clientsVec[i].pos.x << netS.clientsVec[i].pos.y << netS.clientsVec[i].pos.z << netS.clientsVec[i].nameEnemy << netS.clientsVec[i].damage;
-				
+
 			}
 		}
 
@@ -72,10 +73,11 @@ int main()
 				{
 					if (s == "DATA")
 					{
+
 						float x, y, z ;
 						string name;
 						float damage;
-						
+
 						if (netS.clientsVec[receivedClientIndex].rDataPacket >> x)
 						{
 							netS.clientsVec[receivedClientIndex].pos.x = x;

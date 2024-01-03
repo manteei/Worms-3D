@@ -131,6 +131,7 @@ void TextureManager::addName(std::string& text, const sf::Font& font, const sf::
     sfText.setCharacterSize(fontSize);
     sfText.setFillColor(sf::Color::Black);
     sfText.setPosition(position);
+
     window.draw(sfText);
 }
 
@@ -162,7 +163,9 @@ void TextureManager::convertWorldToWindowCoordinates(float worldX, float worldY,
     gluProject(worldX, worldY, worldZ, modelview, projection, viewport, &winX, &winY, &winZ);
 
     windowCoords.x = static_cast<float>(winX);
+
     windowCoords.y = static_cast<float>(window.getSize().y - winY);
+
 }
 
 GLuint TextureManager::createBox() {

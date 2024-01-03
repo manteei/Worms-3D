@@ -16,6 +16,7 @@ About_Game about_Game;
 Settings setting;
 IpAddress S_Ip = "localhost";
 unsigned short S_port;
+
 Player player(20.f);
 Text warning;
 
@@ -23,8 +24,9 @@ Text warning;
 int main()
 {
 
+
     RenderWindow window;
-    window.create(VideoMode::getDesktopMode(), L"Моя игра", Style::Default);
+    window.create(VideoMode::getDesktopMode(), L"пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ", Style::Default);
     window.setMouseCursorVisible(false);
 
     float width = VideoMode::getDesktopMode().width;
@@ -44,7 +46,7 @@ int main()
     Text Titul;
    
     initText.texts(Titul, 730, 50, L"WORMS", 150, Color(237, 147, 0), 3);
-    String name_menu[]{ L"Старт",L"Настройки", L"О игре",L"Выход" };
+    String name_menu[]{ L"пїЅпїЅпїЅпїЅпїЅ",L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ", L"пїЅ пїЅпїЅпїЅпїЅ",L"пїЅпїЅпїЅпїЅпїЅ" };
 
     GameMenu mymenu(window, 950, 350, 4, name_menu, 100, 120);
     mymenu.setColorTextMenu(Color(237, 147, 0), Color::Red, Color::Black);
@@ -75,12 +77,12 @@ int main()
                         netC.registerOnServer(S_Ip, 12345, setting.getName());
                         player.name = setting.getName();
                         if (player.name == "") {
-                            initText.texts(warning,400,900,L"!!! Зайдите в настройки, чтобы ввести имя",60,Color::Red,3);
+                            initText.texts(warning,400,900,L"!!! пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ",60,Color::Red,3);
                             break;
                         }
                         vector<string> namesVec;
                         netC.receiveConnectedClientsNames(namesVec);
-                        GamеStart games(netC, S_Ip, S_port, player, namesVec);
+                        GamпїЅStart games(netC, S_Ip, S_port, player, namesVec);
                         games.start(); 
                             break;}
                     case 1:setting.inputName(); break;

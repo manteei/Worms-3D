@@ -11,7 +11,7 @@ Player& Player::operator=(const Player& other)
 {
     if (this != &other)
     {
-        // Копирование членов класса
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         name = other.name;
         x = other.x;
         y = other.y;
@@ -33,13 +33,13 @@ Player& Player::operator=(const Player& other)
         health = other.health;
         damage = other.damage;
 
-        // Копирование текста и его ресурсов
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         t = other.t;
 
-        // Проверка, что у other.t установлен шрифт
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅ other.t пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         if (other.t.getFont())
         {
-            // Копирование шрифта, если он установлен
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             t.setFont(*other.t.getFont());
         }
     }
@@ -68,14 +68,14 @@ void Player::setFlying(bool fly) {
 void Player::update(Time time, std::vector < std::vector<std::vector<bool>>>& mass, Map map)
 {
     needJump = false;
-    if (!onGround) dy -= time.asSeconds() * 50;
+    if (!onGround) dy -= time.asSeconds() * 100;
     onGround = 0;
 
-    x += dx * time.asSeconds() * 50;
+    x += dx * time.asSeconds() * 100;
     collision(dx, 0, 0, mass, map);
-    y += dy * time.asSeconds() * 50;
+    y += dy * time.asSeconds() * 100;
     collision(0, dy, 0, mass, map);
-    z += dz * time.asSeconds() * 50;
+    z += dz * time.asSeconds() * 100;
     collision(0, 0, dz, mass, map);
 
     dx = dz = 0;
@@ -165,12 +165,15 @@ bool Player::check(int x, int y, int z, std::vector < std::vector<std::vector<bo
 void Player::keyboard(float angleX)
 {
 
+
     if (Keyboard::isKeyPressed(Keyboard::W))
     {
         dx = -sin(angleX / 180 * PI);
         dz = -cos(angleX / 180 * PI);
         if (needJump) {
+
             onGround = false; dy = size / 5;
+
         }
         if (flying) { dx *= size / 10; dz *= size / 10; }
     }
@@ -180,7 +183,9 @@ void Player::keyboard(float angleX)
         dx = sin(angleX / 180 * PI);
         dz = cos(angleX / 180 * PI);
         if (needJump) {
+
             onGround = false; dy = size / 5;
+
         }
         if (flying) { dx *= size / 10; dz *= size / 10; }
     }
@@ -190,7 +195,9 @@ void Player::keyboard(float angleX)
         dx = sin((angleX + 90) / 180 * PI);
         dz = cos((angleX + 90) / 180 * PI);
         if (needJump) {
+
             onGround = false; dy = size / 5;
+
         }
         if (flying) { dx *= size / 10; dz *= size / 10; }
     }
@@ -200,7 +207,9 @@ void Player::keyboard(float angleX)
         dx = sin((angleX - 90) / 180 * PI);
         dz = cos((angleX - 90) / 180 * PI);
         if (needJump) {
+
             onGround = false; dy = size / 5;
+
         }
         if (flying) { dx *= size / 10; dz *= size / 10; }
     }

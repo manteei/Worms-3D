@@ -13,13 +13,14 @@ Camera::Camera(Player player)
 
 void Camera::update(Time time, Player player)
 {
+
     if (!onGround) dy -= time.asSeconds() * 50;
 
     onGround = 0;
     y += dy * time.asSeconds() * 50;
     if (y + h + dy < player.y) { y = player.y; }
     if (y + h + dy > 600) { y = 600 - h; }
-    
+   
 
     x = player.x;  z = player.z;
 }
