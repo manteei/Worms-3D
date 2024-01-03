@@ -130,23 +130,114 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\attack.cpp" />
+
+    <ClCompile Include="src\ResultGame.cpp" />
+    <ClCompile Include="src\command\BananaBomb.cpp" />
+    <ClCompile Include="src\command\Dynamite.cpp" />
+    <ClCompile Include="src\command\Grenade.cpp" />
+    <ClCompile Include="src\command\Rocker.cpp" />
+    <ClCompile Include="src\command\ShotGun.cpp" />
+    <ClCompile Include="src\ConfirmClosure.cpp" />
+    <ClCompile Include="src\settings.cpp" />
+    <ClCompile Include="src\command\MachineGun.cpp" />
+    <ClCompile Include="src\Health.cpp" />
+    <ClCompile Include="src\command\ActionInvoker.cpp" />
+    <ClCompile Include="src\About_Game.cpp" />
+    <ClCompile Include="src\GameMenu.cpp" />
+    <ClCompile Include="src\GameStart.cpp" />
+    <ClCompile Include="src\Options.cpp" />
+
     <ClCompile Include="src\camera.cpp" />
-    <ClCompile Include="src\enemy.cpp" />
     <ClCompile Include="src\map.cpp" />
     <ClCompile Include="src\NetworkClient.cpp" />
     <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\textureManager.cpp" />
     <ClCompile Include="src\Worms_Client.cpp" />
+    <ClCompile Include="src\InitText.cpp" />
+    <ClCompile Include="src\command\Turboranec.cpp" />
+    <ClCompile Include="src\command\Teleport.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\attack.h" />
+
+    <ClInclude Include="src\ResultGame.h" />
+    <ClInclude Include="src\ConfirmClosure.h" />
+    <ClInclude Include="src\settings.h" />
+    <ClInclude Include="src\Health.h" />
+    <ClInclude Include="src\command\Actions.cpp" />
+    <ClInclude Include="src\command\ActionInvoker.h" />
+    <ClInclude Include="src\About_Game.h" />
+    <ClInclude Include="src\GameMenu.h" />
+    <ClInclude Include="src\GameStart.h" />
+    <ClInclude Include="src\Options.h" />
+
     <ClInclude Include="src\camera.h" />
-    <ClInclude Include="src\enemy.h" />
     <ClInclude Include="src\map.h" />
     <ClInclude Include="src\NetworkClient.h" />
     <ClInclude Include="src\player.h" />
     <ClInclude Include="src\textureManager.h" />
+    <ClInclude Include="src\InitText.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\..\Downloads\4.jpg" />
+    <Image Include="resources\3.jpg" />
+    <Image Include="resources\4.jpg" />
+    <Image Include="resources\cursorShot.png" />
+    <Image Include="resources\cursor.png" />
+    <Image Include="resources\grassBox\bottom.jpg" />
+    <Image Include="resources\grassBox\side.jpg" />
+    <Image Include="resources\grassBox\top.jpg" />
+    <Image Include="resources\heightmap.png" />
+    <Image Include="resources\heightmap2.png" />
+    <Image Include="resources\heightmap3.png" />
+    <Image Include="resources\loading.png" />
+    <Image Include="resources\q.png" />
+    <Image Include="resources\qq.png" />
+    <Image Include="resources\qqq.png" />
+    <Image Include="resources\skybox\back.png" />
+    <Image Include="resources\skybox\bottom.png" />
+    <Image Include="resources\skybox\front.png" />
+    <Image Include="resources\skybox\left.png" />
+    <Image Include="resources\skybox\right.png" />
+    <Image Include="resources\skybox\top.png" />
+    <Image Include="resources\textures\grass.jpg" />
+    <Image Include="resources\textures\pink.png" />
+    <Image Include="resources\textures\sand.jpg" />
+    <Image Include="resources\textures\top.jpg" />
+    <Image Include="resources\tools\back.png" />
+    <Image Include="resources\tools\background.png" />
+    <Image Include="resources\tools\banan.png" />
+    <Image Include="resources\tools\chermageddon.png" />
+    <Image Include="resources\tools\drobovik.png" />
+    <Image Include="resources\tools\dubinka.png" />
+    <Image Include="resources\tools\granata.png" />
+    <Image Include="resources\tools\kulak.png" />
+    <Image Include="resources\tools\magnit.png" />
+    <Image Include="resources\tools\oslik.png" />
+    <Image Include="resources\tools\parashut.png" />
+    <Image Include="resources\tools\pulemet.png" />
+    <Image Include="resources\tools\raketa.png" />
+    <Image Include="resources\tools\sheep.png" />
+    <Image Include="resources\tools\teleport.png" />
+    <Image Include="resources\tools\Turboranec.png" />
+    <Image Include="resources\tools\vzryv.png" />
+    <Image Include="t1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="8bitOperatorPlus-Regular.ttf" />
+    <Font Include="resources\troika.otf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="openal32.dll" />
+    <None Include="sfml-audio-2.dll" />
+    <None Include="sfml-audio-d-2.dll" />
+    <None Include="sfml-graphics-2.dll" />
+    <None Include="sfml-graphics-d-2.dll" />
+    <None Include="sfml-network-2.dll" />
+    <None Include="sfml-network-d-2.dll" />
+    <None Include="sfml-system-2.dll" />
+    <None Include="sfml-system-d-2.dll" />
+    <None Include="sfml-window-2.dll" />
+    <None Include="sfml-window-d-2.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

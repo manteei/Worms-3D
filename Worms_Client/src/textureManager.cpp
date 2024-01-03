@@ -1,4 +1,3 @@
-// TextureManager.cpp
 #include "textureManager.h"
 
 #define GL_CLAMP_TO_EDGE 0x812F
@@ -133,7 +132,6 @@ void TextureManager::addName(std::string& text, const sf::Font& font, const sf::
     sfText.setFillColor(sf::Color::Black);
     sfText.setPosition(position);
 
-    // Отрисовка текста в окне SFML
     window.draw(sfText);
 }
 
@@ -165,10 +163,16 @@ void TextureManager::convertWorldToWindowCoordinates(float worldX, float worldY,
     gluProject(worldX, worldY, worldZ, modelview, projection, viewport, &winX, &winY, &winZ);
 
     windowCoords.x = static_cast<float>(winX);
-    windowCoords.y = static_cast<float>(window.getSize().y - winY);  // Invert Y-coordinate as OpenGL and SFML have different coordinate systems
+
+    windowCoords.y = static_cast<float>(window.getSize().y - winY);
+
 }
 
 GLuint TextureManager::createBox() {
+    return LoadTexture("resources/textures/grass.jpg");
+}
+
+GLuint TextureManager::createSand() {
     return LoadTexture("resources/textures/sand.jpg");
 }
 

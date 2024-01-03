@@ -74,11 +74,6 @@ Socket::Status NetworkClient::receiveConnectedClientsNames(vector<string>& names
 				}
 			}
 			cout << "receiveConnectedClientsNames() :Client names read\n";
-			/*for (int i = 0; i < namesVec.size(); i++)
-			{
-				cout << namesVec[i];
-			}
-			cout << endl;*/
 			return Socket::Status::Done;
 
 		}
@@ -121,7 +116,7 @@ Socket::Status NetworkClient::sendData(Packet dataPacket)
 		unsigned short tempDataPort = S_dataPort;
 		if (dataSocket.send(sendPacket, tempIp, tempDataPort) == Socket::Status::Done)
 		{
-			
+
 			sendPacket.clear();
 			sendRateTimer.restart();
 			return Socket::Status::Done;

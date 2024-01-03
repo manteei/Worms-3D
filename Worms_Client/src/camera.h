@@ -5,21 +5,25 @@
 #include <GL/glu.h>
 #include "player.h"
 #include "map.h"
+#include "player.h"
+
 using namespace sf;
 
 class Camera
 {
 public:
 
-    
+
     float x, y, z, speed;
     float dx, dy, dz;
     float w, h, d;
-    bool onGround, farPlayer;
+    float farPlayers;
+    bool onGround, farPlayer, showMap;
    
 
     Camera(Player player);
-    void update(Time time,Player player);
+    void update(Time time, Player player);
     void keyboard();
-   
+    
+
 };

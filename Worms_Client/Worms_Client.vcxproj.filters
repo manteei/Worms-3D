@@ -30,10 +30,61 @@
     <ClCompile Include="src\textureManager.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\enemy.cpp">
+    <ClCompile Include="src\camera.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\camera.cpp">
+    <ClCompile Include="src\Options.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameStart.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameMenu.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\About_Game.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InitText.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command\Turboranec.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command\ActionInvoker.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command\Teleport.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Health.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command\MachineGun.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\settings.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ConfirmClosure.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command\ShotGun.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command\Rocker.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command\Grenade.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command\Dynamite.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command\BananaBomb.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ResultGame.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="src\attack.cpp">
@@ -53,14 +104,191 @@
     <ClInclude Include="src\textureManager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\enemy.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="src\camera.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\attack.h">
+    <ClInclude Include="src\Options.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="src\GameStart.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameMenu.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\About_Game.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\InitText.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command\ActionInvoker.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+
+    <ClInclude Include="src\command\Actions.cpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Health.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\settings.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ConfirmClosure.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ResultGame.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\..\Downloads\4.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\3.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\4.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\cursor.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\heightmap.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\grassBox\bottom.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\grassBox\side.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\grassBox\top.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\skybox\back.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\skybox\bottom.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\skybox\front.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\skybox\left.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\skybox\right.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\skybox\top.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\textures\pink.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\textures\sand.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\tools\back.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\tools\background.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\tools\banan.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\tools\chermageddon.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\tools\drobovik.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\tools\dubinka.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\tools\granata.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\tools\kulak.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\tools\magnit.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\tools\oslik.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\tools\parashut.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\tools\pulemet.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\tools\raketa.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\tools\sheep.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\tools\teleport.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\tools\vzryv.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\heightmap2.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\heightmap3.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\textures\grass.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\textures\top.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\tools\Turboranec.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\q.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\qq.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\qqq.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="t1.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\cursorShot.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resources\loading.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="resources\troika.otf" />
+    <Font Include="8bitOperatorPlus-Regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="openal32.dll" />
+    <None Include="sfml-audio-2.dll" />
+    <None Include="sfml-audio-d-2.dll" />
+    <None Include="sfml-graphics-2.dll" />
+    <None Include="sfml-graphics-d-2.dll" />
+    <None Include="sfml-network-2.dll" />
+    <None Include="sfml-network-d-2.dll" />
+    <None Include="sfml-system-2.dll" />
+    <None Include="sfml-system-d-2.dll" />
+    <None Include="sfml-window-2.dll" />
+    <None Include="sfml-window-d-2.dll" />
+
   </ItemGroup>
 </Project>

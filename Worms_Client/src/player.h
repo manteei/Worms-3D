@@ -4,20 +4,23 @@
 #include <iostream>
 #include <GL/glu.h>
 #include "map.h"
-
+#include <random>
 using namespace sf;
 
 class Player
 {
+
 public:
     Text t;
     std::string name;
     float x, y, z;
     float dx, dy, dz;
     float w, h, d;
-    bool onGround, needJump;
+    bool onGround, needJump, flying = false, onSand, canShoot = false;
     float speed, size;
-    const float PI = 3.141592653;
+    float PI = 3.141592653;
+    float health= 100.0f, damage = 0;
+    int generateRandomNumber();
     Player(float size0);
     void update(Time time, std::vector < std::vector<std::vector<bool>>>& mass, Map map);
     void collision(float Dx, float Dy, float Dz, std::vector < std::vector<std::vector<bool>>>& mass, Map map);
@@ -26,5 +29,8 @@ public:
     void setPosition(float x1, float y1, float z1);
     void load(Font& font);
     void draw(RenderWindow& window);
+    void setFlying(bool fly);
+    // явное объ€вление оператора присваивани€ без реализации
+    Player& operator=(const Player&);
 };
 

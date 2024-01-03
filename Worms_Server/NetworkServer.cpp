@@ -9,9 +9,9 @@ NetworkServer::NetworkServer()
 
 Socket::Status NetworkServer::init()
 {
-	if (listener.listen(Socket::AnyPort) == Socket::Status::Done)
+	if (listener.listen(12345) == Socket::Status::Done)
 	{
-		cout << "Port - " << listener.getLocalPort() << endl;
+		cout << "Port - 12345" <<  endl;
 		return Socket::Status();
 	}
 	else return Socket::Status::Error;
@@ -200,7 +200,6 @@ Socket::Status NetworkServer::sendConnectedClientsRecords()
 		else return Socket::Status::NotReady;
 	}
 }
-
 Socket::Status NetworkServer::receiveData(unsigned int& receivedClientIndex)
 {
 	for (int i = 0; i < clientsVec.size(); i++)
@@ -209,16 +208,25 @@ Socket::Status NetworkServer::receiveData(unsigned int& receivedClientIndex)
 		IpAddress tempIp = clientsVec[i].Ip;
 		unsigned short tempPort = clientsVec[i].port;
 
-		if (clientsVec[i].dataSocket->receive(clientsVec[i].rDataPacket, tempIp, tempPort) == Socket::Status::Done)
+		Socket::Status status = clientsVec[i].dataSocket->receive(clientsVec[i].rDataPacket, tempIp, tempPort);
+
+		if (status == Socket::Status::Done)
 		{
 			receivedClientIndex = i;
-
 			return Socket::Status::Done;
+		}
+		else if (status == Socket::Status::Disconnected)
+		{
+			handleClientDisconnection(i);
+			return Socket::Status::Done; 
 		}
 	}
 
 	return Socket::Status::NotReady;
 }
+
+
+
 
 Socket::Status NetworkServer::sendDataToAll(Packet dataPacket)
 {
@@ -263,4 +271,14 @@ Socket::Status NetworkServer::sendDataToAll(Packet dataPacket)
 
 	}
 	else return Socket::Status::NotReady;
+}
+void NetworkServer::handleClientDisconnection(unsigned int clientIndex)
+{
+	// Обработка отключения клиента
+	cout << "Client " << clientsVec[clientIndex].name << " has been disconnected." << endl;
+
+	sdf = clientsVec[clientIndex].name;
+
+	clientsVec.erase(clientsVec.begin() + clientIndex);
+	
 }
