@@ -68,7 +68,7 @@ void Settings::inputName() {
             }
         }
 
-        initText.texts(Titul2, width - boxWidth / 2, height - boxHeight / 2 - 100, L"Ваше имя: " + name, 60, Color(255, 239, 213), 3);
+        initText.texts(Titul2, width - boxWidth / 2, height - boxHeight / 2 - 100, L"Ваше имя: " + name, 80, Color(237, 147, 0), 3);
         setting.clear();
         setting.draw(background_ab);
         if (!nameCreated) {

@@ -6,6 +6,8 @@
 #include "player.h"
 #include "settings.h"
 #include "NetworkClient.h"
+
+
 using namespace sf;
 
 
@@ -33,6 +35,11 @@ int main()
     if (!texture_window.loadFromFile("resources/4.jpg")) return 4;
     background.setTexture(&texture_window);
 
+    RectangleShape load(Vector2f(70, 70));
+    Texture texture_loading;
+    if (!texture_loading.loadFromFile("resources/loading.png")) return 4;
+    load.setTexture(&texture_loading);
+    load.setPosition(1100, 380);
    
     Text Titul;
    
@@ -61,6 +68,8 @@ int main()
                     switch (mymenu.getSelectedMenuNumber())
                     {
                     case 0: {
+                        window.draw(load);
+                        window.display();
                         NetworkClient netC;
                         netC.init();
                         netC.registerOnServer(S_Ip, 12345, setting.getName());

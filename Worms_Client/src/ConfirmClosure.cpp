@@ -31,6 +31,21 @@ void ConfirmClosure::showConfirmClosure() {
                     close.close();
                 }
             }
+           
+             Vector2i mousePos = Mouse::getPosition(close);
+             if (yesButton.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                 yesButton.setFillColor(Color(109, 185, 102)); 
+             }
+             else {
+                 yesButton.setFillColor(Color(84, 92, 103));
+             }
+
+             if (noButton.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                 noButton.setFillColor(Color::Red); 
+             }
+             else {
+                 noButton.setFillColor(Color(84, 92, 103));
+             }
         }
 
         close.clear(Color(160, 156, 144));

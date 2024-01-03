@@ -24,12 +24,14 @@ void Health::updateHealth(Player player, std::vector<Player> enemyVec) {
 		if (i == 0) {
 			setRecrangleHealth(healthBar[i], 100, ypos);
 			initText.texts(namePlayer[i], 20, ypos, player.name, 20, Color::Black);
-			barWidth[i] = (player.health / maxHealth) * 200;
+			if (player.health <= 0) barWidth[i] = 0;
+			else barWidth[i] = (player.health / maxHealth) * 200;
 		}
 		else {
 			setRecrangleHealth(healthBar[i], 100, ypos);
 			initText.texts(namePlayer[i], 20, ypos, enemyVec[i-1].name, 20, Color::Black);
-			barWidth[i] = (enemyVec[i-1].health / maxHealth) * 200;
+			if (enemyVec[i - 1].health <= 0) barWidth[i] = 0;
+			else barWidth[i] = (enemyVec[i-1].health / maxHealth) * 200;
 		}
 		healthBar[i].setSize(Vector2f(barWidth[i], 20));
 	}

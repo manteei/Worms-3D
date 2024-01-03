@@ -130,6 +130,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ResultGame.cpp" />
+    <ClCompile Include="src\command\BananaBomb.cpp" />
+    <ClCompile Include="src\command\Dynamite.cpp" />
+    <ClCompile Include="src\command\Grenade.cpp" />
+    <ClCompile Include="src\command\Rocker.cpp" />
+    <ClCompile Include="src\command\ShotGun.cpp" />
     <ClCompile Include="src\ConfirmClosure.cpp" />
     <ClCompile Include="src\settings.cpp" />
     <ClCompile Include="src\command\MachineGun.cpp" />
@@ -150,6 +156,7 @@
     <ClCompile Include="src\command\Teleport.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ResultGame.h" />
     <ClInclude Include="src\ConfirmClosure.h" />
     <ClInclude Include="src\settings.h" />
     <ClInclude Include="src\Health.h" />
@@ -170,6 +177,7 @@
     <Image Include="..\..\..\..\..\Downloads\4.jpg" />
     <Image Include="resources\3.jpg" />
     <Image Include="resources\4.jpg" />
+    <Image Include="resources\cursorShot.png" />
     <Image Include="resources\cursor.png" />
     <Image Include="resources\grassBox\bottom.jpg" />
     <Image Include="resources\grassBox\side.jpg" />
@@ -177,6 +185,7 @@
     <Image Include="resources\heightmap.png" />
     <Image Include="resources\heightmap2.png" />
     <Image Include="resources\heightmap3.png" />
+    <Image Include="resources\loading.png" />
     <Image Include="resources\q.png" />
     <Image Include="resources\qq.png" />
     <Image Include="resources\qqq.png" />

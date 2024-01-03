@@ -30,6 +30,7 @@ void GamеStart::start()
 	bool isDragging = false;
 	Vector2i offset;
 	ConfirmClosure confirmClosure;
+	ResultGame resultGame;
 	window.setVerticalSyncEnabled(true);
 
 	window.setActive(true);
@@ -39,6 +40,13 @@ void GamеStart::start()
 	Texture t;
 	t.loadFromFile("resources/cursor.png");
 	Sprite s(t);
+
+	Texture tShot;
+	tShot.loadFromFile("resources/cursorShot.png");
+	Sprite sShot(tShot);
+	sShot.setOrigin(tShot.getSize().x / 2.0f, tShot.getSize().y / 2.0f);
+	float scaleFactor = 0.5f;
+	sShot.setScale(scaleFactor, scaleFactor);
 
 	Font font;
 	font.loadFromFile("8bitOperatorPlus-Regular.ttf");
@@ -66,8 +74,7 @@ void GamеStart::start()
 	Health health(window);
 
 	s.setOrigin(8, 8); s.setPosition(width, height);
-
-//	initText.texts(Titul, 50, 950, L"чтобы открыть опциии, кликните правой кнопкой", 20, Color::Black);
+	sShot.setPosition(width, height);
 
 	std::vector<GLuint> skybox = textureManager.createSkybox();
 	GLuint box = textureManager.createBox();
@@ -145,26 +152,24 @@ void GamеStart::start()
 								if (s == enemyVec[i].name) enemyVec[i].setPosition(x, y, z);
 								if (name == enemyVec[i].name) enemyVec[i].health -= damage;
 							}
-							if (name == player.name) player.health -= damage;
+							if (name == player.name) {
+								player.health -= damage;
+								
+							}
 						}
 					}
 					else if (s == "DEAD") {
 						string name;
 						receivedDataPacket >> name;
-						// Используйте итератор для обхода вектора и найдите элемент, который нужно удалить
-						auto it = std::find_if(enemyVec.begin(), enemyVec.end(), [&](const Player& player) {
+						auto it = find_if(enemyVec.begin(), enemyVec.end(), [&](const Player& player) {
 							return player.name == name;
 							});
 
-						// Проверяем, найден ли элемент
 						if (it != enemyVec.end()) {
-							// Удаляем элемент
 							enemyVec.erase(it);
-							std::cout << name << " убили" << std::endl;
+							
 						}
-						else {
-							std::cout << name << " не найден" << std::endl;
-						}
+
 					}
 
 				}
@@ -175,6 +180,10 @@ void GamеStart::start()
 		nameEnemy = "";
 		health.updateHealth(player, enemyVec);
 
+		if (player.health <= 0) {
+			resultGame.gameIsLost();
+			window.close();
+		}
 		Event event;
 		while (window.pollEvent(event))
 		{
@@ -200,6 +209,7 @@ void GamеStart::start()
 					camera.showMap = false;
 					camera.farPlayers = 0;
 				}
+				
 				windowIsActive = true;
 				window.setMouseCursorVisible(false);
 				mymenu.showWindow = false;
@@ -226,6 +236,7 @@ void GamеStart::start()
 					
 				}
 				if (event.key.code == Keyboard::Space && player.canShoot) { shoot = 1; }
+				
 			}
 		}
 		
@@ -272,9 +283,9 @@ void GamеStart::start()
 				while (dist < 120)  // радиус действия
 				{		
 					dist++;
-					x += -sin(angleX / 180 * PI);    X = x ;
-					y += tan(angleY / 180 * PI);    Y = y ;
-					z += -cos(angleX / 180 * PI);    Z = z ;
+					x += -sin(angleX / 180 * PI);   
+					y += tan(angleY / 180 * PI);   
+					z += -cos(angleX / 180 * PI);    
 
 					for (int i = 0; i < enemyVec.size(); i++) {
 						if (x  <= enemyVec[i].x + size0 /2 && x   >= enemyVec[i].x - size0 / 2 &&
@@ -363,14 +374,16 @@ void GamеStart::start()
 
 
 		window.pushGLStates();
-		window.draw(s);
-		if (mymenu.showWindow) {
-			window.draw(background_ab);
-			mymenu.draw();
-		}
+		
 		if (player.flying || player.canShoot) {
 			window.draw(background_timer);
 			window.draw(Titul);
+		}
+		if (player.canShoot) window.draw(sShot);
+		else window.draw(s);
+		if (mymenu.showWindow) {
+			window.draw(background_ab);
+			mymenu.draw();
 		}
 		health.draw();
 		window.popGLStates();

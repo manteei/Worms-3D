@@ -4,7 +4,7 @@ Camera::Camera(Player player)
 {
     x = player.x; y = player.y; z = player.z;
     dx = 0; dy = 0; dz = 0;
-    w = 5; h = 20; d = 5;
+    w = 5; h = 10; d = 5;
     farPlayers = 0;
     farPlayer = showMap = false;
     onGround = true;

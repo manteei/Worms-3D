@@ -41,8 +41,13 @@ int main()
 		}
 
 	
+		
+
+		
+		unsigned int receivedClientIndex;
+		Socket::Status stat = netS.receiveData(receivedClientIndex);
 		if (netS.sdf != "") {
-			
+
 			deadPacket << "DEAD";
 			for (int i = 0; i < netS.clientsVec.size(); i++)
 			{
@@ -51,16 +56,13 @@ int main()
 			}
 			if (netS.sendDataToAll(deadPacket) == Socket::Status::Done)
 			{
-				
-				//cout << "sdsdsdsdsdsDSdsd" << endl;
+				cout << "gooooood!!" << endl;
 				netS.sdf = "";
 			}
+
 			deadPacket.clear();
 		}
-
-		
-		unsigned int receivedClientIndex;
-		Socket::Status stat = netS.receiveData(receivedClientIndex);
+		else 
 		if (stat == Socket::Status::Done)
 		{	
 		  if (netS.clientsVec[receivedClientIndex].rDataPacket.getDataSize() > 0)
@@ -73,7 +75,7 @@ int main()
 						float x, y, z ;
 						string name;
 						float damage;
-
+						
 						if (netS.clientsVec[receivedClientIndex].rDataPacket >> x)
 						{
 							netS.clientsVec[receivedClientIndex].pos.x = x;
@@ -106,24 +108,8 @@ int main()
 			}
 
 		}
-		/*else if (stat == Socket::Status::Disconnected) {
-			cout << "Зашли в цикл для "<< netS.clientsVec[receivedClientIndex].name  << endl;
-			deadPacket << "DEAD" << netS.clientsVec[receivedClientIndex].name;
-			
 
-			if (netS.sendDataToAll(deadPacket) == Socket::Status::Done)
-			{
-				deadPacket.clear();
-				deadPacket << "DEAD";
-				for (int i = 0; i < netS.clientsVec.size(); i++)
-				{
-					deadPacket << netS.clientsVec[receivedClientIndex].name;
-
-				}
-			}
-		}*/
-
-
+		
 	}
 
 
