@@ -56,7 +56,6 @@ int main()
 			}
 			if (netS.sendDataToAll(deadPacket) == Socket::Status::Done)
 			{
-				cout << "gooooood!!" << endl;
 				netS.sdf = "";
 			}
 
@@ -100,8 +99,6 @@ int main()
 
 						}
 						netS.clientsVec[receivedClientIndex].rDataPacket.clear();
-
-						//cout << netS.clientsVec[receivedClientIndex].name << netS.clientsVec[receivedClientIndex].pos.x << " " << netS.clientsVec[receivedClientIndex].pos.y << " " << netS.clientsVec[receivedClientIndex].pos.z << endl;
 					}
 				
 				}

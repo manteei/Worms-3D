@@ -20,7 +20,6 @@ class Options
 	Font font;  
 	Text Titul;
 	InitText initText;
-	// Динамический массив текстовых объектов названий пунктов меню
 	RectangleShape* mainMenu;
 
 
@@ -52,7 +51,7 @@ public:
 
 	
 
-	int getSelectedMenuNumber() // Возвращает номер выбранного элемента меню
+	int getSelectedMenuNumber() 
 	{
 		return mainMenuSelected;
 	}

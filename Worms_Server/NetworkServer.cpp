@@ -274,7 +274,7 @@ Socket::Status NetworkServer::sendDataToAll(Packet dataPacket)
 }
 void NetworkServer::handleClientDisconnection(unsigned int clientIndex)
 {
-	// Обработка отключения клиента
+
 	cout << "Client " << clientsVec[clientIndex].name << " has been disconnected." << endl;
 
 	sdf = clientsVec[clientIndex].name;
