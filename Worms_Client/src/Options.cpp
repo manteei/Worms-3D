@@ -100,7 +100,7 @@ void Options::MoveDown()
 	}
 
 }
-// рисуем элементы меню в графическом окне
+
 void Options::draw()
 {	
 	for (int i = 0; i < max_menu; i++) mywindow.draw(mainMenu[i]);

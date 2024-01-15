@@ -3,7 +3,7 @@
 InitText::InitText() {
     font.loadFromFile("resources/troika.otf");
 }
-// функция настройки текста
+
 void InitText::texts(Text& mtext, float xpos, float ypos, String str, int size_font,
     Color menu_text_color, int bord, Color border_color)
 {

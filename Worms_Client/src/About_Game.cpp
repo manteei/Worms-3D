@@ -3,7 +3,7 @@
 About_Game::About_Game() {
 
 }
-// Функция с описанием игры
+
 void About_Game::showInformation()
 {
  
