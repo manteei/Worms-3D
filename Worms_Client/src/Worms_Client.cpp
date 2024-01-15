@@ -9,8 +9,6 @@
 
 
 using namespace sf;
-
-
 InitText initText;
 About_Game about_Game;
 Settings setting;
